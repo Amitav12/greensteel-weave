@@ -1,13 +1,22 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import SEO from "@/components/seo/SEO";
+import Hero from "@/components/sections/Hero";
+import ImpactCounters from "@/components/sections/ImpactCounters";
+import ProductShowcase from "@/components/sections/ProductShowcase";
+import LiveDataTicker from "@/components/sections/LiveDataTicker";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main>
+      <SEO
+        title="AAASHA TRADING LTD — Recycling & Steel Trading"
+        description="Sustainable recycling and premium steel trading with a commitment to environmental responsibility."
+        canonical="/"
+      />
+      <Hero />
+      <ImpactCounters />
+      <ProductShowcase />
+      <LiveDataTicker />
+    </main>
   );
 };
 
