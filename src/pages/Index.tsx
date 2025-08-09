@@ -1,26 +1,25 @@
 
 import SEO from "@/components/seo/SEO";
 import Hero from "@/components/sections/Hero";
-import ImpactCounters from "@/components/sections/ImpactCounters";
-import ProductShowcase from "@/components/sections/ProductShowcase";
 import LiveDataTicker from "@/components/sections/LiveDataTicker";
+import ProductShowcase from "@/components/sections/ProductShowcase";
+import ImpactCounters from "@/components/sections/ImpactCounters";
 import TrustedBy from "@/components/sections/TrustedBy";
 
-const Index = () => {
+export default function Index() {
   return (
-    <main>
-      <SEO
-        title="AAASHA TRADING LTD — Recycling & Steel Trading"
-        description="Sustainable recycling and premium steel trading with a commitment to environmental responsibility."
-        canonical="/"
+    <div className="min-h-screen">
+      <SEO 
+        title="AAASHA TRADING LTD - Sustainable Steel Trading & Recycling"
+        description="Leading steel trading and recycling company focused on sustainability and environmental responsibility. Premium steel products and eco-friendly solutions."
+        keywords="steel trading, recycling, sustainability, steel coils, pipes, structural steel"
       />
+      
       <Hero />
-      <TrustedBy />
-      <ImpactCounters />
-      <ProductShowcase />
       <LiveDataTicker />
-    </main>
+      <ProductShowcase />
+      <ImpactCounters />
+      <TrustedBy />
+    </div>
   );
-};
-
-export default Index;
+}

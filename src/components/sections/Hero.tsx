@@ -5,7 +5,6 @@ import { useTypewriter } from "@/hooks/useTypewriter";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import Parallax from "@/components/motion/Parallax";
 
 export default function Hero() {
   const { text, cursor } = useTypewriter([
@@ -25,36 +24,21 @@ export default function Hero() {
 
   return (
     <section ref={containerRef} className="relative min-h-[70vh] grid place-items-center overflow-hidden">
-      {/* Background Video/Image with Parallax */}
+      {/* Background Image with Parallax */}
       <motion.div 
         style={{ y: backgroundY }}
         className="absolute inset-0 w-full h-[120%]"
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={heroImage}
-          className="absolute inset-0 h-full w-full object-cover"
-          onError={(e) => {
-            // Fallback to image if video fails
-            e.currentTarget.style.display = 'none';
-          }}
-        >
-          <source src="/placeholder.svg" type="video/mp4" />
-          <img
-            src={heroImage}
-            alt="Recycling and steel operations hero image"
-            className="h-full w-full object-cover"
-            loading="eager"
-          />
-        </video>
         <img
           src={heroImage}
           alt="Recycling and steel operations hero image"
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"
+          onError={(e) => {
+            console.error('Hero image failed to load');
+            // Fallback styling
+            e.currentTarget.style.backgroundColor = 'hsl(var(--muted))';
+          }}
         />
       </motion.div>
 
@@ -124,7 +108,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-8 flex items-center justify-center gap-4"
+          className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Link to="/products">
             <motion.div
