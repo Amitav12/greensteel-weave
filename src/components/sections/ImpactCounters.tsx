@@ -50,15 +50,7 @@ export default function ImpactCounters() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 40, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.4, 0, 0.2, 1] // Using cubic-bezier array instead of string
-      }
-    }
+    visible: { opacity: 1, y: 0, scale: 1 }
   };
 
   return (
@@ -74,6 +66,10 @@ export default function ImpactCounters() {
           <motion.div 
             key={c.label} 
             variants={itemVariants}
+            transition={{
+              duration: 0.8,
+              ease: [0.4, 0, 0.2, 1]
+            }}
             whileHover={{ 
               y: -5,
               transition: { duration: 0.2 }
