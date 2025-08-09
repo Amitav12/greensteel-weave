@@ -13,29 +13,29 @@ const nav = [
 
 export default function SiteHeader() {
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
-    `px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+    `px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 backdrop-blur-md ${
       isActive 
-        ? "text-primary bg-primary/10 shadow-sm" 
-        : "text-foreground/90 hover:text-foreground hover:bg-accent/50"
+        ? "text-white bg-primary/30 border border-primary/50 shadow-lg shadow-primary/20" 
+        : "text-white/90 hover:text-white hover:bg-white/20 hover:border-white/30 border border-transparent"
     }`;
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-md bg-[hsl(var(--glass-bg))] border-b border-[hsl(var(--glass-border))] shadow-sm">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/10 shadow-2xl">
+      <div className="container flex h-20 items-center justify-between px-6">
         <Link to="/" className="group">
           <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-            className="font-extrabold tracking-tight text-lg text-foreground drop-shadow-sm group-hover:text-primary transition-colors duration-300"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+            className="font-black tracking-tight text-2xl text-white drop-shadow-2xl group-hover:text-primary transition-colors duration-300"
             style={{
-              textShadow: "0 1px 3px rgba(0,0,0,0.3), 0 0 10px rgba(255,255,255,0.1)"
+              textShadow: "0 0 20px rgba(76,175,80,0.8), 0 4px 8px rgba(0,0,0,0.9), 0 0 40px rgba(255,255,255,0.3)"
             }}
           >
             AAASHA TRADING LTD
           </motion.div>
         </Link>
         
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-2">
           {nav.map((n) => (
             <NavLink key={n.to} to={n.to} className={getNavCls} end>
               {n.label}
@@ -43,17 +43,17 @@ export default function SiteHeader() {
           ))}
         </nav>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <NavLink to="/contact">
             <motion.div
-              whileHover={{ scale: 1.05, brightness: 1.1 }}
+              whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
               <Button 
                 variant="hero" 
                 size="lg"
-                className="shadow-[var(--shadow-glow)] hover:shadow-[0_0_25px_rgba(76,175,80,0.4)] transition-all duration-300"
+                className="px-8 py-4 text-lg font-bold bg-primary/80 hover:bg-primary backdrop-blur-md border-2 border-primary/50 hover:border-primary text-white shadow-2xl shadow-primary/40 hover:shadow-primary/60 transition-all duration-300"
               >
                 Contact Us
               </Button>
