@@ -1,39 +1,149 @@
+
 import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-recycling-steel.jpg";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import { Link } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import Parallax from "@/components/motion/Parallax";
 
 export default function Hero() {
   const { text, cursor } = useTypewriter([
     "Sustainable Recycling",
-    "Premium Steel Trading",
+    "Premium Steel Trading", 
     "Environmental Responsibility",
   ], 45, 1400);
 
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
-    <section className="relative min-h-[70vh] grid place-items-center overflow-hidden">
-      <img
-        src={heroImage}
-        alt="Recycling and steel operations hero image"
-        className="absolute inset-0 h-full w-full object-cover"
-        loading="eager"
-      />
+    <section ref={containerRef} className="relative min-h-[70vh] grid place-items-center overflow-hidden">
+      {/* Background Video/Image with Parallax */}
+      <motion.div 
+        style={{ y: backgroundY }}
+        className="absolute inset-0 w-full h-[120%]"
+      >
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={heroImage}
+          className="absolute inset-0 h-full w-full object-cover"
+          onError={(e) => {
+            // Fallback to image if video fails
+            e.currentTarget.style.display = 'none';
+          }}
+        >
+          <source src="/placeholder.svg" type="video/mp4" />
+          <img
+            src={heroImage}
+            alt="Recycling and steel operations hero image"
+            className="h-full w-full object-cover"
+            loading="eager"
+          />
+        </video>
+        <img
+          src={heroImage}
+          alt="Recycling and steel operations hero image"
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="eager"
+        />
+      </motion.div>
+
+      {/* Overlay Layers */}
       <div className="absolute inset-0 bg-primary/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+      <div className="absolute inset-0 subtle-noise" />
 
-      <div className="container relative z-10 py-20 text-center animate-enter" data-aos="fade-up">
-        <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-[hsl(var(--glass-bg))] border border-[hsl(var(--glass-border))]">AAASHA TRADING LTD</span>
-        <h1 className="mt-6 text-4xl md:text-6xl font-extrabold tracking-tight">
-          Driving <span className="text-primary">Sustainability</span> in Steel
-        </h1>
-        <p className="mt-4 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-          {text}<span className="text-primary">{cursor}</span>
-        </p>
-        <div className="mt-8 flex items-center justify-center gap-4">
-          <Link to="/products"><Button variant="hero" size="lg">Explore Products</Button></Link>
-          <Link to="/contact"><Button variant="glass" size="lg">Contact Us</Button></Link>
-        </div>
+      {/* Floating Particles */}
+      <div className="absolute inset-0">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-primary/20 rounded-full"
+            style={{
+              left: `${20 + i * 15}%`,
+              top: `${30 + (i % 3) * 20}%`,
+            }}
+            animate={{
+              y: [-20, 20, -20],
+              x: [-10, 10, -10],
+              opacity: [0.3, 0.7, 0.3]
+            }}
+            transition={{
+              duration: 6 + i * 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.5
+            }}
+          />
+        ))}
       </div>
+
+      {/* Content */}
+      <motion.div 
+        style={{ y: textY }}
+        className="container relative z-10 py-20 text-center"
+      >
+        <motion.span 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold glass-card"
+        >
+          AAASHA TRADING LTD
+        </motion.span>
+
+        <motion.h1 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-6 text-4xl md:text-6xl font-extrabold tracking-tight"
+        >
+          Driving <span className="text-primary">Sustainability</span> in Steel
+        </motion.h1>
+
+        <motion.p 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-4 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto"
+        >
+          {text}<span className="text-primary animate-pulse">{cursor}</span>
+        </motion.p>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-8 flex items-center justify-center gap-4"
+        >
+          <Link to="/products">
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button variant="hero" size="lg">Explore Products</Button>
+            </motion.div>
+          </Link>
+          <Link to="/contact">
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button variant="glass" size="lg">Contact Us</Button>
+            </motion.div>
+          </Link>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

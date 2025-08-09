@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -124,4 +125,62 @@
     background: hsl(var(--accent));
     color: hsl(var(--primary-foreground));
   }
+
+  /* Motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Enhanced Glass Utilities */
+  .glass-card {
+    @apply bg-[hsl(var(--glass-bg))] backdrop-blur-md border border-[hsl(var(--glass-border))] shadow-[var(--shadow-elegant)];
+  }
+  
+  .glass-card-hover {
+    @apply glass-card hover:bg-[hsl(var(--glass-bg-hover))] hover:shadow-[var(--shadow-glow)] transition-all duration-300;
+  }
+  
+  .glass-ring {
+    @apply ring-1 ring-[hsl(var(--glass-border))] hover:ring-primary/20 transition-all duration-200;
+  }
+  
+  .glass-divider {
+    @apply border-t border-[hsl(var(--glass-border))];
+  }
+  
+  .subtle-noise {
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.02) 0%, transparent 50%);
+  }
+  
+  /* Shimmer effect for counters */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+  
+  /* Magnetic hover effect */
+  .magnetic-hover {
+    transition: transform 0.2s ease;
+  }
+  
+  .magnetic-hover:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
