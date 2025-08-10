@@ -29,135 +29,105 @@ const services = [
 
 export default function ServicesOverviewSimple() {
   return (
-    <section className="py-20 bg-gradient-to-br from-green-50/50 via-white to-emerald-50/30 relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_75%,rgba(34,197,94,0.05),transparent_50%),radial-gradient(circle_at_75%_25%,rgba(16,185,129,0.03),transparent_50%)]" />
-      
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/60 backdrop-blur-xl rounded-full border border-green-200/50 mb-6">
-            <Recycle className="w-5 h-5 text-green-600" />
-            <span className="text-sm font-bold text-green-700">Our Services</span>
-          </div>
-          <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-4">
-            <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
-              Sustainable Solutions
-            </span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Comprehensive recycling and trading services focused on environmental responsibility and premium quality
-          </p>
-        </motion.div>
-
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-3 gap-10 mb-20">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-            >
-              <Card 
-                variant="eco-leaf" 
-                className="group cursor-pointer h-full"
-                hover
-                greenTint="light"
-                ecoTexture
-              >
-                <CardHeader className="text-center p-8">
-                  <motion.div
-                    whileHover={{ scale: 1.2, rotate: 10 }}
-                    transition={{ duration: 0.3 }}
-                    className={`inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r ${service.color} rounded-3xl mb-8 shadow-2xl`}
-                  >
-                    <service.icon className="w-12 h-12 text-white" />
-                  </motion.div>
-                  
-                  <CardTitle className="text-3xl font-black text-gray-900 mb-4 group-hover:text-green-600 transition-colors">
-                    {service.title}
-                  </CardTitle>
-                  
-                  <CardDescription className="text-gray-600 text-lg leading-relaxed mb-8">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="px-8 pb-8">
-                  {/* Features List */}
-                  <div className="space-y-4 mb-8">
-                    {service.features.map((feature, idx) => (
-                      <motion.div
-                        key={feature}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: (index * 0.2) + (idx * 0.1) }}
-                        className="flex items-center justify-center"
-                      >
-                        <div className="w-3 h-3 bg-green-500 rounded-full mr-4" />
-                        <span className="text-gray-700 font-semibold text-lg">{feature}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                  
-                  <Button 
-                    variant="eco-gradient"
-                    className="w-full font-bold text-lg py-4"
-                    greenTint="medium"
-                    ecoGlow
-                  >
-                    <ArrowRight className="w-5 h-5 mr-2" />
-                    Learn More
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+    <div className="space-y-6">
+      {/* Section Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="mb-8"
+      >
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full border border-green-200 mb-4">
+          <Recycle className="w-4 h-4 text-green-600" />
+          <span className="text-sm font-bold text-green-700">Our Services</span>
         </div>
+        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+          <span className="text-green-600">Sustainable Solutions</span>
+        </h3>
+        <p className="text-gray-600 leading-relaxed">
+          Comprehensive recycling and trading services focused on environmental responsibility and premium quality
+        </p>
+      </motion.div>
 
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
-        >
-          <Card variant="eco-gradient-glass" className="inline-block" greenTint="medium" ecoTexture>
-            <CardContent className="px-12 py-8">
-              <div className="flex items-center gap-4">
-                <Recycle className="w-8 h-8 text-white" />
-                <div className="text-left">
-                  <h3 className="text-2xl font-bold text-white mb-2">
-                    Ready to Transform Your Waste?
-                  </h3>
-                  <p className="text-green-100 text-lg">
-                    Join us in creating a sustainable future through innovative recycling solutions
-                  </p>
-                </div>
-                <Button 
-                  variant="glass" 
-                  size="lg"
-                  className="ml-4"
-                  greenTint="light"
-                >
-                  <ArrowRight className="w-5 h-5 mr-2" />
-                  Get Started
-                </Button>
+      {/* Services List */}
+      <div className="space-y-4">
+        {services.map((service, index) => (
+          <motion.div
+            key={service.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{ x: 5 }}
+            className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 group"
+          >
+            <div className="flex items-start gap-4">
+              <div className={`w-12 h-12 bg-gradient-to-r ${service.color} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                <service.icon className="w-6 h-6 text-white" />
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+              
+              <div className="flex-1 min-w-0">
+                <h4 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                  {service.title}
+                </h4>
+                <p className="text-gray-600 text-sm leading-relaxed mb-3">
+                  {service.description}
+                </p>
+                
+                {/* Features */}
+                <div className="space-y-1">
+                  {service.features.map((feature, idx) => (
+                    <div key={feature} className="flex items-center gap-2 text-xs text-gray-500">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <Button 
+                variant="outline"
+                size="sm"
+                className="border-green-200 text-green-600 hover:bg-green-50 flex-shrink-0"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </motion.div>
+        ))}
       </div>
-    </section>
+
+      {/* Call to Action */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="mt-6"
+      >
+        <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 text-white">
+          <div className="flex items-center gap-4">
+            <Recycle className="w-8 h-8 text-white flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <h4 className="text-lg font-bold mb-1">
+                Ready to Transform Your Waste?
+              </h4>
+              <p className="text-green-100 text-sm">
+                Join us in creating a sustainable future
+              </p>
+            </div>
+            <Button 
+              variant="outline"
+              size="sm"
+              className="bg-white/10 border-white/20 text-white hover:bg-white/20 flex-shrink-0"
+            >
+              <ArrowRight className="w-4 h-4 mr-1" />
+              Get Started
+            </Button>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 }

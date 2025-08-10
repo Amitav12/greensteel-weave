@@ -31,7 +31,12 @@ export default function Partners() {
         </div>
       </section>
 
-      <TrustedBy />
+      {/* Partners Content Section */}
+      <section className="py-12 sm:py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
+          <TrustedBy />
+        </div>
+      </section>
     </>
   );
 }

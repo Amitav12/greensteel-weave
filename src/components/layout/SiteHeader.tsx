@@ -1,11 +1,13 @@
 
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import ContactModal from "@/components/ui/ContactModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Recycle, Menu, X, Factory, Award, Users, FileText, Newspaper } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const nav = [
+  { to: "/", label: "Home", icon: Recycle },
   { to: "/about", label: "About", icon: Users },
   { to: "/products", label: "Products", icon: Factory },
   { to: "/partners", label: "Partners", icon: Award },
@@ -16,6 +18,7 @@ const nav = [
 export default function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
@@ -70,15 +73,14 @@ export default function SiteHeader() {
           {/* Desktop CTA and Mobile Menu Button */}
           <div className="flex items-center gap-4">
             <div className="hidden md:block">
-              <NavLink to="/contact">
-                <Button 
-                  className="bg-[#4CAF50] hover:bg-[#2E7D32] text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                  size="lg"
-                >
-                  <Phone className="w-4 h-4 mr-2" />
-                  Contact Us
-                </Button>
-              </NavLink>
+              <Button 
+                onClick={() => setIsContactModalOpen(true)}
+                className="bg-[#4CAF50] hover:bg-[#2E7D32] text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                size="lg"
+              >
+                <Phone className="w-4 h-4 mr-2" />
+                Contact Us
+              </Button>
             </div>
             
             {/* Mobile Menu Button */}
@@ -160,21 +162,28 @@ export default function SiteHeader() {
                   transition={{ delay: nav.length * 0.1, duration: 0.3 }}
                   className="pt-4"
                 >
-                  <NavLink to="/contact" className="block">
-                    <Button 
-                      className="w-full bg-[#4CAF50] hover:bg-[#2E7D32] text-white font-bold text-lg py-4 shadow-lg"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <Phone className="w-5 h-5 mr-2" />
-                      Contact Us Today
-                    </Button>
-                  </NavLink>
+                  <Button 
+                    onClick={() => {
+                      setIsContactModalOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full bg-[#4CAF50] hover:bg-[#2E7D32] text-white font-bold text-lg py-4 shadow-lg"
+                  >
+                    <Phone className="w-5 h-5 mr-2" />
+                    Contact Us Today
+                  </Button>
                 </motion.div>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </>
   );
 }
