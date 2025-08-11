@@ -110,7 +110,7 @@ export default function FeaturedVideos({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 to-green-50"
+      className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-700 transition-colors duration-300"
     >
       <div className="container mx-auto px-4 max-w-7xl">
         <motion.div
@@ -119,10 +119,10 @@ export default function FeaturedVideos({
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-16 lg:mb-20"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Our Business <span className="text-green-600">Process</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Our Business <span className="text-green-600 dark:text-green-400">Process</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Watch our complete end-to-end workflow in action - from initial consultation to final delivery
           </p>
         </motion.div>
@@ -137,7 +137,7 @@ export default function FeaturedVideos({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.6 }}
-                className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                className="relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
                 style={{ 
                   aspectRatio: '20/30',
                   minHeight: '500px'

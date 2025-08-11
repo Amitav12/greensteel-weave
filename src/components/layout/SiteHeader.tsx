@@ -110,9 +110,9 @@ export default function SiteHeader() {
             <Button 
               onClick={() => setIsContactModalOpen(true)}
               className="bg-[#4CAF50] hover:bg-[#2E7D32] dark:bg-[#66BB6A] dark:hover:bg-[#4CAF50] text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-              size="lg"
+              size="sm"
             >
-              <Phone className="w-4 h-4 mr-2" />
+              <Phone className="w-3 h-3 mr-1" />
               Contact Us
             </Button>
           </div>

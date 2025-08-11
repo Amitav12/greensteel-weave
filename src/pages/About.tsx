@@ -107,7 +107,7 @@ export default function About() {
       </section>
 
       {/* Our Story */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -116,22 +116,22 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center px-6 py-3 bg-green-100 rounded-full mb-6">
-                <Quote className="w-5 h-5 text-green-600 mr-2" />
-                <span className="text-green-800 font-semibold">Our Story</span>
+              <div className="inline-flex items-center px-6 py-3 bg-green-100 dark:bg-green-800 rounded-full mb-6">
+                <Quote className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+                <span className="text-green-800 dark:text-green-300 font-semibold">Our Story</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+              <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
                 Building a{" "}
                 <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                   Sustainable Future
                 </span>
               </h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                 Founded in 2009 with a vision to revolutionize the steel trading industry through
                 sustainable practices, AAASHA TRADING LTD has grown from a small startup to a
                 leading player in the Indian steel market.
               </p>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 Our commitment to environmental responsibility and quality excellence has earned
                 us the trust of major steel manufacturers and helped us contribute significantly
                 to India's circular economy.
@@ -151,8 +151,8 @@ export default function About() {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     className="flex items-center space-x-3"
                   >
-                    <CheckCircle className="w-6 h-6 text-green-600" />
-                    <span className="text-gray-700 font-medium">{achievement}</span>
+                    <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
+                    <span className="text-gray-700 dark:text-gray-300 font-medium">{achievement}</span>
                   </motion.div>
                 ))}
               </div>
@@ -180,7 +180,7 @@ export default function About() {
       </section>
 
       {/* Our Values */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-white">
+      <section className="py-20 bg-gradient-to-br from-green-50 to-white dark:from-gray-800 dark:to-gray-700 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -189,17 +189,17 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center px-6 py-3 bg-green-100 rounded-full mb-6">
-              <Target className="w-5 h-5 text-green-600 mr-2" />
-              <span className="text-green-800 font-semibold">Our Values</span>
+            <div className="inline-flex items-center px-6 py-3 bg-green-100 dark:bg-green-800 rounded-full mb-6">
+              <Target className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+              <span className="text-green-800 dark:text-green-300 font-semibold">Our Values</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
               What Drives{" "}
               <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 Our Success
               </span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Our core values guide every decision we make and every relationship we build,
               ensuring sustainable growth and positive impact.
             </p>
@@ -213,15 +213,15 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-green-100"
+                className="group bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-green-100 dark:border-gray-700"
               >
-                <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <value.icon className="w-8 h-8 text-green-600" />
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <value.icon className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-green-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                   {value.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                   {value.description}
                 </p>
               </motion.div>
@@ -231,7 +231,7 @@ export default function About() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-white">
+      <section className="py-20 bg-gradient-to-br from-green-50 to-white dark:from-gray-800 dark:to-gray-700 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -240,17 +240,17 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center px-6 py-3 bg-green-100 rounded-full mb-6">
-              <Users className="w-5 h-5 text-green-600 mr-2" />
-              <span className="text-green-800 font-semibold">Our Team</span>
+            <div className="inline-flex items-center px-6 py-3 bg-green-100 dark:bg-green-800 rounded-full mb-6">
+              <Users className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+              <span className="text-green-800 dark:text-green-300 font-semibold">Our Team</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
               Meet Our{" "}
               <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 Leadership
               </span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Our experienced team combines industry expertise with innovative thinking
               to drive sustainable growth and deliver exceptional results.
             </p>
@@ -264,7 +264,7 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group bg-white rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-green-100"
+                className="group bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-green-100 dark:border-gray-700"
               >
                 <div className="relative mb-6">
                   <div className="w-full aspect-square bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl flex items-center justify-center">
@@ -272,13 +272,13 @@ export default function About() {
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-green-600/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-green-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                   {member.name}
                 </h3>
-                <p className="text-green-600 font-semibold mb-3">
+                <p className="text-green-600 dark:text-green-400 font-semibold mb-3">
                   {member.position}
                 </p>
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                   {member.bio}
                 </p>
               </motion.div>

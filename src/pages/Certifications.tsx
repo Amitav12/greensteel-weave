@@ -30,7 +30,7 @@ export default function Certifications() {
       </section>
 
       {/* Certificates Content Section */}
-      <section className="py-12 sm:py-16 bg-white">
+      <section className="py-12 sm:py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <CertificateCarousel />
         </div>

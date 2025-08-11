@@ -74,7 +74,7 @@ export default function Contact() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-white dark:from-gray-800 dark:to-gray-900 transition-colors duration-300">
         {/* Hero Section */}
         <section className="py-20 bg-gradient-to-r from-green-900 to-green-800">
           <div className="container mx-auto px-6">
@@ -108,18 +108,18 @@ export default function Contact() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-green-100"
+                  className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-green-100 dark:border-gray-700"
                 >
-                  <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
-                    <info.icon className="w-8 h-8 text-green-600" />
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-800 rounded-2xl flex items-center justify-center mb-6">
+                    <info.icon className="w-8 h-8 text-green-600 dark:text-green-400" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{info.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{info.title}</h3>
                   <div className="space-y-2 mb-4">
                     {info.details.map((detail, idx) => (
-                      <p key={idx} className="text-gray-700 font-medium">{detail}</p>
+                      <p key={idx} className="text-gray-700 dark:text-gray-300 font-medium">{detail}</p>
                     ))}
                   </div>
-                  <p className="text-gray-600">{info.description}</p>
+                  <p className="text-gray-600 dark:text-gray-400">{info.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -132,17 +132,17 @@ export default function Contact() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="bg-white rounded-3xl p-8 shadow-xl border border-green-100"
+                className="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-green-100 dark:border-gray-700"
               >
                 <div className="flex items-center mb-8">
                   <MessageSquare className="w-8 h-8 text-green-600 mr-3" />
-                  <h2 className="text-3xl font-bold text-gray-900">Send us a Message</h2>
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Send us a Message</h2>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                         <User className="w-4 h-4 inline mr-2" />
                         Full Name *
                       </label>
@@ -152,7 +152,7 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                         placeholder="Your full name"
                       />
                     </div>
