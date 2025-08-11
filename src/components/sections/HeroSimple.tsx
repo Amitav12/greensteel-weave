@@ -87,7 +87,7 @@ export default function HeroSimple() {
 
   return (
     <section ref={containerRef} className="relative h-screen flex items-start justify-center overflow-hidden bg-transparent pt-8">
-      {/* Enhanced Background with Image Carousel - Now fully visible */}
+      {/* Enhanced Background with Image Carousel */}
       <animated.div
         style={backgroundSpring}
         className="absolute inset-0"
@@ -101,7 +101,7 @@ export default function HeroSimple() {
           respectReducedMotion={true}
         />
         
-        {/* Minimal overlay to ensure text readability */}
+        {/* Restored original overlay for text readability */}
         <div className="absolute inset-0 bg-black/20 z-15" />
       </animated.div>
 
