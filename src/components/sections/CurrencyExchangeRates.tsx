@@ -5,7 +5,7 @@ import { TrendingUp, TrendingDown, RefreshCw } from "lucide-react";
 import { getExchangeRates, scheduleAutomaticUpdates, type CurrencyData } from "@/services/exchangeRateService";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Currency symbol mapping utility
+// Enhanced currency symbol mapping utility
 const getCurrencySymbol = (code: string): string => {
   const symbols: { [key: string]: string } = {
     'CNY': '¥',
@@ -22,6 +22,44 @@ const getCurrencySymbol = (code: string): string => {
     'BRL': 'R$'
   };
   return symbols[code] || '';
+};
+
+// Enhanced country flag mapping
+const getCountryFlag = (code: string): string => {
+  const flags: { [key: string]: string } = {
+    'CNY': '🇨🇳', // China
+    'IDR': '🇮🇩', // Indonesia
+    'INR': '🇮🇳', // India
+    'EUR': '🇪🇺', // European Union
+    'ZAR': '🇿🇦', // South Africa
+    'PLN': '🇵🇱', // Poland
+    'TRY': '🇹🇷', // Turkey
+    'RUB': '🇷🇺', // Russia
+    'BDT': '🇧🇩', // Bangladesh
+    'JPY': '🇯🇵', // Japan
+    'GBP': '🇬🇧', // United Kingdom
+    'BRL': '🇧🇷', // Brazil
+  };
+  return flags[code] || '🏳️';
+};
+
+// Enhanced country name mapping
+const getCountryName = (code: string): string => {
+  const countries: { [key: string]: string } = {
+    'CNY': 'Chinese',
+    'IDR': 'Indonesian', 
+    'INR': 'Indian',
+    'EUR': 'Euro',
+    'ZAR': 'South African',
+    'PLN': 'Polish',
+    'TRY': 'Turkish',
+    'RUB': 'Russian',
+    'BDT': 'Bangladeshi',
+    'JPY': 'Japanese',
+    'GBP': 'British',
+    'BRL': 'Brazilian',
+  };
+  return countries[code] || code;
 };
 
 // Number formatting utility for different currency types
@@ -54,7 +92,7 @@ const CurrencyCardSkeleton = () => (
   </div>
 );
 
-// Stock market background animation component
+// Enhanced stock market background animation component
 const StockMarketBackground = () => {
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
 
@@ -272,12 +310,14 @@ export default function CurrencyExchangeRates() {
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.15 }}
                     >
-                      <span className="text-lg">{currency.flag}</span>
+                      <span className="text-lg" title={`${getCountryName(currency.code)} Flag`}>
+                        {getCountryFlag(currency.code)}
+                      </span>
                     </motion.div>
                     <div>
                       <span className="font-bold text-sm text-gray-900">{currency.code}</span>
                       <p className="text-xs text-gray-600 hidden md:block leading-tight">
-                        {currency.name.split(' ')[0]}
+                        {getCountryName(currency.code)}
                       </p>
                     </div>
                   </div>
