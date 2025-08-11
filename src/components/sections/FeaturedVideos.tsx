@@ -21,40 +21,72 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(muted);
+  const [isInView, setIsInView] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const videos = [
     {
-      id: 'steel-processing',
-      title: 'Steel Processing',
-      description: 'Advanced steel manufacturing process',
-      thumbnail: '/api/placeholder/300/400',
-      src: '/api/placeholder/video/steel-processing.mp4',
+      id: 'initial-contact',
+      title: 'Initial Contact',
+      description: 'Comprehensive consultation and assessment',
+      thumbnail: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=600&fit=crop&crop=center',
+      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
       step: 1
     },
     {
-      id: 'quality-control',
-      title: 'Quality Control',
-      description: 'Rigorous quality assurance standards',
-      thumbnail: '/api/placeholder/300/400',
-      src: '/api/placeholder/video/quality-control.mp4',
+      id: 'processing-logistics',
+      title: 'Processing & Logistics',
+      description: 'Advanced processing and coordination',
+      thumbnail: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=600&fit=crop&crop=center',
+      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
       step: 2
     },
     {
-      id: 'delivery',
-      title: 'Fast Delivery',
-      description: 'Efficient logistics and delivery',
-      thumbnail: '/api/placeholder/300/400',
-      src: '/api/placeholder/video/delivery.mp4',
+      id: 'delivery-completion',
+      title: 'Final Delivery',
+      description: 'Seamless delivery and completion',
+      thumbnail: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=600&fit=crop&crop=center',
+      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
       step: 3
     }
   ];
 
+  // Intersection Observer for autoplay when section comes into view
   useEffect(() => {
-    if (autoplay && videos.length > 0) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the section is visible
+        rootMargin: '0px 0px -100px 0px' // Offset to trigger earlier
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  // Auto-start video when section comes into view
+  useEffect(() => {
+    if (isInView && autoplay && !isPlaying) {
       playCurrentVideo();
     }
-  }, [autoplay, currentVideoIndex]);
+  }, [isInView, autoplay]);
+
+  useEffect(() => {
+    if (autoplay && videos.length > 0 && isInView) {
+      playCurrentVideo();
+    }
+  }, [autoplay, currentVideoIndex, isInView]);
 
   const playCurrentVideo = () => {
     const currentVideo = videoRefs.current[currentVideoIndex];
@@ -92,6 +124,7 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
 
   return (
     <motion.section
+      ref={sectionRef}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -106,10 +139,10 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Featured <span className="text-green-600">Videos</span>
+            Our Business <span className="text-green-600">Process</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Watch our steel processing journey from raw materials to finished products
+            Watch our complete end-to-end workflow in action - from initial consultation to final delivery
           </p>
         </motion.div>
 
