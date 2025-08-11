@@ -9,8 +9,5 @@ if (!container) {
   throw new Error("Root element not found");
 }
 
-createRoot(container).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+const root = createRoot(container);
+root.render(<App />);
