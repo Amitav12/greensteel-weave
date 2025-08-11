@@ -1,8 +1,6 @@
-
 import SEO from "@/components/seo/SEO";
 import HeroSimple from "@/components/sections/HeroSimple";
 import CurrencyExchangeWithChart from "../components/sections/CurrencyExchangeWithChart";
-import BusinessProcessVideo from "@/components/sections/BusinessProcessVideo";
 import FeaturedVideos from "@/components/sections/FeaturedVideos";
 import OurPartners from "@/components/sections/OurPartners";
 
@@ -65,24 +63,6 @@ export default function Index() {
           </div>
         </div>
       </motion.section>
-
-      {/* Business Process Video Section */}
-      <BusinessProcessVideo
-        autoplay={true}
-        muted={true}
-        onSegmentStart={(segmentId) => {
-          // Analytics tracking can be added here
-          console.log('Segment started:', segmentId);
-        }}
-        onSegmentComplete={(segmentId) => {
-          // Analytics tracking can be added here
-          console.log('Segment completed:', segmentId);
-        }}
-        onFullPlayComplete={() => {
-          // Analytics tracking can be added here
-          console.log('Full process video completed');
-        }}
-      />
 
       {/* Featured Videos Section */}
       <FeaturedVideos
