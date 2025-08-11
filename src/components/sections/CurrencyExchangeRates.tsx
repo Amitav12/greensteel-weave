@@ -135,40 +135,40 @@ const StockMarketBackground = () => {
     `${createPath(points)} L ${points[points.length - 1]?.x || 0} 100 L 0 100 Z`;
 
   return (
-    <div className="absolute inset-0 opacity-40 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 opacity-50 overflow-hidden pointer-events-none">
       <svg width="100%" height="100%" className="absolute inset-0" viewBox="0 0 120 100" preserveAspectRatio="none">
         <defs>
           {/* Dark background with blue/purple gradient */}
           <radialGradient id="darkBackground" cx="30%" cy="30%" r="100%">
-            <stop offset="0%" stopColor="#0f172a" stopOpacity="0.9" />
-            <stop offset="40%" stopColor="#1e1b4b" stopOpacity="0.7" />
-            <stop offset="100%" stopColor="#000000" stopOpacity="0.5" />
+            <stop offset="0%" stopColor="#000000" stopOpacity="1" />
+            <stop offset="40%" stopColor="#0f172a" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#1e1b4b" stopOpacity="0.8" />
           </radialGradient>
           
           {/* Grid pattern */}
           <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse">
-            <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#1e40af" strokeWidth="0.2" opacity="0.2"/>
+            <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#1e40af" strokeWidth="0.3" opacity="0.4"/>
           </pattern>
           
           {/* Main trend line gradient - Green to Blue */}
           <linearGradient id="trendGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#059669" stopOpacity="0.6" />
-            <stop offset="50%" stopColor="#0284c7" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#1d4ed8" stopOpacity="0.7" />
+            <stop offset="0%" stopColor="#059669" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="#0284c7" stopOpacity="1" />
+            <stop offset="100%" stopColor="#1d4ed8" stopOpacity="0.9" />
           </linearGradient>
           
           {/* Secondary line gradient - Purple to Pink */}
           <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#6b21a8" stopOpacity="0.5" />
-            <stop offset="50%" stopColor="#7c2d92" stopOpacity="0.7" />
-            <stop offset="100%" stopColor="#be185d" stopOpacity="0.6" />
+            <stop offset="0%" stopColor="#6b21a8" stopOpacity="0.7" />
+            <stop offset="50%" stopColor="#7c2d92" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#be185d" stopOpacity="0.8" />
           </linearGradient>
           
           {/* Area fill gradients */}
           <linearGradient id="areaFill" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#059669" stopOpacity="0.2" />
-            <stop offset="50%" stopColor="#0284c7" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#1d4ed8" stopOpacity="0.05" />
+            <stop offset="0%" stopColor="#059669" stopOpacity="0.3" />
+            <stop offset="50%" stopColor="#0284c7" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#1d4ed8" stopOpacity="0.1" />
           </linearGradient>
           
           {/* Glow effects */}
@@ -203,7 +203,7 @@ const StockMarketBackground = () => {
             y1={y}
             x2="120"
             y2={y}
-            stroke="#3b82f6"
+            stroke="#1e40af"
             strokeWidth="0.3"
             strokeOpacity="0.4"
             strokeDasharray="2,2"
@@ -320,29 +320,6 @@ const StockMarketBackground = () => {
           />
         ))}
         
-        {/* Market status indicators */}
-        {[...Array(3)].map((_, i) => (
-          <motion.text
-            key={`status-${i}`}
-            x={10 + i * 35}
-            y={15}
-            fontSize="3.5"
-            fill={i === 0 ? "#10b981" : i === 1 ? "#3b82f6" : "#8b5cf6"}
-            opacity="0.8"
-            fontWeight="bold"
-            filter="url(#glow)"
-            animate={{
-              opacity: [0.6, 1, 0.6]
-            }}
-            transition={{
-              duration: 2 + i * 0.3,
-              repeat: Infinity,
-              delay: i * 0.5
-            }}
-          >
-            {['BULL', 'TREND', 'UP'][i]}
-          </motion.text>
-        ))}
       </svg>
     </div>
   );
