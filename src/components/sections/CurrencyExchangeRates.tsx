@@ -126,36 +126,36 @@ const StockMarketBackground = () => {
     points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
 
   return (
-    <div className="absolute inset-0 opacity-20 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 opacity-40 overflow-hidden pointer-events-none">
       <svg width="100%" height="100%" className="absolute inset-0" viewBox="0 0 120 100" preserveAspectRatio="none">
         <defs>
           {/* Enhanced gradients for better visibility */}
           <linearGradient id="stockGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.4" />
-            <stop offset="50%" stopColor="#059669" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#34D399" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="#059669" stopOpacity="1" />
+            <stop offset="100%" stopColor="#34D399" stopOpacity="0.8" />
           </linearGradient>
           <linearGradient id="stockGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#34D399" stopOpacity="0.3" />
-            <stop offset="50%" stopColor="#10B981" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#059669" stopOpacity="0.3" />
+            <stop offset="0%" stopColor="#34D399" stopOpacity="0.7" />
+            <stop offset="50%" stopColor="#10B981" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#059669" stopOpacity="0.7" />
           </linearGradient>
           <linearGradient id="stockGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#059669" stopOpacity="0.2" />
-            <stop offset="50%" stopColor="#34D399" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="#10B981" stopOpacity="0.2" />
+            <stop offset="0%" stopColor="#059669" stopOpacity="0.6" />
+            <stop offset="50%" stopColor="#34D399" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#10B981" stopOpacity="0.6" />
           </linearGradient>
           
           {/* Background glow */}
           <radialGradient id="backgroundGlow" cx="50%" cy="50%" r="80%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.08" />
-            <stop offset="60%" stopColor="#059669" stopOpacity="0.04" />
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.2" />
+            <stop offset="60%" stopColor="#059669" stopOpacity="0.1" />
             <stop offset="100%" stopColor="#34D399" stopOpacity="0" />
           </radialGradient>
           
           {/* Area fill gradients */}
           <linearGradient id="areaFill1" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.15" />
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.3" />
             <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
           </linearGradient>
         </defs>
@@ -172,10 +172,10 @@ const StockMarketBackground = () => {
             x2="120"
             y2={15 + i * 10}
             stroke="#10B981"
-            strokeWidth="0.15"
-            strokeOpacity="0.2"
+            strokeWidth="0.3"
+            strokeOpacity="0.5"
             animate={{
-              strokeOpacity: [0.1, 0.3, 0.1]
+              strokeOpacity: [0.3, 0.7, 0.3]
             }}
             transition={{
               duration: 4 + i * 0.3,
@@ -195,10 +195,10 @@ const StockMarketBackground = () => {
             x2={i * 12}
             y2="100"
             stroke="#10B981"
-            strokeWidth="0.1"
-            strokeOpacity="0.15"
+            strokeWidth="0.2"
+            strokeOpacity="0.4"
             animate={{
-              strokeOpacity: [0.05, 0.2, 0.05]
+              strokeOpacity: [0.2, 0.5, 0.2]
             }}
             transition={{
               duration: 5 + i * 0.2,
@@ -219,7 +219,7 @@ const StockMarketBackground = () => {
         <path
           d={createPath(mainPoints)}
           stroke="url(#stockGradient1)"
-          strokeWidth="1.2"
+          strokeWidth="2"
           fill="none"
           strokeLinecap="round"
         />
@@ -227,7 +227,7 @@ const StockMarketBackground = () => {
         <path
           d={createPath(secondaryPoints)}
           stroke="url(#stockGradient2)"
-          strokeWidth="0.8"
+          strokeWidth="1.5"
           fill="none"
           strokeLinecap="round"
         />
@@ -235,7 +235,7 @@ const StockMarketBackground = () => {
         <path
           d={createPath(tertiaryPoints)}
           stroke="url(#stockGradient3)"
-          strokeWidth="0.6"
+          strokeWidth="1"
           fill="none"
           strokeLinecap="round"
         />
