@@ -9,7 +9,7 @@ import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Phone, Mail, MapPin, Award, Shield, Recycle, TrendingUp } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Award, Shield, Recycle, TrendingUp } from "lucide-react";
 import { useState } from "react";
 
 export default function Index() {
@@ -162,23 +162,12 @@ export default function Index() {
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+              className="flex justify-center items-center mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
             >
-              <Button
-                onClick={() => setIsContactModalOpen(true)}
-                variant="eco-gradient"
-                size="lg"
-                className="text-lg px-8 py-4 font-bold"
-                greenTint="medium"
-                ecoGlow
-              >
-                <Phone className="w-5 h-5 mr-2" />
-                Get Free Quote
-              </Button>
               <Link to="/products">
                 <Button
                   variant="glass"
@@ -200,11 +189,6 @@ export default function Index() {
               viewport={{ once: true }}
               transition={{ delay: 0.6 }}
             >
-              <div className="bg-white/5 backdrop-blur-xl rounded-xl p-4 border border-white/10">
-                <Phone className="w-6 h-6 text-green-400 mx-auto mb-2" />
-                <h3 className="text-white font-bold mb-1">Call Us</h3>
-                <p className="text-green-300 text-sm">+91 XXX XXX XXXX</p>
-              </div>
               <div className="bg-white/5 backdrop-blur-xl rounded-xl p-4 border border-white/10">
                 <Mail className="w-6 h-6 text-green-400 mx-auto mb-2" />
                 <h3 className="text-white font-bold mb-1">Email Us</h3>

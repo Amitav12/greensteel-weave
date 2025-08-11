@@ -1,5 +1,6 @@
+
 import { motion } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 interface Video {
@@ -56,7 +57,6 @@ export default function FeaturedVideos({
   const [videoLoaded, setVideoLoaded] = useState(videos.map(() => false));
   const [videoPlaying, setVideoPlaying] = useState(videos.map(() => autoplay));
   const [videoMuted, setVideoMuted] = useState(videos.map(() => muted));
-  const [globalPlaying, setGlobalPlaying] = useState(autoplay);
   const videoRefs = useRef<HTMLVideoElement[]>([]);
 
   useEffect(() => {
@@ -100,22 +100,6 @@ export default function FeaturedVideos({
     });
   };
 
-  const handleGlobalPlayPause = () => {
-    setGlobalPlaying(prev => !prev);
-    videoRefs.current.forEach((video, index) => {
-      if (!video) return;
-      if (globalPlaying) {
-        video.pause();
-        setVideoPlaying(prev => ({ ...prev, [index]: false }));
-      } else {
-        video.play().catch(error => {
-          console.error("Failed to play video", index, error);
-        });
-        setVideoPlaying(prev => ({ ...prev, [index]: true }));
-      }
-    });
-  };
-
   return (
     <motion.section
       initial={{ opacity: 0, y: 50 }}
@@ -140,19 +124,6 @@ export default function FeaturedVideos({
         </motion.div>
 
         <div className="flex flex-col items-center justify-center gap-8 md:gap-12">
-          {/* Global Play/Pause Control */}
-          <div className="flex gap-4">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleGlobalPlayPause}
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-            >
-              {globalPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-              {globalPlaying ? 'Pause All' : 'Play All'}
-            </motion.button>
-          </div>
-
           {/* Video Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl w-full">
             {videos.map((video, index) => (
@@ -164,8 +135,8 @@ export default function FeaturedVideos({
                 transition={{ delay: index * 0.2, duration: 0.6 }}
                 className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
                 style={{ 
-                  aspectRatio: '30/10', // Changed to 30:10 ratio as requested
-                  minHeight: '200px' // Adjusted minimum height for the new ratio
+                  aspectRatio: '20/30', // Changed to 20:30 ratio as requested
+                  minHeight: '400px' // Adjusted minimum height for the new ratio
                 }}
               >
                 {/* Step Badge */}
@@ -200,6 +171,7 @@ export default function FeaturedVideos({
                     muted={videoMuted[index]}
                     loop
                     playsInline
+                    autoPlay={autoplay}
                     onLoadedData={() => handleVideoLoaded(index)}
                     onPlay={() => {
                       setVideoPlaying(prev => ({ ...prev, [index]: true }));
