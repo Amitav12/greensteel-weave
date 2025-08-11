@@ -382,9 +382,9 @@ export default function CurrencyExchangeRates() {
         <StockMarketBackground />
         <div className="relative z-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4">
-            <div className="mb-3 sm:mb-0">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">USD Exchange Rates</h3>
-              <p className="text-sm text-gray-600">1 USD converts to</p>
+          <div className="mb-3 sm:mb-0">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 transition-colors duration-300">USD Exchange Rates</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300 transition-colors duration-300">1 USD converts to</p>
             </div>
             <Skeleton className="h-8 w-32 rounded-full" />
           </div>
@@ -423,7 +423,7 @@ export default function CurrencyExchangeRates() {
   }
 
   return (
-    <div className="relative bg-white rounded-xl p-3 sm:p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full overflow-hidden">
+    <div className="relative bg-white dark:bg-gray-800 rounded-xl p-3 sm:p-5 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 h-full overflow-hidden">
       <StockMarketBackground />
       
       <div className="relative z-10">

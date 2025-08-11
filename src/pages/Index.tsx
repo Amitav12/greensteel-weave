@@ -16,7 +16,7 @@ export default function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
       <SEO
         title="AAASHA TRADING LTD - Leading Steel Trading & Sustainable Recycling Solutions"
         description="Transform your business with AAASHA TRADING LTD - India's premier steel trading and recycling company. Sustainable solutions, competitive prices, and exceptional service since inception."
@@ -32,7 +32,7 @@ export default function Index() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-green-50"
+        className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-700 transition-colors duration-300"
       >
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <motion.div
@@ -41,10 +41,10 @@ export default function Index() {
             viewport={{ once: true }}
             className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Live <span className="text-green-600">Currency Rates</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 transition-colors duration-300">
+              Live <span className="text-green-600 dark:text-green-400">Currency Rates</span>
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto px-4 transition-colors duration-300">
               Real-time USD exchange rates for informed trading decisions
             </p>
           </motion.div>
@@ -88,7 +88,7 @@ export default function Index() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-green-50"
+        className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-700 transition-colors duration-300"
       >
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <motion.div
@@ -97,10 +97,10 @@ export default function Index() {
             viewport={{ once: true }}
             className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Why Choose <span className="text-green-600">AAASHA TRADING?</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4 transition-colors duration-300">
+              Why Choose <span className="text-green-600 dark:text-green-400">AAASHA TRADING?</span>
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto px-4 transition-colors duration-300">
               Your trusted partner in sustainable steel trading and recycling solutions
             </p>
           </motion.div>
@@ -119,13 +119,13 @@ export default function Index() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="bg-white rounded-xl p-5 sm:p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100"
+                className="bg-white dark:bg-gray-800 rounded-xl p-5 sm:p-6 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700"
               >
                 <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-4`}>
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 transition-colors duration-300">{feature.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed transition-colors duration-300">{feature.description}</p>
               </motion.div>
             ))}
           </div>
