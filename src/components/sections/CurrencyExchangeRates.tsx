@@ -136,38 +136,65 @@ const StockMarketBackground = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 opacity-30 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 opacity-60 overflow-hidden pointer-events-none">
       <svg width="100%" height="100%" className="absolute inset-0" viewBox="0 0 120 100" preserveAspectRatio="none">
         <defs>
-          {/* Grid pattern */}
-          <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#10B981" strokeWidth="0.3" opacity="0.4"/>
+          {/* Dark background gradient */}
+          <radialGradient id="darkBackground" cx="50%" cy="50%" r="100%">
+            <stop offset="0%" stopColor="#1a1a2e" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="#16213e" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#0f172a" stopOpacity="0.4" />
+          </radialGradient>
+          
+          {/* Grid pattern with dark theme */}
+          <pattern id="grid" width="8" height="8" patternUnits="userSpaceOnUse">
+            <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#fbbf24" strokeWidth="0.2" opacity="0.3"/>
           </pattern>
           
-          {/* Gradients for candlesticks */}
-          <linearGradient id="greenCandle" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#22C55E" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#16A34A" stopOpacity="0.7" />
+          {/* Bright orange/yellow gradients for candlesticks */}
+          <linearGradient id="bullishCandle" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#fbbf24" stopOpacity="1" />
+            <stop offset="50%" stopColor="#f59e0b" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#d97706" stopOpacity="0.8" />
           </linearGradient>
-          <linearGradient id="redCandle" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#EF4444" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#DC2626" stopOpacity="0.7" />
+          <linearGradient id="bearishCandle" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#f97316" stopOpacity="1" />
+            <stop offset="50%" stopColor="#ea580c" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#dc2626" stopOpacity="0.8" />
           </linearGradient>
           
-          {/* Background glow */}
-          <radialGradient id="chartGlow" cx="50%" cy="50%" r="70%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
-          </radialGradient>
+          {/* Glowing trend line gradient */}
+          <linearGradient id="trendGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.6" />
+            <stop offset="50%" stopColor="#f59e0b" stopOpacity="1" />
+            <stop offset="100%" stopColor="#f97316" stopOpacity="0.8" />
+          </linearGradient>
+          
+          {/* Glow effects */}
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+          
+          <filter id="strongGlow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge> 
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
         </defs>
         
-        {/* Background with subtle glow */}
-        <rect width="120" height="100" fill="url(#chartGlow)" />
+        {/* Dark background */}
+        <rect width="120" height="100" fill="url(#darkBackground)" />
         
         {/* Grid overlay */}
         <rect width="120" height="100" fill="url(#grid)" />
         
-        {/* Horizontal price levels */}
+        {/* Horizontal price levels with bright orange */}
         {[20, 35, 50, 65, 80].map((y, i) => (
           <motion.line
             key={`price-line-${i}`}
@@ -175,12 +202,13 @@ const StockMarketBackground = () => {
             y1={y}
             x2="120"
             y2={y}
-            stroke="#10B981"
-            strokeWidth="0.5"
-            strokeOpacity="0.5"
-            strokeDasharray="2,2"
+            stroke="#fbbf24"
+            strokeWidth="0.4"
+            strokeOpacity="0.4"
+            strokeDasharray="3,3"
+            filter="url(#glow)"
             animate={{
-              strokeOpacity: [0.3, 0.6, 0.3]
+              strokeOpacity: [0.2, 0.6, 0.2]
             }}
             transition={{
               duration: 3 + i * 0.5,
@@ -190,18 +218,41 @@ const StockMarketBackground = () => {
           />
         ))}
         
-        {/* Volume bars at bottom */}
+        {/* Vertical time lines */}
+        {[...Array(8)].map((_, i) => (
+          <motion.line
+            key={`time-line-${i}`}
+            x1={15 + i * 13}
+            y1="0"
+            x2={15 + i * 13}
+            y2="100"
+            stroke="#fbbf24"
+            strokeWidth="0.3"
+            strokeOpacity="0.2"
+            animate={{
+              strokeOpacity: [0.1, 0.3, 0.1]
+            }}
+            transition={{
+              duration: 4 + i * 0.2,
+              repeat: Infinity,
+              delay: i * 0.2
+            }}
+          />
+        ))}
+        
+        {/* Volume bars at bottom with bright colors */}
         {candlesticks.map((candle, i) => (
           <motion.rect
             key={`volume-${i}`}
             x={candle.x}
             y={85}
             width="3"
-            height={Math.random() * 10 + 2}
-            fill={candle.isGreen ? "#22C55E" : "#EF4444"}
-            opacity="0.4"
+            height={Math.random() * 12 + 3}
+            fill={candle.isGreen ? "#fbbf24" : "#f97316"}
+            opacity="0.6"
+            filter="url(#glow)"
             initial={{ height: 0 }}
-            animate={{ height: Math.random() * 10 + 2 }}
+            animate={{ height: Math.random() * 12 + 3 }}
             transition={{
               duration: 0.5,
               delay: i * 0.1
@@ -209,7 +260,7 @@ const StockMarketBackground = () => {
           />
         ))}
         
-        {/* Main candlestick chart */}
+        {/* Main candlestick chart with bright colors */}
         <g>
           {candlesticks.map((candle, i) => (
             <motion.g
@@ -222,17 +273,18 @@ const StockMarketBackground = () => {
                 ease: "easeOut"
               }}
             >
-              {/* High-Low line (wick) */}
+              {/* High-Low line (wick) with glow */}
               <motion.line
                 x1={candle.x + 1.5}
                 y1={candle.high}
                 x2={candle.x + 1.5}
                 y2={candle.low}
-                stroke={candle.isGreen ? "#22C55E" : "#EF4444"}
-                strokeWidth="1"
-                opacity="0.8"
+                stroke={candle.isGreen ? "#fbbf24" : "#f97316"}
+                strokeWidth="1.2"
+                opacity="0.9"
+                filter="url(#glow)"
                 animate={{
-                  opacity: [0.6, 1, 0.6]
+                  opacity: [0.7, 1, 0.7]
                 }}
                 transition={{
                   duration: 2,
@@ -241,21 +293,22 @@ const StockMarketBackground = () => {
                 }}
               />
               
-              {/* Candlestick body */}
+              {/* Candlestick body with bright gradients */}
               <motion.rect
                 x={candle.x}
                 y={Math.min(candle.open, candle.close)}
                 width="3"
                 height={Math.abs(candle.close - candle.open) || 0.5}
-                fill={candle.isGreen ? "url(#greenCandle)" : "url(#redCandle)"}
-                stroke={candle.isGreen ? "#16A34A" : "#DC2626"}
-                strokeWidth="0.4"
+                fill={candle.isGreen ? "url(#bullishCandle)" : "url(#bearishCandle)"}
+                stroke={candle.isGreen ? "#fbbf24" : "#f97316"}
+                strokeWidth="0.5"
                 rx="0.5"
+                filter="url(#strongGlow)"
                 animate={{
                   filter: [
-                    `drop-shadow(0 0 0px ${candle.isGreen ? '#22C55E' : '#EF4444'})`,
-                    `drop-shadow(0 0 2px ${candle.isGreen ? '#22C55E' : '#EF4444'})`,
-                    `drop-shadow(0 0 0px ${candle.isGreen ? '#22C55E' : '#EF4444'})`
+                    "url(#strongGlow)",
+                    "url(#strongGlow) brightness(1.2)",
+                    "url(#strongGlow)"
                   ]
                 }}
                 transition={{
@@ -265,16 +318,17 @@ const StockMarketBackground = () => {
                 }}
               />
               
-              {/* Price indicator dots */}
+              {/* Bright price indicator dots */}
               <motion.circle
                 cx={candle.x + 1.5}
                 cy={candle.close}
-                r="1"
-                fill={candle.isGreen ? "#22C55E" : "#EF4444"}
-                opacity="0.7"
+                r="1.2"
+                fill={candle.isGreen ? "#fbbf24" : "#f97316"}
+                opacity="0.8"
+                filter="url(#strongGlow)"
                 animate={{
-                  r: [0.7, 1.2, 0.7],
-                  opacity: [0.5, 1, 0.5]
+                  r: [0.8, 1.5, 0.8],
+                  opacity: [0.6, 1, 0.6]
                 }}
                 transition={{
                   duration: 1.5,
@@ -286,14 +340,15 @@ const StockMarketBackground = () => {
           ))}
         </g>
         
-        {/* Trend line overlay */}
+        {/* Bright upward trending line with glow */}
         <motion.path
           d={`M 0 ${candlesticks[0]?.close || 50} ${candlesticks.map((c, i) => `L ${c.x + 1.5} ${c.close}`).join(' ')}`}
-          stroke="#10B981"
-          strokeWidth="1.2"
+          stroke="url(#trendGradient)"
+          strokeWidth="2"
           fill="none"
-          opacity="0.5"
+          opacity="0.8"
           strokeDasharray="4,4"
+          filter="url(#strongGlow)"
           animate={{
             strokeDashoffset: [0, -8]
           }}
@@ -304,18 +359,58 @@ const StockMarketBackground = () => {
           }}
         />
         
-        {/* Market indicators */}
+        {/* Upward trending arrow */}
+        <motion.path
+          d="M 100 40 L 110 30 L 115 35 L 110 25 L 120 30 L 115 35 L 110 30 Z"
+          fill="#fbbf24"
+          opacity="0.8"
+          filter="url(#strongGlow)"
+          animate={{
+            opacity: [0.6, 1, 0.6],
+            y: [0, -2, 0]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity
+          }}
+        />
+        
+        {/* Floating light effects */}
+        {[...Array(8)].map((_, i) => (
+          <motion.circle
+            key={`light-${i}`}
+            cx={10 + i * 14}
+            cy={20 + Math.random() * 60}
+            r={0.5 + Math.random() * 1}
+            fill={i % 2 === 0 ? "#fbbf24" : "#f97316"}
+            opacity="0.6"
+            filter="url(#strongGlow)"
+            animate={{
+              opacity: [0.3, 0.8, 0.3],
+              r: [0.5, 1.5, 0.5],
+              y: [0, -5, 0]
+            }}
+            transition={{
+              duration: 2 + i * 0.3,
+              repeat: Infinity,
+              delay: i * 0.2
+            }}
+          />
+        ))}
+        
+        {/* Market indicators with bright colors */}
         {[...Array(3)].map((_, i) => (
           <motion.text
             key={`indicator-${i}`}
             x={8 + i * 35}
             y={12}
             fontSize="4"
-            fill="#10B981"
-            opacity="0.6"
+            fill="#fbbf24"
+            opacity="0.8"
             fontWeight="bold"
+            filter="url(#glow)"
             animate={{
-              opacity: [0.4, 0.8, 0.4]
+              opacity: [0.6, 1, 0.6]
             }}
             transition={{
               duration: 2 + i * 0.3,
