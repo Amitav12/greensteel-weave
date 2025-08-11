@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Recycle, Leaf, Factory, TrendingUp, Sparkles } from "lucide-react";
-import heroImage from "@/assets/hero-recycling-steel.jpg";
 import SimpleImageCarousel from "@/components/ui/SimpleImageCarousel";
 import steelWorkerImage from "@/assets/steel-worker-industrial.jpg";
 import shippingContainersImage from "@/assets/shipping-containers-port.jpg";
@@ -87,8 +86,8 @@ export default function HeroSimple() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative h-screen flex items-start justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-green-900 to-black pt-8">
-      {/* Enhanced Background with Image Carousel */}
+    <section ref={containerRef} className="relative h-screen flex items-start justify-center overflow-hidden bg-transparent pt-8">
+      {/* Enhanced Background with Image Carousel - Now fully visible */}
       <animated.div
         style={backgroundSpring}
         className="absolute inset-0"
@@ -102,24 +101,9 @@ export default function HeroSimple() {
           respectReducedMotion={true}
         />
         
-        {/* Fallback Background Image - Hidden when carousel works */}
-        <img
-          src={heroImage}
-          alt="Recycling and steel operations"
-          className="absolute inset-0 h-full w-full object-cover opacity-5 z-5"
-          loading="eager"
-          style={{
-            filter: 'brightness(0.7) contrast(1.1)'
-          }}
-        />
-        
-        {/* Animated gradient overlay - minimal */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500/2 via-emerald-600/1 to-teal-500/2 animate-pulse z-15" />
+        {/* Minimal overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-black/20 z-15" />
       </animated.div>
-
-      {/* Dynamic Glass Morphism Overlays - very light */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/3 via-green-500/5 to-black/10 z-20" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-green-900/5 to-black/15 z-20" />
 
       {/* Floating Particles Effect */}
       <div className="absolute inset-0 overflow-hidden z-30">
@@ -155,7 +139,7 @@ export default function HeroSimple() {
             {/* Left Column - Main Content */}
             <div ref={heroContentRef} className="text-left space-y-1 md:space-y-2 flex flex-col justify-center">
               {/* Company Badge */}
-              <div className="inline-flex items-center rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 text-sm font-bold bg-white/10 backdrop-blur-2xl text-white shadow-2xl border border-white/20 -mt-8 md:-mt-6 lg:-mt-4 -mb-4 md:-mb-3 lg:-mb-2">
+              <div className="inline-flex items-center rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 text-sm font-bold bg-white/20 backdrop-blur-2xl text-white shadow-2xl border border-white/30 -mt-8 md:-mt-6 lg:-mt-4 -mb-4 md:-mb-3 lg:-mb-2">
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -393,8 +377,6 @@ export default function HeroSimple() {
           </div>
         </div>
       </animated.div>
-
-
     </section>
   );
 }

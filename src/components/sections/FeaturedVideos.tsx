@@ -26,7 +26,7 @@ const videos: Video[] = [
     step: 1,
     title: "Initial Consultation",
     description: "We start by understanding your specific needs and requirements.",
-    src: "https://res.cloudinary.com/drlqqq70b/video/upload/v1715778378/AAASHA%20TRADING%20LTD/pexels-kelly-lacy-6475751_vpjxyj.mp4",
+    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     captions: "/captions/step1.vtt",
   },
   {
@@ -34,7 +34,7 @@ const videos: Video[] = [
     step: 2,
     title: "Material Sourcing",
     description: "Our global network ensures the best quality materials at competitive prices.",
-    src: "https://res.cloudinary.com/drlqqq70b/video/upload/v1715778378/AAASHA%20TRADING%20LTD/pexels-tima-miroshnichenko-5452054_vknw4g.mp4",
+    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
     captions: "/captions/step2.vtt",
   },
   {
@@ -42,7 +42,7 @@ const videos: Video[] = [
     step: 3,
     title: "Processing & Recycling",
     description: "Eco-friendly processes transform scrap into valuable resources.",
-    src: "https://res.cloudinary.com/drlqqq70b/video/upload/v1715778378/AAASHA%20TRADING%20LTD/pexels-kindel-media-8241441_u9wswi.mp4",
+    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     captions: "/captions/step3.vtt",
   },
 ];
@@ -62,14 +62,14 @@ export default function FeaturedVideos({
   useEffect(() => {
     if (autoplay) {
       videoRefs.current.forEach((video, index) => {
-        if (video) {
+        if (video && videoLoaded[index]) {
           video.play().catch(error => {
             console.error("Autoplay failed for video", index, error);
           });
         }
       });
     }
-  }, [autoplay]);
+  }, [autoplay, videoLoaded]);
 
   useEffect(() => {
     let allCompleted = true;
@@ -98,6 +98,10 @@ export default function FeaturedVideos({
       newState[index] = !newState[index];
       return newState;
     });
+    
+    if (videoRefs.current[index]) {
+      videoRefs.current[index].muted = !videoMuted[index];
+    }
   };
 
   return (
@@ -135,8 +139,8 @@ export default function FeaturedVideos({
                 transition={{ delay: index * 0.2, duration: 0.6 }}
                 className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
                 style={{ 
-                  aspectRatio: '20/30', // Changed to 20:30 ratio as requested
-                  minHeight: '400px' // Adjusted minimum height for the new ratio
+                  aspectRatio: '20/30',
+                  minHeight: '500px'
                 }}
               >
                 {/* Step Badge */}
@@ -172,15 +176,37 @@ export default function FeaturedVideos({
                     loop
                     playsInline
                     autoPlay={autoplay}
+                    preload="metadata"
                     onLoadedData={() => handleVideoLoaded(index)}
+                    onCanPlayThrough={() => handleVideoLoaded(index)}
                     onPlay={() => {
-                      setVideoPlaying(prev => ({ ...prev, [index]: true }));
+                      setVideoPlaying(prev => {
+                        const newState = [...prev];
+                        newState[index] = true;
+                        return newState;
+                      });
                       onVideoStart?.(video.id);
                     }}
-                    onPause={() => setVideoPlaying(prev => ({ ...prev, [index]: false }))}
+                    onPause={() => setVideoPlaying(prev => {
+                      const newState = [...prev];
+                      newState[index] = false;
+                      return newState;
+                    })}
                     onEnded={() => {
-                      setVideoPlaying(prev => ({ ...prev, [index]: false }));
+                      setVideoPlaying(prev => {
+                        const newState = [...prev];
+                        newState[index] = false;
+                        return newState;
+                      });
                       onVideoComplete?.(video.id);
+                    }}
+                    onError={(e) => {
+                      console.error("Video error:", e);
+                      setVideoLoaded(prev => {
+                        const newState = [...prev];
+                        newState[index] = false;
+                        return newState;
+                      });
                     }}
                   >
                     <source src={video.src} type="video/mp4" />
