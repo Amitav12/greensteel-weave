@@ -92,109 +92,93 @@ const CurrencyCardSkeleton = () => (
   </div>
 );
 
-// Enhanced stock market background animation component
+// Enhanced continuous stock market background animation component
 const StockMarketBackground = () => {
-  const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
-  const [secondaryPoints, setSecondaryPoints] = useState<{ x: number; y: number }[]>([]);
+  const [timeOffset, setTimeOffset] = useState(0);
 
   useEffect(() => {
-    const generatePoints = () => {
-      const newPoints = [];
-      const newSecondaryPoints = [];
-      
-      // Main chart line
-      for (let i = 0; i <= 100; i += 1) {
-        newPoints.push({
-          x: i,
-          y: 20 + Math.sin(i * 0.08) * 25 + Math.cos(i * 0.12) * 15 + Math.random() * 8
-        });
-      }
-      
-      // Secondary chart line
-      for (let i = 0; i <= 100; i += 1) {
-        newSecondaryPoints.push({
-          x: i,
-          y: 60 + Math.sin(i * 0.06) * 20 + Math.cos(i * 0.1) * 12 + Math.random() * 6
-        });
-      }
-      
-      setPoints(newPoints);
-      setSecondaryPoints(newSecondaryPoints);
-    };
+    const interval = setInterval(() => {
+      setTimeOffset(prev => prev + 0.01);
+    }, 50); // Update every 50ms for smooth animation
 
-    generatePoints();
-    const interval = setInterval(generatePoints, 4000);
     return () => clearInterval(interval);
   }, []);
 
-  const mainPathD = points.map((point, index) => 
-    `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
-  ).join(' ');
-  
-  const secondaryPathD = secondaryPoints.map((point, index) => 
-    `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
-  ).join(' ');
+  // Generate continuous chart points that move over time
+  const generateChartPoints = (baseY: number, frequency: number, amplitude: number, phaseShift: number = 0) => {
+    const points = [];
+    for (let i = 0; i <= 120; i += 1) {
+      const x = i;
+      const y = baseY + 
+               Math.sin((i * 0.05 + timeOffset + phaseShift) * frequency) * amplitude +
+               Math.cos((i * 0.03 + timeOffset * 0.7 + phaseShift) * frequency * 1.3) * (amplitude * 0.6) +
+               Math.sin((i * 0.08 + timeOffset * 1.2 + phaseShift) * frequency * 0.8) * (amplitude * 0.3);
+      points.push({ x, y });
+    }
+    return points;
+  };
+
+  const mainPoints = generateChartPoints(30, 1, 20, 0);
+  const secondaryPoints = generateChartPoints(60, 1.2, 15, Math.PI / 4);
+  const tertiaryPoints = generateChartPoints(45, 0.8, 12, Math.PI / 2);
+
+  const createPath = (points: { x: number; y: number }[]) => 
+    points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
 
   return (
-    <div className="absolute inset-0 opacity-15 overflow-hidden pointer-events-none">
-      <svg width="100%" height="100%" className="absolute inset-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <div className="absolute inset-0 opacity-20 overflow-hidden pointer-events-none">
+      <svg width="100%" height="100%" className="absolute inset-0" viewBox="0 0 120 100" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="stockGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.3" />
-            <stop offset="50%" stopColor="#059669" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#10B981" stopOpacity="0.3" />
+          {/* Enhanced gradients for better visibility */}
+          <linearGradient id="stockGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.4" />
+            <stop offset="50%" stopColor="#059669" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#34D399" stopOpacity="0.4" />
           </linearGradient>
           <linearGradient id="stockGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#34D399" stopOpacity="0.2" />
-            <stop offset="50%" stopColor="#10B981" stopOpacity="0.4" />
-            <stop offset="100%" stopColor="#34D399" stopOpacity="0.2" />
+            <stop offset="0%" stopColor="#34D399" stopOpacity="0.3" />
+            <stop offset="50%" stopColor="#10B981" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#059669" stopOpacity="0.3" />
           </linearGradient>
-          <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
+          <linearGradient id="stockGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#059669" stopOpacity="0.2" />
+            <stop offset="50%" stopColor="#34D399" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#10B981" stopOpacity="0.2" />
+          </linearGradient>
+          
+          {/* Background glow */}
+          <radialGradient id="backgroundGlow" cx="50%" cy="50%" r="80%">
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.08" />
+            <stop offset="60%" stopColor="#059669" stopOpacity="0.04" />
+            <stop offset="100%" stopColor="#34D399" stopOpacity="0" />
           </radialGradient>
+          
+          {/* Area fill gradients */}
+          <linearGradient id="areaFill1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
+          </linearGradient>
         </defs>
         
         {/* Background glow effect */}
-        <ellipse cx="50" cy="50" rx="60" ry="40" fill="url(#glowGradient)" />
+        <rect width="120" height="100" fill="url(#backgroundGlow)" />
         
-        {/* Main chart line */}
-        <motion.path
-          d={mainPathD}
-          stroke="url(#stockGradient)"
-          strokeWidth="0.8"
-          fill="none"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
-        />
-        
-        {/* Secondary chart line */}
-        <motion.path
-          d={secondaryPathD}
-          stroke="url(#stockGradient2)"
-          strokeWidth="0.6"
-          fill="none"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 3.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
-        />
-        
-        {/* Animated data points */}
-        {points.filter((_, i) => i % 8 === 0).map((point, i) => (
-          <motion.circle
-            key={`main-${i}`}
-            cx={point.x}
-            cy={point.y}
-            r="0.3"
-            fill="#10B981"
-            opacity="0.6"
+        {/* Floating grid lines with animation */}
+        {[...Array(8)].map((_, i) => (
+          <motion.line
+            key={`grid-h-${i}`}
+            x1="0"
+            y1={15 + i * 10}
+            x2="120"
+            y2={15 + i * 10}
+            stroke="#10B981"
+            strokeWidth="0.15"
+            strokeOpacity="0.2"
             animate={{
-              r: [0.3, 0.6, 0.3],
-              opacity: [0.6, 1, 0.6]
+              strokeOpacity: [0.1, 0.3, 0.1]
             }}
             transition={{
-              duration: 2,
+              duration: 4 + i * 0.3,
               ease: "easeInOut",
               repeat: Infinity,
               delay: i * 0.2
@@ -202,24 +186,98 @@ const StockMarketBackground = () => {
           />
         ))}
         
-        {/* Floating grid lines */}
-        {[...Array(6)].map((_, i) => (
+        {/* Vertical grid lines */}
+        {[...Array(10)].map((_, i) => (
           <motion.line
-            key={`grid-${i}`}
-            x1="0"
-            y1={20 + i * 12}
-            x2="100"
-            y2={20 + i * 12}
+            key={`grid-v-${i}`}
+            x1={i * 12}
+            y1="0"
+            x2={i * 12}
+            y2="100"
             stroke="#10B981"
             strokeWidth="0.1"
-            opacity="0.3"
+            strokeOpacity="0.15"
             animate={{
-              opacity: [0.1, 0.4, 0.1]
+              strokeOpacity: [0.05, 0.2, 0.05]
             }}
             transition={{
-              duration: 3 + i * 0.5,
+              duration: 5 + i * 0.2,
               ease: "easeInOut",
               repeat: Infinity,
+              delay: i * 0.1
+            }}
+          />
+        ))}
+        
+        {/* Area fill for main chart */}
+        <path
+          d={`${createPath(mainPoints)} L 120 100 L 0 100 Z`}
+          fill="url(#areaFill1)"
+        />
+        
+        {/* Main chart lines - continuous animation */}
+        <path
+          d={createPath(mainPoints)}
+          stroke="url(#stockGradient1)"
+          strokeWidth="1.2"
+          fill="none"
+          strokeLinecap="round"
+        />
+        
+        <path
+          d={createPath(secondaryPoints)}
+          stroke="url(#stockGradient2)"
+          strokeWidth="0.8"
+          fill="none"
+          strokeLinecap="round"
+        />
+        
+        <path
+          d={createPath(tertiaryPoints)}
+          stroke="url(#stockGradient3)"
+          strokeWidth="0.6"
+          fill="none"
+          strokeLinecap="round"
+        />
+        
+        {/* Animated data points that follow the lines */}
+        {mainPoints.filter((_, i) => i % 10 === 0).map((point, i) => (
+          <motion.circle
+            key={`point-${i}`}
+            cx={point.x}
+            cy={point.y}
+            r="0.4"
+            fill="#10B981"
+            animate={{
+              r: [0.2, 0.6, 0.2],
+              opacity: [0.6, 1, 0.6]
+            }}
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              repeat: Infinity,
+              delay: i * 0.15
+            }}
+          />
+        ))}
+        
+        {/* Floating price indicators */}
+        {[...Array(6)].map((_, i) => (
+          <motion.circle
+            key={`float-${i}`}
+            cx={15 + i * 18}
+            cy={20 + Math.sin(timeOffset + i) * 30}
+            r="0.3"
+            fill="#34D399"
+            animate={{
+              cy: [20 + Math.sin(timeOffset + i) * 30, 80 + Math.sin(timeOffset + i) * 30],
+              opacity: [0.3, 0.8, 0.3]
+            }}
+            transition={{
+              duration: 3 + i * 0.2,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatType: "reverse",
               delay: i * 0.3
             }}
           />
@@ -349,64 +407,132 @@ export default function CurrencyExchangeRates() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           <AnimatePresence mode="wait">
             {rates.map((currency, index) => (
               <motion.div
                 key={currency.code}
-                initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
+                initial={{ opacity: 0, y: 20, scale: 0.9, rotateX: -15 }}
+                animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
                 transition={{ 
-                  delay: index * 0.03,
-                  duration: 0.25,
-                  ease: "easeOut"
+                  delay: index * 0.05,
+                  duration: 0.4,
+                  ease: "easeOut",
+                  type: "spring",
+                  stiffness: 100
                 }}
-                whileHover={{ y: -2, scale: 1.02, transition: { duration: 0.15 } }}
-                className={`rounded-lg p-3 transition-all duration-200 border-2 ${
+                whileHover={{ 
+                  y: -3, 
+                  scale: 1.03, 
+                  rotateX: 2,
+                  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                  transition: { duration: 0.2, ease: "easeOut" } 
+                }}
+                whileTap={{ scale: 0.98 }}
+                className={`relative rounded-xl p-3 transition-all duration-300 border-2 backdrop-blur-sm ${
                   currency.trend === 'up' 
-                    ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 hover:border-green-300' 
+                    ? 'bg-gradient-to-br from-green-50/80 to-emerald-50/80 border-green-200 hover:border-green-300 hover:shadow-green-100' 
                     : currency.trend === 'down'
-                    ? 'bg-gradient-to-br from-red-50 to-pink-50 border-red-200 hover:border-red-300'
-                    : 'bg-gradient-to-br from-gray-50 to-slate-50 border-gray-200 hover:border-gray-300'
-                }`}
+                    ? 'bg-gradient-to-br from-red-50/80 to-pink-50/80 border-red-200 hover:border-red-300 hover:shadow-red-100'
+                    : 'bg-gradient-to-br from-gray-50/80 to-slate-50/80 border-gray-200 hover:border-gray-300 hover:shadow-gray-100'
+                } overflow-hidden`}
+                style={{
+                  minHeight: '120px',
+                  transformStyle: 'preserve-3d'
+                }}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
+                {/* Subtle card background animation */}
+                <motion.div 
+                  className="absolute inset-0 opacity-10"
+                  animate={{
+                    background: [
+                      `radial-gradient(circle at 0% 0%, ${currency.trend === 'up' ? '#10B981' : currency.trend === 'down' ? '#EF4444' : '#6B7280'} 0%, transparent 50%)`,
+                      `radial-gradient(circle at 100% 100%, ${currency.trend === 'up' ? '#10B981' : currency.trend === 'down' ? '#EF4444' : '#6B7280'} 0%, transparent 50%)`,
+                      `radial-gradient(circle at 0% 0%, ${currency.trend === 'up' ? '#10B981' : currency.trend === 'down' ? '#EF4444' : '#6B7280'} 0%, transparent 50%)`
+                    ]
+                  }}
+                  transition={{
+                    duration: 3,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    delay: index * 0.2
+                  }}
+                />
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                       <motion.div 
+                         className="w-8 h-8 rounded-lg flex items-center justify-center shadow-md bg-white/90 border border-gray-200/50 overflow-hidden backdrop-blur-sm"
+                         whileHover={{ scale: 1.15, rotate: 5 }}
+                         transition={{ duration: 0.2, ease: "easeOut" }}
+                         animate={{
+                           boxShadow: [
+                             "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                             "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                             "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+                           ]
+                         }}
+                         style={{
+                           animationDuration: "2s",
+                           animationIterationCount: "infinite",
+                           animationDelay: `${index * 0.1}s`
+                         }}
+                       >
+                          <img 
+                            src={getCountryFlag(currency.code)}
+                            alt={`${getCountryName(currency.code)} Flag`}
+                            className="w-full h-full object-cover rounded-md"
+                            loading="lazy"
+                            onError={(e) => {
+                              // Fallback to emoji if image fails to load
+                              e.currentTarget.style.display = 'none';
+                              e.currentTarget.parentElement!.innerHTML = `<span class="text-lg font-bold" title="${getCountryName(currency.code)} Flag">🏳️</span>`;
+                            }}
+                          />
+                        </motion.div>
+                       <div>
+                         <motion.span 
+                           className="font-bold text-sm text-gray-900"
+                           animate={{ opacity: [0.8, 1, 0.8] }}
+                           transition={{ duration: 2, repeat: Infinity, delay: index * 0.1 }}
+                         >
+                           {currency.code}
+                         </motion.span>
+                         <motion.p 
+                           className="text-xs text-gray-600 hidden md:block leading-tight"
+                           initial={{ opacity: 0 }}
+                           animate={{ opacity: 1 }}
+                           transition={{ delay: 0.3 + index * 0.05 }}
+                         >
+                           {getCountryName(currency.code)}
+                         </motion.p>
+                       </div>
+                     </div>
+                     
                      <motion.div 
-                       className="w-8 h-8 rounded-md flex items-center justify-center shadow-sm bg-white border border-gray-200 overflow-hidden"
-                       whileHover={{ scale: 1.1 }}
-                       transition={{ duration: 0.15 }}
+                       className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold shadow-sm ${
+                         currency.trend === 'up' 
+                           ? 'bg-green-100/80 text-green-700 border border-green-200' 
+                           : currency.trend === 'down'
+                           ? 'bg-red-100/80 text-red-700 border border-red-200'
+                           : 'bg-gray-100/80 text-gray-700 border border-gray-200'
+                       }`}
+                       whileHover={{ scale: 1.08, boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
+                       animate={{
+                         y: [0, -1, 0],
+                         boxShadow: [
+                           "0 1px 3px rgba(0,0,0,0.1)",
+                           "0 4px 6px rgba(0,0,0,0.1)",
+                           "0 1px 3px rgba(0,0,0,0.1)"
+                         ]
+                       }}
+                       transition={{
+                         duration: 2,
+                         repeat: Infinity,
+                         delay: index * 0.1
+                       }}
                      >
-                        <img 
-                          src={getCountryFlag(currency.code)}
-                          alt={`${getCountryName(currency.code)} Flag`}
-                          className="w-full h-full object-cover rounded-sm"
-                          loading="lazy"
-                          onError={(e) => {
-                            // Fallback to emoji if image fails to load
-                            e.currentTarget.style.display = 'none';
-                            e.currentTarget.parentElement!.innerHTML = `<span class="text-lg font-bold" title="${getCountryName(currency.code)} Flag">🏳️</span>`;
-                          }}
-                        />
-                     </motion.div>
-                    <div>
-                      <span className="font-bold text-sm text-gray-900">{currency.code}</span>
-                      <p className="text-xs text-gray-600 hidden md:block leading-tight">
-                        {getCountryName(currency.code)}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <motion.div 
-                    className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold ${
-                      currency.trend === 'up' 
-                        ? 'bg-green-100 text-green-700' 
-                        : currency.trend === 'down'
-                        ? 'bg-red-100 text-red-700'
-                        : 'bg-gray-100 text-gray-700'
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                  >
                     {currency.trend === 'up' ? (
                       <TrendingUp className="w-3 h-3" />
                     ) : currency.trend === 'down' ? (
@@ -414,40 +540,90 @@ export default function CurrencyExchangeRates() {
                     ) : (
                       <div className="w-3 h-3 bg-current rounded-full opacity-50" />
                     )}
-                    {currency.change > 0 ? '+' : ''}{currency.change}%
-                  </motion.div>
-                </div>
-                
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs text-gray-600">1 USD =</span>
-                </div>
-                
-                <motion.div
-                  key={`${currency.code}-${currency.rate}`}
-                  initial={{ opacity: 0.7 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-lg sm:text-xl font-black text-gray-900 mb-2"
-                >
-                  {getCurrencySymbol(currency.code)}{formatCurrencyRate(currency.rate, currency.code)}
-                </motion.div>
-                
-                {/* Enhanced Progress Bar */}
-                <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${Math.min(Math.abs(currency.change) * 20 + 30, 100)}%` }}
-                    transition={{ delay: index * 0.02, duration: 0.8, ease: "easeOut" }}
-                    className={`h-1.5 rounded-full ${
-                      currency.trend === 'up' 
-                        ? 'bg-gradient-to-r from-green-400 to-green-600' 
-                        : currency.trend === 'down'
-                        ? 'bg-gradient-to-r from-red-400 to-red-600'
-                        : 'bg-gradient-to-r from-gray-400 to-gray-600'
-                    }`}
-                  />
-                </div>
-              </motion.div>
+                       {currency.change > 0 ? '+' : ''}{currency.change}%
+                     </motion.div>
+                   </div>
+                   
+                   <motion.div 
+                     className="flex items-center gap-2 mb-2"
+                     initial={{ opacity: 0, x: -10 }}
+                     animate={{ opacity: 1, x: 0 }}
+                     transition={{ delay: 0.4 + index * 0.05 }}
+                   >
+                     <span className="text-xs text-gray-600 font-medium">1 USD =</span>
+                   </motion.div>
+                   
+                   <motion.div
+                     key={`${currency.code}-${currency.rate}`}
+                     initial={{ opacity: 0, scale: 0.9 }}
+                     animate={{ 
+                       opacity: 1, 
+                       scale: 1,
+                       color: [
+                         "#111827",
+                         currency.trend === 'up' ? "#059669" : currency.trend === 'down' ? "#DC2626" : "#111827",
+                         "#111827"
+                       ]
+                     }}
+                     transition={{ 
+                       duration: 0.3,
+                       scale: { duration: 0.2 },
+                       color: { duration: 2, repeat: Infinity }
+                     }}
+                     className="text-lg sm:text-xl font-black mb-2 tracking-tight"
+                   >
+                     <motion.span
+                       animate={{ 
+                         textShadow: [
+                           "0 0 0px rgba(16, 185, 129, 0)",
+                           currency.trend === 'up' ? "0 0 8px rgba(16, 185, 129, 0.3)" : currency.trend === 'down' ? "0 0 8px rgba(239, 68, 68, 0.3)" : "0 0 0px rgba(16, 185, 129, 0)",
+                           "0 0 0px rgba(16, 185, 129, 0)"
+                         ]
+                       }}
+                       transition={{ duration: 3, repeat: Infinity, delay: index * 0.2 }}
+                     >
+                       {getCurrencySymbol(currency.code)}{formatCurrencyRate(currency.rate, currency.code)}
+                     </motion.span>
+                   </motion.div>
+                   
+                   {/* Enhanced Progress Bar with Animation */}
+                   <div className="w-full bg-gray-200/50 rounded-full h-2 overflow-hidden backdrop-blur-sm border border-gray-300/30">
+                     <motion.div
+                       initial={{ width: 0, scaleX: 0 }}
+                       animate={{ 
+                         width: `${Math.min(Math.abs(currency.change) * 20 + 30, 100)}%`,
+                         scaleX: 1
+                       }}
+                       transition={{ 
+                         delay: index * 0.03, 
+                         duration: 1.2, 
+                         ease: "easeOut",
+                         scaleX: { duration: 0.8 }
+                       }}
+                       className={`h-2 rounded-full relative overflow-hidden ${
+                         currency.trend === 'up' 
+                           ? 'bg-gradient-to-r from-green-400 via-green-500 to-green-600' 
+                           : currency.trend === 'down'
+                           ? 'bg-gradient-to-r from-red-400 via-red-500 to-red-600'
+                           : 'bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600'
+                       }`}
+                     >
+                       {/* Shimmer effect */}
+                       <motion.div
+                         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                         animate={{
+                           x: ["-100%", "100%"]
+                         }}
+                         transition={{
+                           duration: 2,
+                           repeat: Infinity,
+                           delay: index * 0.1
+                         }}
+                       />
+                     </motion.div>
+                   </div>
+                 </div>
+               </motion.div>
             ))}
           </AnimatePresence>
         </div>
