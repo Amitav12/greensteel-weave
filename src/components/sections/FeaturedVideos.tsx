@@ -145,14 +145,14 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="py-16 bg-gradient-to-br from-gray-50 to-green-50"
+      className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-gray-50 to-green-50"
     >
       <div className="container mx-auto px-4 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-12 md:mb-16 lg:mb-20"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Our Business <span className="text-green-600">Process</span>
@@ -162,7 +162,7 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
           </p>
         </motion.div>
 
-        <div className="flex flex-col items-center justify-center gap-8">
+        <div className="flex flex-col items-center justify-center gap-8 md:gap-12">
           {/* Global Play/Pause Control */}
           <div className="flex gap-4">
             <motion.button
@@ -180,7 +180,7 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
           </div>
 
           {/* Video Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl w-full">
             {videos.map((video, index) => (
               <motion.div
                 key={video.id}
@@ -189,7 +189,10 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.6 }}
                 className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                style={{ aspectRatio: '16/10' }} // Wider and shorter aspect ratio
+                style={{ 
+                  aspectRatio: '16/12', // Made taller for more vertical space
+                  minHeight: '320px' // Ensure minimum height on all devices
+                }}
               >
                 {/* Step Badge */}
                 <div className="absolute top-4 left-4 z-20">
@@ -250,9 +253,9 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
                   {/* Video Info */}
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <h3 className="font-bold text-lg mb-1">{video.title}</h3>
-                    <p className="text-sm text-gray-200">{video.description}</p>
+                  <div className="absolute bottom-6 left-4 right-4 text-white">
+                    <h3 className="font-bold text-lg md:text-xl mb-2">{video.title}</h3>
+                    <p className="text-sm md:text-base text-gray-200 leading-relaxed">{video.description}</p>
                   </div>
                 </div>
 
