@@ -1,8 +1,8 @@
+
 import SEO from "@/components/seo/SEO";
 import HeroSimple from "@/components/sections/HeroSimple";
 import CurrencyExchangeWithChart from "../components/sections/CurrencyExchangeWithChart";
 import FeaturedVideos from "@/components/sections/FeaturedVideos";
-import OurPartners from "@/components/sections/OurPartners";
 
 import ContactModal from "@/components/ui/ContactModal";
 import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
@@ -131,9 +131,6 @@ export default function Index() {
           </div>
         </div>
       </motion.section>
-
-      {/* Our Partners Section */}
-      <OurPartners />
 
       {/* Call to Action Section - Streamlined */}
       <motion.section

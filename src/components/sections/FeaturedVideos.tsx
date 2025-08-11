@@ -1,7 +1,15 @@
+import { motion } from "framer-motion";
+import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+interface Video {
+  id: string;
+  step: number;
+  title: string;
+  description: string;
+  src: string;
+  captions?: string;
+}
 
 interface FeaturedVideosProps {
   autoplay?: boolean;
@@ -11,136 +19,105 @@ interface FeaturedVideosProps {
   onAllVideosComplete?: () => void;
 }
 
-const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
-  autoplay = true,
-  muted = true,
-  onVideoStart,
-  onVideoComplete,
-  onAllVideosComplete
-}) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [videoMutedStates, setVideoMutedStates] = useState<boolean[]>([]);
-  const [isInView, setIsInView] = useState(false);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const sectionRef = useRef<HTMLDivElement>(null);
+const videos: Video[] = [
+  {
+    id: "step1",
+    step: 1,
+    title: "Initial Consultation",
+    description: "We start by understanding your specific needs and requirements.",
+    src: "https://res.cloudinary.com/drlqqq70b/video/upload/v1715778378/AAASHA%20TRADING%20LTD/pexels-kelly-lacy-6475751_vpjxyj.mp4",
+    captions: "/captions/step1.vtt",
+  },
+  {
+    id: "step2",
+    step: 2,
+    title: "Material Sourcing",
+    description: "Our global network ensures the best quality materials at competitive prices.",
+    src: "https://res.cloudinary.com/drlqqq70b/video/upload/v1715778378/AAASHA%20TRADING%20LTD/pexels-tima-miroshnichenko-5452054_vknw4g.mp4",
+    captions: "/captions/step2.vtt",
+  },
+  {
+    id: "step3",
+    step: 3,
+    title: "Processing & Recycling",
+    description: "Eco-friendly processes transform scrap into valuable resources.",
+    src: "https://res.cloudinary.com/drlqqq70b/video/upload/v1715778378/AAASHA%20TRADING%20LTD/pexels-kindel-media-8241441_u9wswi.mp4",
+    captions: "/captions/step3.vtt",
+  },
+];
 
-  const videos = [
-    {
-      id: 'initial-contact',
-      title: 'Initial Contact',
-      description: 'Comprehensive consultation and assessment',
-      thumbnail: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop&crop=center',
-      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-      step: 1
-    },
-    {
-      id: 'processing-logistics',
-      title: 'Processing & Logistics',
-      description: 'Advanced processing and coordination',
-      thumbnail: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop&crop=center',
-      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-      step: 2
-    },
-    {
-      id: 'delivery-completion',
-      title: 'Final Delivery',
-      description: 'Seamless delivery and completion',
-      thumbnail: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop&crop=center',
-      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-      step: 3
-    }
-  ];
+export default function FeaturedVideos({ 
+  autoplay = false, 
+  muted = false, 
+  onVideoStart, 
+  onVideoComplete, 
+  onAllVideosComplete 
+}: FeaturedVideosProps) {
+  const [videoLoaded, setVideoLoaded] = useState(videos.map(() => false));
+  const [videoPlaying, setVideoPlaying] = useState(videos.map(() => autoplay));
+  const [videoMuted, setVideoMuted] = useState(videos.map(() => muted));
+  const [globalPlaying, setGlobalPlaying] = useState(autoplay);
+  const videoRefs = useRef<HTMLVideoElement[]>([]);
 
-  // Initialize muted states
   useEffect(() => {
-    setVideoMutedStates(new Array(videos.length).fill(muted));
-  }, [muted, videos.length]);
-
-  // Intersection Observer for autoplay when section comes into view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      {
-        threshold: 0.3,
-        rootMargin: '0px 0px -100px 0px'
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (autoplay) {
+      videoRefs.current.forEach((video, index) => {
+        if (video) {
+          video.play().catch(error => {
+            console.error("Autoplay failed for video", index, error);
+          });
+        }
+      });
     }
+  }, [autoplay]);
 
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
-  // Auto-start all videos when section comes into view
   useEffect(() => {
-    if (isInView && autoplay && !isPlaying) {
-      playAllVideos();
-    }
-  }, [isInView, autoplay]);
-
-  const playAllVideos = () => {
-    videoRefs.current.forEach((video, index) => {
-      if (video) {
-        video.currentTime = 0;
-        video.muted = videoMutedStates[index];
-        video.play().then(() => {
-          onVideoStart?.(videos[index].id);
-        }).catch(console.error);
+    let allCompleted = true;
+    videos.forEach((_, index) => {
+      if (videoPlaying[index]) {
+        allCompleted = false;
       }
     });
-    setIsPlaying(true);
-  };
 
-  const pauseAllVideos = () => {
-    videoRefs.current.forEach((video) => {
-      if (video) {
-        video.pause();
-      }
-    });
-    setIsPlaying(false);
-  };
-
-  const toggleVideoMute = (index: number) => {
-    const newMutedStates = [...videoMutedStates];
-    newMutedStates[index] = !newMutedStates[index];
-    setVideoMutedStates(newMutedStates);
-    
-    const video = videoRefs.current[index];
-    if (video) {
-      video.muted = newMutedStates[index];
-    }
-  };
-
-  const handleVideoEnd = (index: number) => {
-    onVideoComplete?.(videos[index].id);
-    
-    // Check if all videos have ended
-    const allEnded = videoRefs.current.every(video => video?.ended);
-    if (allEnded) {
-      setIsPlaying(false);
+    if (allCompleted) {
       onAllVideosComplete?.();
     }
+  }, [videoPlaying, onAllVideosComplete]);
+
+  const handleVideoLoaded = (index: number) => {
+    setVideoLoaded(prev => {
+      const newState = [...prev];
+      newState[index] = true;
+      return newState;
+    });
   };
 
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      pauseAllVideos();
-    } else {
-      playAllVideos();
-    }
+  const toggleMute = (index: number) => {
+    setVideoMuted(prev => {
+      const newState = [...prev];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
+
+  const handleGlobalPlayPause = () => {
+    setGlobalPlaying(prev => !prev);
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return;
+      if (globalPlaying) {
+        video.pause();
+        setVideoPlaying(prev => ({ ...prev, [index]: false }));
+      } else {
+        video.play().catch(error => {
+          console.error("Failed to play video", index, error);
+        });
+        setVideoPlaying(prev => ({ ...prev, [index]: true }));
+      }
+    });
   };
 
   return (
     <motion.section
-      ref={sectionRef}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -166,16 +143,13 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
           {/* Global Play/Pause Control */}
           <div className="flex gap-4">
             <motion.button
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={togglePlayPause}
-              className="p-4 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200"
+              onClick={handleGlobalPlayPause}
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
             >
-              {isPlaying ? (
-                <Pause className="w-6 h-6 text-green-600" />
-              ) : (
-                <Play className="w-6 h-6 text-green-600" />
-              )}
+              {globalPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+              {globalPlaying ? 'Pause All' : 'Play All'}
             </motion.button>
           </div>
 
@@ -184,14 +158,14 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
             {videos.map((video, index) => (
               <motion.div
                 key={video.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.6 }}
                 className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
                 style={{ 
-                  aspectRatio: '16/12', // Made taller for more vertical space
-                  minHeight: '320px' // Ensure minimum height on all devices
+                  aspectRatio: '30/10', // Changed to 30:10 ratio as requested
+                  minHeight: '200px' // Adjusted minimum height for the new ratio
                 }}
               >
                 {/* Step Badge */}
@@ -201,55 +175,56 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
                   </div>
                 </div>
 
-                {/* Individual Mute Button */}
+                {/* Individual Mute/Unmute Button */}
                 <div className="absolute top-4 right-4 z-20">
                   <motion.button
                     whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => toggleVideoMute(index)}
-                    className="p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-all duration-300"
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => toggleMute(index)}
+                    className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
                   >
-                    {videoMutedStates[index] ? (
-                      <VolumeX className="w-4 h-4 text-white" />
-                    ) : (
-                      <Volume2 className="w-4 h-4 text-white" />
-                    )}
+                    {videoMuted[index] ? 
+                      <VolumeX className="w-4 h-4" /> : 
+                      <Volume2 className="w-4 h-4" />
+                    }
                   </motion.button>
                 </div>
 
-                {/* Now Playing Indicator */}
-                <AnimatePresence>
-                  {isPlaying && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="absolute top-16 right-4 z-20"
-                    >
-                      <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-                        <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-                        Playing
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Video Container */}
+                {/* Video Element */}
                 <div className="relative w-full h-full">
                   <video
-                    ref={el => videoRefs.current[index] = el}
+                    ref={(el) => {
+                      if (el) videoRefs.current[index] = el;
+                    }}
                     className="w-full h-full object-cover"
-                    poster={video.thumbnail}
-                    onEnded={() => handleVideoEnd(index)}
-                    muted={videoMutedStates[index]}
-                    playsInline
-                    preload="metadata"
+                    muted={videoMuted[index]}
                     loop
+                    playsInline
+                    onLoadedData={() => handleVideoLoaded(index)}
+                    onPlay={() => {
+                      setVideoPlaying(prev => ({ ...prev, [index]: true }));
+                      onVideoStart?.(video.id);
+                    }}
+                    onPause={() => setVideoPlaying(prev => ({ ...prev, [index]: false }))}
+                    onEnded={() => {
+                      setVideoPlaying(prev => ({ ...prev, [index]: false }));
+                      onVideoComplete?.(video.id);
+                    }}
                   >
                     <source src={video.src} type="video/mp4" />
+                    {video.captions && (
+                      <track
+                        kind="captions"
+                        src={video.captions}
+                        srcLang="en"
+                        label="English"
+                        default
+                      />
+                    )}
+                    Your browser does not support the video tag.
                   </video>
 
-                  {/* Video Overlay */}
+                  {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
                   {/* Video Info */}
@@ -259,15 +234,10 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
                   </div>
                 </div>
 
-                {/* Progress Bar */}
-                {isPlaying && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/30">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: isPlaying ? '100%' : '0%' }}
-                      transition={{ duration: 10, ease: 'linear' }}
-                      className="h-full bg-green-500"
-                    />
+                {/* Loading State */}
+                {!videoLoaded[index] && (
+                  <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+                    <div className="text-gray-600">Loading video...</div>
                   </div>
                 )}
               </motion.div>
@@ -277,6 +247,4 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
       </div>
     </motion.section>
   );
-};
-
-export default FeaturedVideos;
+}
