@@ -110,7 +110,7 @@ export default function HeroSimple() {
           respectReducedMotion={true}
         />
         
-        {/* Restored original overlay for text readability */}
+        {/* Dark overlay for text readability - removed white background */}
         <div className="absolute inset-0 bg-black/20 z-15" />
       </animated.div>
 
@@ -147,8 +147,8 @@ export default function HeroSimple() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-center">
             {/* Left Column - Main Content */}
             <div ref={heroContentRef} className="text-left space-y-1 md:space-y-2 flex flex-col justify-center">
-              {/* Company Badge */}
-              <div className="inline-flex items-center rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 text-sm font-bold bg-white/20 backdrop-blur-2xl text-white shadow-2xl border border-white/30 -mt-8 md:-mt-6 lg:-mt-4 -mb-4 md:-mb-3 lg:-mb-2">
+              {/* Company Badge - removed white/glass background */}
+              <div className="inline-flex items-center rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 text-sm font-bold bg-black/40 backdrop-blur-2xl text-white shadow-2xl border border-green-400/30 -mt-8 md:-mt-6 lg:-mt-4 -mb-4 md:-mb-3 lg:-mb-2">
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -259,7 +259,7 @@ export default function HeroSimple() {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="bg-white/10 backdrop-blur-3xl rounded-lg md:rounded-xl p-2 md:p-3 lg:p-4 border border-green-400/30 shadow-2xl relative overflow-hidden hover:border-green-300/50 transition-all duration-500 max-w-sm mx-auto"
+                className="bg-black/20 backdrop-blur-3xl rounded-lg md:rounded-xl p-2 md:p-3 lg:p-4 border border-green-400/30 shadow-2xl relative overflow-hidden hover:border-green-300/50 transition-all duration-500 max-w-sm mx-auto"
               >
                 {/* Enhanced glass effect background */}
                 <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-emerald-400/10 to-teal-500/15" />
