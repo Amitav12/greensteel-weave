@@ -1,7 +1,9 @@
+
 import SEO from "@/components/seo/SEO";
 import HeroSimple from "@/components/sections/HeroSimple";
 import CurrencyExchangeWithChart from "../components/sections/CurrencyExchangeWithChart";
 import BusinessProcessVideo from "@/components/sections/BusinessProcessVideo";
+import FeaturedVideos from "@/components/sections/FeaturedVideos";
 import OurPartners from "@/components/sections/OurPartners";
 
 import ContactModal from "@/components/ui/ContactModal";
@@ -79,6 +81,24 @@ export default function Index() {
         onFullPlayComplete={() => {
           // Analytics tracking can be added here
           console.log('Full process video completed');
+        }}
+      />
+
+      {/* Featured Videos Section */}
+      <FeaturedVideos
+        autoplay={true}
+        muted={true}
+        onVideoStart={(videoId) => {
+          // Analytics tracking can be added here
+          console.log('Featured video started:', videoId);
+        }}
+        onVideoComplete={(videoId) => {
+          // Analytics tracking can be added here
+          console.log('Featured video completed:', videoId);
+        }}
+        onAllVideosComplete={() => {
+          // Analytics tracking can be added here
+          console.log('All featured videos completed');
         }}
       />
 
