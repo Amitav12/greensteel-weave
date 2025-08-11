@@ -94,193 +94,237 @@ const CurrencyCardSkeleton = () => (
 
 // Enhanced continuous stock market background animation component
 const StockMarketBackground = () => {
-  const [timeOffset, setTimeOffset] = useState(0);
+  const [candlesticks, setCandlesticks] = useState<Array<{
+    x: number;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    isGreen: boolean;
+  }>>([]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeOffset(prev => prev + 0.01);
-    }, 50); // Update every 50ms for smooth animation
+    const generateCandlesticks = () => {
+      const newCandlesticks = [];
+      let lastPrice = 50;
+      
+      for (let i = 0; i < 20; i++) {
+        const variation = (Math.random() - 0.5) * 8;
+        const open = lastPrice;
+        const close = Math.max(10, Math.min(90, open + variation));
+        const high = Math.max(open, close) + Math.random() * 5;
+        const low = Math.min(open, close) - Math.random() * 5;
+        const isGreen = close > open;
+        
+        newCandlesticks.push({
+          x: i * 6,
+          open,
+          high,
+          low,
+          close,
+          isGreen
+        });
+        
+        lastPrice = close;
+      }
+      setCandlesticks(newCandlesticks);
+    };
 
+    generateCandlesticks();
+    const interval = setInterval(generateCandlesticks, 3000);
     return () => clearInterval(interval);
   }, []);
 
-  // Generate continuous chart points that move over time
-  const generateChartPoints = (baseY: number, frequency: number, amplitude: number, phaseShift: number = 0) => {
-    const points = [];
-    for (let i = 0; i <= 120; i += 1) {
-      const x = i;
-      const y = baseY + 
-               Math.sin((i * 0.05 + timeOffset + phaseShift) * frequency) * amplitude +
-               Math.cos((i * 0.03 + timeOffset * 0.7 + phaseShift) * frequency * 1.3) * (amplitude * 0.6) +
-               Math.sin((i * 0.08 + timeOffset * 1.2 + phaseShift) * frequency * 0.8) * (amplitude * 0.3);
-      points.push({ x, y });
-    }
-    return points;
-  };
-
-  const mainPoints = generateChartPoints(30, 1, 20, 0);
-  const secondaryPoints = generateChartPoints(60, 1.2, 15, Math.PI / 4);
-  const tertiaryPoints = generateChartPoints(45, 0.8, 12, Math.PI / 2);
-
-  const createPath = (points: { x: number; y: number }[]) => 
-    points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
-
   return (
-    <div className="absolute inset-0 opacity-40 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 opacity-30 overflow-hidden pointer-events-none">
       <svg width="100%" height="100%" className="absolute inset-0" viewBox="0 0 120 100" preserveAspectRatio="none">
         <defs>
-          {/* Enhanced gradients for better visibility */}
-          <linearGradient id="stockGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.8" />
-            <stop offset="50%" stopColor="#059669" stopOpacity="1" />
-            <stop offset="100%" stopColor="#34D399" stopOpacity="0.8" />
+          {/* Grid pattern */}
+          <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#10B981" strokeWidth="0.3" opacity="0.4"/>
+          </pattern>
+          
+          {/* Gradients for candlesticks */}
+          <linearGradient id="greenCandle" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#22C55E" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#16A34A" stopOpacity="0.7" />
           </linearGradient>
-          <linearGradient id="stockGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#34D399" stopOpacity="0.7" />
-            <stop offset="50%" stopColor="#10B981" stopOpacity="0.9" />
-            <stop offset="100%" stopColor="#059669" stopOpacity="0.7" />
-          </linearGradient>
-          <linearGradient id="stockGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#059669" stopOpacity="0.6" />
-            <stop offset="50%" stopColor="#34D399" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#10B981" stopOpacity="0.6" />
+          <linearGradient id="redCandle" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#EF4444" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#DC2626" stopOpacity="0.7" />
           </linearGradient>
           
           {/* Background glow */}
-          <radialGradient id="backgroundGlow" cx="50%" cy="50%" r="80%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.2" />
-            <stop offset="60%" stopColor="#059669" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#34D399" stopOpacity="0" />
-          </radialGradient>
-          
-          {/* Area fill gradients */}
-          <linearGradient id="areaFill1" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.3" />
+          <radialGradient id="chartGlow" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.15" />
             <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
-          </linearGradient>
+          </radialGradient>
         </defs>
         
-        {/* Background glow effect */}
-        <rect width="120" height="100" fill="url(#backgroundGlow)" />
+        {/* Background with subtle glow */}
+        <rect width="120" height="100" fill="url(#chartGlow)" />
         
-        {/* Floating grid lines with animation */}
-        {[...Array(8)].map((_, i) => (
+        {/* Grid overlay */}
+        <rect width="120" height="100" fill="url(#grid)" />
+        
+        {/* Horizontal price levels */}
+        {[20, 35, 50, 65, 80].map((y, i) => (
           <motion.line
-            key={`grid-h-${i}`}
+            key={`price-line-${i}`}
             x1="0"
-            y1={15 + i * 10}
+            y1={y}
             x2="120"
-            y2={15 + i * 10}
+            y2={y}
             stroke="#10B981"
-            strokeWidth="0.3"
+            strokeWidth="0.5"
             strokeOpacity="0.5"
+            strokeDasharray="2,2"
             animate={{
-              strokeOpacity: [0.3, 0.7, 0.3]
+              strokeOpacity: [0.3, 0.6, 0.3]
             }}
             transition={{
-              duration: 4 + i * 0.3,
-              ease: "easeInOut",
+              duration: 3 + i * 0.5,
               repeat: Infinity,
-              delay: i * 0.2
+              delay: i * 0.3
             }}
           />
         ))}
         
-        {/* Vertical grid lines */}
-        {[...Array(10)].map((_, i) => (
-          <motion.line
-            key={`grid-v-${i}`}
-            x1={i * 12}
-            y1="0"
-            x2={i * 12}
-            y2="100"
-            stroke="#10B981"
-            strokeWidth="0.2"
-            strokeOpacity="0.4"
-            animate={{
-              strokeOpacity: [0.2, 0.5, 0.2]
-            }}
+        {/* Volume bars at bottom */}
+        {candlesticks.map((candle, i) => (
+          <motion.rect
+            key={`volume-${i}`}
+            x={candle.x}
+            y={85}
+            width="3"
+            height={Math.random() * 10 + 2}
+            fill={candle.isGreen ? "#22C55E" : "#EF4444"}
+            opacity="0.4"
+            initial={{ height: 0 }}
+            animate={{ height: Math.random() * 10 + 2 }}
             transition={{
-              duration: 5 + i * 0.2,
-              ease: "easeInOut",
-              repeat: Infinity,
+              duration: 0.5,
               delay: i * 0.1
             }}
           />
         ))}
         
-        {/* Area fill for main chart */}
-        <path
-          d={`${createPath(mainPoints)} L 120 100 L 0 100 Z`}
-          fill="url(#areaFill1)"
-        />
+        {/* Main candlestick chart */}
+        <g>
+          {candlesticks.map((candle, i) => (
+            <motion.g
+              key={`candle-${i}`}
+              initial={{ opacity: 0, scaleY: 0 }}
+              animate={{ opacity: 1, scaleY: 1 }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.05,
+                ease: "easeOut"
+              }}
+            >
+              {/* High-Low line (wick) */}
+              <motion.line
+                x1={candle.x + 1.5}
+                y1={candle.high}
+                x2={candle.x + 1.5}
+                y2={candle.low}
+                stroke={candle.isGreen ? "#22C55E" : "#EF4444"}
+                strokeWidth="1"
+                opacity="0.8"
+                animate={{
+                  opacity: [0.6, 1, 0.6]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.1
+                }}
+              />
+              
+              {/* Candlestick body */}
+              <motion.rect
+                x={candle.x}
+                y={Math.min(candle.open, candle.close)}
+                width="3"
+                height={Math.abs(candle.close - candle.open) || 0.5}
+                fill={candle.isGreen ? "url(#greenCandle)" : "url(#redCandle)"}
+                stroke={candle.isGreen ? "#16A34A" : "#DC2626"}
+                strokeWidth="0.4"
+                rx="0.5"
+                animate={{
+                  filter: [
+                    `drop-shadow(0 0 0px ${candle.isGreen ? '#22C55E' : '#EF4444'})`,
+                    `drop-shadow(0 0 2px ${candle.isGreen ? '#22C55E' : '#EF4444'})`,
+                    `drop-shadow(0 0 0px ${candle.isGreen ? '#22C55E' : '#EF4444'})`
+                  ]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.15
+                }}
+              />
+              
+              {/* Price indicator dots */}
+              <motion.circle
+                cx={candle.x + 1.5}
+                cy={candle.close}
+                r="1"
+                fill={candle.isGreen ? "#22C55E" : "#EF4444"}
+                opacity="0.7"
+                animate={{
+                  r: [0.7, 1.2, 0.7],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  delay: i * 0.1
+                }}
+              />
+            </motion.g>
+          ))}
+        </g>
         
-        {/* Main chart lines - continuous animation */}
-        <path
-          d={createPath(mainPoints)}
-          stroke="url(#stockGradient1)"
-          strokeWidth="2"
+        {/* Trend line overlay */}
+        <motion.path
+          d={`M 0 ${candlesticks[0]?.close || 50} ${candlesticks.map((c, i) => `L ${c.x + 1.5} ${c.close}`).join(' ')}`}
+          stroke="#10B981"
+          strokeWidth="1.2"
           fill="none"
-          strokeLinecap="round"
+          opacity="0.5"
+          strokeDasharray="4,4"
+          animate={{
+            strokeDashoffset: [0, -8]
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "linear"
+          }}
         />
         
-        <path
-          d={createPath(secondaryPoints)}
-          stroke="url(#stockGradient2)"
-          strokeWidth="1.5"
-          fill="none"
-          strokeLinecap="round"
-        />
-        
-        <path
-          d={createPath(tertiaryPoints)}
-          stroke="url(#stockGradient3)"
-          strokeWidth="1"
-          fill="none"
-          strokeLinecap="round"
-        />
-        
-        {/* Animated data points that follow the lines */}
-        {mainPoints.filter((_, i) => i % 10 === 0).map((point, i) => (
-          <motion.circle
-            key={`point-${i}`}
-            cx={point.x}
-            cy={point.y}
-            r="0.4"
+        {/* Market indicators */}
+        {[...Array(3)].map((_, i) => (
+          <motion.text
+            key={`indicator-${i}`}
+            x={8 + i * 35}
+            y={12}
+            fontSize="4"
             fill="#10B981"
+            opacity="0.6"
+            fontWeight="bold"
             animate={{
-              r: [0.2, 0.6, 0.2],
-              opacity: [0.6, 1, 0.6]
+              opacity: [0.4, 0.8, 0.4]
             }}
             transition={{
-              duration: 2,
-              ease: "easeInOut",
+              duration: 2 + i * 0.3,
               repeat: Infinity,
-              delay: i * 0.15
+              delay: i * 0.5
             }}
-          />
-        ))}
-        
-        {/* Floating price indicators */}
-        {[...Array(6)].map((_, i) => (
-          <motion.circle
-            key={`float-${i}`}
-            cx={15 + i * 18}
-            cy={20 + Math.sin(timeOffset + i) * 30}
-            r="0.3"
-            fill="#34D399"
-            animate={{
-              cy: [20 + Math.sin(timeOffset + i) * 30, 80 + Math.sin(timeOffset + i) * 30],
-              opacity: [0.3, 0.8, 0.3]
-            }}
-            transition={{
-              duration: 3 + i * 0.2,
-              ease: "easeInOut",
-              repeat: Infinity,
-              repeatType: "reverse",
-              delay: i * 0.3
-            }}
-          />
+          >
+            {['BUY', 'HOLD', 'SELL'][i]}
+          </motion.text>
         ))}
       </svg>
     </div>
