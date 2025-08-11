@@ -1,3 +1,4 @@
+
 declare module 'animejs' {
   interface AnimeParams {
     targets: any;
@@ -12,9 +13,14 @@ declare module 'animejs' {
     seek(time: number): void;
     finished: Promise<void>;
   }
+
+  interface AnimeStatic {
+    (params: AnimeParams): AnimeInstance;
+    set(targets: any, properties: any): void;
+    random(min: number, max: number): number;
+  }
   
-  function anime(params: AnimeParams): AnimeInstance;
-  
+  const anime: AnimeStatic;
   export = anime;
 }
 

@@ -12,7 +12,7 @@ import { AnimeText } from "@/components/animations/AnimeText";
 import { useTypewriter } from "@/hooks/useTypewriter";
 import ImageCarousel from "@/components/ui/ImageCarousel";
 import { CarouselErrorBoundary } from "@/components/ui/CarouselErrorBoundary";
-import { carouselImages } from "@/data/carouselImages";
+import { heroCarouselImages } from "@/data/carouselImages";
 import { Link } from "react-router-dom";
 import { Recycle, ArrowRight, Leaf, Factory, TrendingUp, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-recycling-steel.jpg";
@@ -55,11 +55,9 @@ export default function Hero() {
   const { text, cursor } = useTypewriter([
     "Sustainable Recycling Solutions",
     "Premium Steel Trading",
-    "Environmental Responsibility",
+    "Environmental Responsibility", 
     "Waste to Value Transformation"
   ], 50, 1500);
-
-
 
   const [isLoaded, setIsLoaded] = useState(false);
   const containerRef = useRef(null);
@@ -310,7 +308,7 @@ export default function Hero() {
         }
       >
         <ImageCarousel 
-          images={carouselImages}
+          images={heroCarouselImages}
           autoPlayInterval={6000}
           transitionDuration={1500}
           pauseOnHover={true}
