@@ -1,28 +1,8 @@
 
 import { CarouselImage } from '@/components/ui/ImageCarousel';
 
-// Import the industrial images
-import steelWorkerImage from '@/assets/steel-worker-industrial.jpg';
-import shippingContainersImage from '@/assets/shipping-containers-port.jpg';
-import cargoShipImage from '@/assets/cargo-ship-containers.jpg';
-
-// Configuration for the hero carousel images with new industrial images
+// Configuration for the hero carousel images with only the 5 new industrial images
 export const heroCarouselImages: CarouselImage[] = [
-  {
-    src: steelWorkerImage,
-    alt: "Steel worker in industrial setting with molten metal and sparks",
-    title: "Steel Manufacturing Excellence"
-  },
-  {
-    src: shippingContainersImage,
-    alt: "Colorful shipping containers at port facility",
-    title: "Global Trade Operations"
-  },
-  {
-    src: cargoShipImage,
-    alt: "Large cargo ship loaded with containers on ocean",
-    title: "International Shipping Solutions"
-  },
   {
     src: "/lovable-uploads/b388c060-872e-4f0e-bfbc-528b4f713584.png",
     alt: "Industrial crane handling scrap metal in recycling facility",
@@ -50,9 +30,9 @@ export const heroCarouselImages: CarouselImage[] = [
   }
 ];
 
-// Default carousel configuration - adjusted for more images
+// Default carousel configuration
 export const carouselConfig = {
-  autoPlayInterval: 5000, // 5 seconds between slides for better viewing
+  autoPlayInterval: 5000, // 5 seconds between slides
   transitionDuration: 1000, // 1 second fade transition
   pauseOnHover: true, // Pause on mouse hover
   respectReducedMotion: true // Respect user's motion preferences

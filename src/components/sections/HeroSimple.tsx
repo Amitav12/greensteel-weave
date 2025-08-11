@@ -7,9 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Recycle, Leaf, Factory, TrendingUp, Sparkles } from "lucide-react";
 import SimpleImageCarousel from "@/components/ui/SimpleImageCarousel";
-import steelWorkerImage from "@/assets/steel-worker-industrial.jpg";
-import shippingContainersImage from "@/assets/shipping-containers-port.jpg";
-import cargoShipImage from "@/assets/cargo-ship-containers.jpg";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -92,12 +89,9 @@ export default function HeroSimple() {
         style={backgroundSpring}
         className="absolute inset-0"
       >
-        {/* Enhanced Image Carousel with New Industrial Images */}
+        {/* Enhanced Image Carousel with only the 5 new industrial images */}
         <SimpleImageCarousel 
           images={[
-            steelWorkerImage, 
-            shippingContainersImage, 
-            cargoShipImage,
             "/lovable-uploads/b388c060-872e-4f0e-bfbc-528b4f713584.png",
             "/lovable-uploads/c731af5f-b373-492b-8a87-5f5bb800df2b.png",
             "/lovable-uploads/2ea524d3-9629-4e45-a879-2e407f5cc008.png",
