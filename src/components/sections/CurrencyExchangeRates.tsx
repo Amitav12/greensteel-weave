@@ -24,21 +24,21 @@ const getCurrencySymbol = (code: string): string => {
   return symbols[code] || '';
 };
 
-// Enhanced country flag mapping with explicit Unicode flag emojis
+// Enhanced country flag mapping with flag image paths
 const getCountryFlag = (code: string): string => {
   const flags: { [key: string]: string } = {
-    'CNY': '\uD83C\uDDE8\uD83C\uDDF3', // 🇨🇳 China
-    'IDR': '\uD83C\uDDEE\uD83C\uDDE9', // 🇮🇩 Indonesia
-    'INR': '\uD83C\uDDEE\uD83C\uDDF3', // 🇮🇳 India
-    'EUR': '\uD83C\uDDEA\uD83C\uDDFA', // 🇪🇺 European Union
-    'ZAR': '\uD83C\uDDFF\uD83C\uDDE6', // 🇿🇦 South Africa
-    'PLN': '\uD83C\uDDF5\uD83C\uDDF1', // 🇵🇱 Poland
-    'TRY': '\uD83C\uDDF9\uD83C\uDDF7', // 🇹🇷 Turkey
-    'RUB': '\uD83C\uDDF7\uD83C\uDDFA', // 🇷🇺 Russia
-    'BDT': '\uD83C\uDDE7\uD83C\uDDE9', // 🇧🇩 Bangladesh
-    'JPY': '\uD83C\uDDEF\uD83C\uDDF5', // 🇯🇵 Japan
-    'GBP': '\uD83C\uDDEC\uD83C\uDDE7', // 🇬🇧 United Kingdom
-    'BRL': '\uD83C\uDDE7\uD83C\uDDF7', // 🇧🇷 Brazil
+    'CNY': '/lovable-uploads/82b77987-9612-46f8-b031-ef5aee1370fe.png', // China
+    'IDR': '/lovable-uploads/b83671c2-d48e-4e87-8bde-f2cc8567ca27.png', // Indonesia
+    'INR': '/lovable-uploads/8b4fb8cf-d20a-42f9-8bde-f2cc8567ca27.png', // India
+    'EUR': '/lovable-uploads/52d6deef-90b7-44d0-b157-6e1d09de914b.png', // European Union
+    'ZAR': '/lovable-uploads/024f0f84-0553-4da3-bd3a-a551e8fe0db0.png', // South Africa
+    'PLN': '/lovable-uploads/f9b0fca8-13e9-4800-8575-21f017d07f78.png', // Poland
+    'TRY': '/lovable-uploads/d126b7a6-4374-4148-bb0a-981f4cb4712c.png', // Turkey
+    'RUB': '/lovable-uploads/28fc1481-cd9f-4227-ac00-3d3d69ad1ad8.png', // Russia
+    'BDT': '\uD83C\uDDE7\uD83C\uDDE9', // 🇧🇩 Bangladesh (fallback to emoji)
+    'JPY': '\uD83C\uDDEF\uD83C\uDDF5', // 🇯🇵 Japan (fallback to emoji)
+    'GBP': '\uD83C\uDDEC\uD83C\uDDE7', // 🇬🇧 United Kingdom (fallback to emoji)
+    'BRL': '\uD83C\uDDE7\uD83C\uDDF7', // 🇧🇷 Brazil (fallback to emoji)
   };
   return flags[code] || '\uD83C\uDFF3\uFE0F'; // 🏳️ fallback
 };
@@ -305,19 +305,28 @@ export default function CurrencyExchangeRates() {
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <motion.div 
-                      className="w-8 h-8 rounded-md flex items-center justify-center shadow-sm bg-white border border-gray-200"
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      <span 
-                        className="text-lg font-bold" 
-                        title={`${getCountryName(currency.code)} Flag`}
-                        style={{ fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif' }}
-                      >
-                        {getCountryFlag(currency.code)}
-                      </span>
-                    </motion.div>
+                     <motion.div 
+                       className="w-8 h-8 rounded-md flex items-center justify-center shadow-sm bg-white border border-gray-200 overflow-hidden"
+                       whileHover={{ scale: 1.1 }}
+                       transition={{ duration: 0.15 }}
+                     >
+                       {getCountryFlag(currency.code).startsWith('/lovable-uploads/') ? (
+                         <img 
+                           src={getCountryFlag(currency.code)}
+                           alt={`${getCountryName(currency.code)} Flag`}
+                           className="w-full h-full object-cover rounded-sm"
+                           loading="lazy"
+                         />
+                       ) : (
+                         <span 
+                           className="text-lg font-bold" 
+                           title={`${getCountryName(currency.code)} Flag`}
+                           style={{ fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif' }}
+                         >
+                           {getCountryFlag(currency.code)}
+                         </span>
+                       )}
+                     </motion.div>
                     <div>
                       <span className="font-bold text-sm text-gray-900">{currency.code}</span>
                       <p className="text-xs text-gray-600 hidden md:block leading-tight">
