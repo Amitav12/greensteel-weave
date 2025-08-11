@@ -24,23 +24,23 @@ const getCurrencySymbol = (code: string): string => {
   return symbols[code] || '';
 };
 
-// Enhanced country flag mapping
+// Enhanced country flag mapping with explicit Unicode flag emojis
 const getCountryFlag = (code: string): string => {
   const flags: { [key: string]: string } = {
-    'CNY': '🇨🇳', // China
-    'IDR': '🇮🇩', // Indonesia
-    'INR': '🇮🇳', // India
-    'EUR': '🇪🇺', // European Union
-    'ZAR': '🇿🇦', // South Africa
-    'PLN': '🇵🇱', // Poland
-    'TRY': '🇹🇷', // Turkey
-    'RUB': '🇷🇺', // Russia
-    'BDT': '🇧🇩', // Bangladesh
-    'JPY': '🇯🇵', // Japan
-    'GBP': '🇬🇧', // United Kingdom
-    'BRL': '🇧🇷', // Brazil
+    'CNY': '\uD83C\uDDE8\uD83C\uDDF3', // 🇨🇳 China
+    'IDR': '\uD83C\uDDEE\uD83C\uDDE9', // 🇮🇩 Indonesia
+    'INR': '\uD83C\uDDEE\uD83C\uDDF3', // 🇮🇳 India
+    'EUR': '\uD83C\uDDEA\uD83C\uDDFA', // 🇪🇺 European Union
+    'ZAR': '\uD83C\uDDFF\uD83C\uDDE6', // 🇿🇦 South Africa
+    'PLN': '\uD83C\uDDF5\uD83C\uDDF1', // 🇵🇱 Poland
+    'TRY': '\uD83C\uDDF9\uD83C\uDDF7', // 🇹🇷 Turkey
+    'RUB': '\uD83C\uDDF7\uD83C\uDDFA', // 🇷🇺 Russia
+    'BDT': '\uD83C\uDDE7\uD83C\uDDE9', // 🇧🇩 Bangladesh
+    'JPY': '\uD83C\uDDEF\uD83C\uDDF5', // 🇯🇵 Japan
+    'GBP': '\uD83C\uDDEC\uD83C\uDDE7', // 🇬🇧 United Kingdom
+    'BRL': '\uD83C\uDDE7\uD83C\uDDF7', // 🇧🇷 Brazil
   };
-  return flags[code] || '🏳️';
+  return flags[code] || '\uD83C\uDFF3\uFE0F'; // 🏳️ fallback
 };
 
 // Enhanced country name mapping
@@ -310,7 +310,11 @@ export default function CurrencyExchangeRates() {
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.15 }}
                     >
-                      <span className="text-lg" title={`${getCountryName(currency.code)} Flag`}>
+                      <span 
+                        className="text-lg font-bold" 
+                        title={`${getCountryName(currency.code)} Flag`}
+                        style={{ fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif' }}
+                      >
                         {getCountryFlag(currency.code)}
                       </span>
                     </motion.div>
