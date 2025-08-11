@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Recycle, Leaf, Factory, TrendingUp, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-recycling-steel.jpg";
+import SimpleImageCarousel from "@/components/ui/SimpleImageCarousel";
+import steelWorkerImage from "@/assets/steel-worker-industrial.jpg";
+import shippingContainersImage from "@/assets/shipping-containers-port.jpg";
+import cargoShipImage from "@/assets/cargo-ship-containers.jpg";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -84,31 +88,45 @@ export default function HeroSimple() {
 
   return (
     <section ref={containerRef} className="relative h-screen flex items-start justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-green-900 to-black pt-8">
-      {/* Enhanced Background with Multiple Layers */}
+      {/* Enhanced Background with Image Carousel */}
       <animated.div
         style={backgroundSpring}
         className="absolute inset-0"
       >
+        {/* Enhanced Image Carousel - Your Industrial Images */}
+        <SimpleImageCarousel 
+          images={[steelWorkerImage, shippingContainersImage, cargoShipImage]}
+          interval={5000}
+          className="z-10"
+          pauseOnHover={true}
+          respectReducedMotion={true}
+        />
+        
+        {/* Fallback Background Image - Hidden when carousel works */}
         <img
           src={heroImage}
           alt="Recycling and steel operations"
-          className="absolute inset-0 h-full w-full object-cover opacity-30"
+          className="absolute inset-0 h-full w-full object-cover opacity-5 z-5"
           loading="eager"
+          style={{
+            filter: 'brightness(0.7) contrast(1.1)'
+          }}
         />
-        {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-emerald-600/15 to-teal-500/20 animate-pulse" />
+        
+        {/* Animated gradient overlay - minimal */}
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500/2 via-emerald-600/1 to-teal-500/2 animate-pulse z-15" />
       </animated.div>
 
-      {/* Dynamic Glass Morphism Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-green-500/20 to-black/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-green-900/30 to-black/50" />
+      {/* Dynamic Glass Morphism Overlays - very light */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/3 via-green-500/5 to-black/10 z-20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-green-900/5 to-black/15 z-20" />
 
       {/* Floating Particles Effect */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden z-30">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-green-400/30 rounded-full"
+            className="absolute w-2 h-2 bg-green-400/8 rounded-full"
             animate={{
               y: [-20, -100],
               x: [0, Math.random() * 100 - 50],
@@ -130,7 +148,7 @@ export default function HeroSimple() {
       {/* Main Content */}
       <animated.div
         style={heroSpring}
-        className="container relative z-10 px-4 md:px-6 -mt-40 md:-mt-36 lg:-mt-32"
+        className="container relative z-40 px-4 md:px-6 -mt-40 md:-mt-36 lg:-mt-32"
       >
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-center">

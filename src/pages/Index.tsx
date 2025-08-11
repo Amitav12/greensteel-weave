@@ -1,13 +1,11 @@
 import SEO from "@/components/seo/SEO";
 import HeroSimple from "@/components/sections/HeroSimple";
-import CurrencyExchangeRates from "@/components/sections/CurrencyExchangeRates";
-import DailyIronSteelRates from "@/components/sections/DailyIronSteelRates";
-import LiveDataTickerSimple from "@/components/sections/LiveDataTickerSimple";
-import ServicesOverviewSimple from "@/components/sections/ServicesOverviewSimple";
-import ProductShowcase from "@/components/sections/ProductShowcase";
-import ImpactCounters from "@/components/sections/ImpactCounters";
-import TrustedBy from "@/components/sections/TrustedBy";
+import CurrencyExchangeWithChart from "../components/sections/CurrencyExchangeWithChart";
+import BusinessProcessVideo from "@/components/sections/BusinessProcessVideo";
+import OurPartners from "@/components/sections/OurPartners";
+
 import ContactModal from "@/components/ui/ContactModal";
+import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -19,15 +17,15 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-white">
-      <SEO 
+      <SEO
         title="AAASHA TRADING LTD - Leading Steel Trading & Sustainable Recycling Solutions"
         description="Transform your business with AAASHA TRADING LTD - India's premier steel trading and recycling company. Sustainable solutions, competitive prices, and exceptional service since inception."
         keywords="steel trading, recycling, sustainability, steel coils, pipes, structural steel, currency exchange, live rates, India steel trading, sustainable recycling"
       />
-      
+
       {/* Hero Section */}
       <HeroSimple />
-      
+
       {/* Live Market Data Section - Mobile Responsive */}
       <motion.section
         initial={{ opacity: 0 }}
@@ -44,14 +42,14 @@ export default function Index() {
             className="text-center mb-8 sm:mb-12"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Live <span className="text-green-600">Market Data</span>
+              Live <span className="text-green-600">Currency Rates</span>
             </h2>
             <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-              Real-time currency rates and steel prices for informed trading decisions
+              Real-time USD exchange rates for informed trading decisions
             </p>
           </motion.div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+
+          <div className="max-w-5xl mx-auto">
             {/* Currency Rates */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -60,75 +58,30 @@ export default function Index() {
               transition={{ duration: 0.6 }}
               className="w-full"
             >
-              <CurrencyExchangeRates />
-            </motion.div>
-            
-            {/* Steel Rates */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full"
-            >
-              <DailyIronSteelRates />
+              <CurrencyExchangeWithChart />
             </motion.div>
           </div>
         </div>
       </motion.section>
-      
-      {/* Live Data Ticker */}
-      <LiveDataTickerSimple />
-      
-      {/* Combined Services & Products Section - Mobile Responsive */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="py-12 sm:py-16 bg-white"
-      >
-        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 sm:mb-12"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Our <span className="text-green-600">Solutions</span>
-            </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-              Comprehensive steel trading and recycling services tailored to your business needs
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
-            {/* Services Overview */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="w-full"
-            >
-              <ServicesOverviewSimple />
-            </motion.div>
-            
-            {/* Product Showcase */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full"
-            >
-              <ProductShowcase />
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
-      
+
+      {/* Business Process Video Section */}
+      <BusinessProcessVideo
+        autoplay={true}
+        muted={true}
+        onSegmentStart={(segmentId) => {
+          // Analytics tracking can be added here
+          console.log('Segment started:', segmentId);
+        }}
+        onSegmentComplete={(segmentId) => {
+          // Analytics tracking can be added here
+          console.log('Segment completed:', segmentId);
+        }}
+        onFullPlayComplete={() => {
+          // Analytics tracking can be added here
+          console.log('Full process video completed');
+        }}
+      />
+
       {/* Why Choose Us Section - Mobile Responsive */}
       <motion.section
         initial={{ opacity: 0, y: 30 }}
@@ -151,7 +104,7 @@ export default function Index() {
               Your trusted partner in sustainable steel trading and recycling solutions
             </p>
           </motion.div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
               { icon: Award, title: "Industry Leader", description: "Recognized expertise in steel trading and recycling solutions", color: "from-blue-500 to-blue-600" },
@@ -178,56 +131,10 @@ export default function Index() {
           </div>
         </div>
       </motion.section>
-      
-      {/* Impact & Trust Section - Mobile Responsive */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="py-12 sm:py-16 bg-white"
-      >
-        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 sm:mb-12"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Our <span className="text-green-600">Impact</span>
-            </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-              Measurable results and trusted partnerships that drive sustainable growth
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
-            {/* Impact Counters */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="w-full"
-            >
-              <ImpactCounters />
-            </motion.div>
-            
-            {/* Trusted By */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full"
-            >
-              <TrustedBy />
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
-      
+
+      {/* Our Partners Section */}
+      <OurPartners />
+
       {/* Call to Action Section - Streamlined */}
       <motion.section
         initial={{ opacity: 0, y: 50 }}
@@ -239,7 +146,7 @@ export default function Index() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(34,197,94,0.1),transparent_70%)]" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <motion.h2 
+            <motion.h2
               className="text-3xl md:text-5xl font-black text-white mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -247,7 +154,7 @@ export default function Index() {
             >
               Ready to Transform Your Business?
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-lg md:text-xl text-green-300 mb-10 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -256,15 +163,15 @@ export default function Index() {
             >
               Join hundreds of satisfied clients who trust AAASHA TRADING for sustainable steel solutions.
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
             >
-              <Button 
+              <Button
                 onClick={() => setIsContactModalOpen(true)}
                 variant="eco-gradient"
                 size="lg"
@@ -276,7 +183,7 @@ export default function Index() {
                 Get Free Quote
               </Button>
               <Link to="/products">
-                <Button 
+                <Button
                   variant="glass"
                   size="lg"
                   className="text-lg px-8 py-4 font-bold"
@@ -287,9 +194,9 @@ export default function Index() {
                 </Button>
               </Link>
             </motion.div>
-            
+
             {/* Quick Contact Info - Compact */}
-            <motion.div 
+            <motion.div
               className="grid md:grid-cols-3 gap-6 text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -317,9 +224,15 @@ export default function Index() {
       </motion.section>
 
       {/* Contact Modal */}
-      <ContactModal 
-        isOpen={isContactModalOpen} 
-        onClose={() => setIsContactModalOpen(false)} 
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
+
+      {/* WhatsApp Floating Button */}
+      <WhatsAppFloat 
+        phoneNumber="919876543210"
+        defaultMessage="Hello AAASHA TRADING! I'm interested in your steel trading and recycling services. Could you please provide more information about your products and pricing?"
       />
     </div>
   );

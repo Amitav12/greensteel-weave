@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, Play, X, Recycle, Leaf, Factory, TrendingUp, Award, Shield } from "lucide-react";
+import { Eye, Play, X, Recycle, Leaf, Factory, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import EnhancedProductCards from "./EnhancedProductCards";
 import coils from "@/assets/product-steel-coils.jpg";
@@ -83,110 +82,12 @@ export default function ProductShowcase() {
           </p>
         </motion.div>
 
-        {/* Perfectly Centered Layout */}
+        {/* Full-Width Product Display */}
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex justify-center">
-            <div className="w-full max-w-6xl">
-              <div className="grid lg:grid-cols-2 gap-8 items-start">
-                {/* Left Column - Additional Content Cards */}
-                <div className="space-y-6">
-                  {/* Process Overview Card */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100"
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="p-2 bg-green-500 rounded-lg">
-                        <Recycle className="w-5 h-5 text-white" />
-                      </div>
-                      <h4 className="font-bold text-gray-900">Our Process</h4>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3 text-sm">
-                        <div className="w-2 h-2 bg-green-500 rounded-full" />
-                        <span className="text-gray-700">Collection & Sorting</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-sm">
-                        <div className="w-2 h-2 bg-green-500 rounded-full" />
-                        <span className="text-gray-700">Processing & Refinement</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-sm">
-                        <div className="w-2 h-2 bg-green-500 rounded-full" />
-                        <span className="text-gray-700">Quality Assurance</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-sm">
-                        <div className="w-2 h-2 bg-green-500 rounded-full" />
-                        <span className="text-gray-700">Distribution</span>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Environmental Impact Card */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.1 }}
-                    className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm"
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="p-2 bg-emerald-500 rounded-lg">
-                        <Leaf className="w-5 h-5 text-white" />
-                      </div>
-                      <h4 className="font-bold text-gray-900">Impact Stats</h4>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="text-center">
-                        <div className="text-2xl font-black text-green-600 mb-1">95%</div>
-                        <div className="text-xs text-gray-600">Waste Reduction</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-black text-emerald-600 mb-1">74%</div>
-                        <div className="text-xs text-gray-600">Energy Savings</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-black text-teal-600 mb-1">100%</div>
-                        <div className="text-xs text-gray-600">Recyclable Output</div>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Certifications Card */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="bg-gradient-to-br from-gray-50 to-green-50 rounded-xl p-6 border border-gray-100"
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="p-2 bg-gray-700 rounded-lg">
-                        <Shield className="w-5 h-5 text-white" />
-                      </div>
-                      <h4 className="font-bold text-gray-900">Certifications</h4>
-                    </div>
-                    <div className="space-y-2">
-                      <Badge className="bg-green-100 text-green-700 border-green-200 text-xs">
-                        <Award className="w-3 h-3 mr-1" />
-                        ISO 14001
-                      </Badge>
-                      <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 text-xs">
-                        <Award className="w-3 h-3 mr-1" />
-                        ISO 9001
-                      </Badge>
-                      <Badge className="bg-teal-100 text-teal-700 border-teal-200 text-xs">
-                        <Award className="w-3 h-3 mr-1" />
-                        OHSAS 18001
-                      </Badge>
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* Right Column - Featured Product Display */}
-                <div>
+            <div className="w-full max-w-4xl">
+              {/* Single Column - Full-Width Featured Product Display */}
+              <div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -264,8 +165,8 @@ export default function ProductShowcase() {
                             key={i}
                             onClick={() => setIndex(i)}
                             className={`w-2 h-2 rounded-full transition-all duration-300 ${i === index
-                                ? 'bg-green-400 scale-125'
-                                : 'bg-white/50 hover:bg-white/70'
+                              ? 'bg-green-400 scale-125'
+                              : 'bg-white/50 hover:bg-white/70'
                               }`}
                           />
                         ))}
@@ -305,33 +206,12 @@ export default function ProductShowcase() {
                           </div>
                         </div>
 
-                        {/* Features List */}
-                        <div className="space-y-2">
-                          <h5 className="font-bold text-gray-900 text-sm">Key Features:</h5>
-                          <div className="grid grid-cols-2 gap-1">
-                            {current.features.map((feature, i) => (
-                              <div key={feature} className="flex items-center gap-2 text-xs text-gray-600">
-                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
-                                {feature}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* CTA Buttons */}
-                        <div className="flex gap-3 pt-2">
+                        {/* View Details Button Only */}
+                        <div className="flex justify-center pt-2">
                           <Button
                             variant="outline"
                             size="sm"
-                            className="flex-1 border-green-200 text-green-600 hover:bg-green-50"
-                          >
-                            <Award className="w-4 h-4 mr-1" />
-                            Request Quote
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="flex-1 border-green-200 text-green-600 hover:bg-green-50"
+                            className="border-green-200 text-green-600 hover:bg-green-50"
                             onClick={() => setShowModal(true)}
                           >
                             <Eye className="w-4 h-4 mr-1" />
@@ -427,27 +307,11 @@ export default function ProductShowcase() {
                                   {current.description}
                                 </p>
 
-                                {/* Features */}
-                                <div className="space-y-3">
-                                  <h4 className="font-bold text-white">Key Features:</h4>
-                                  <div className="space-y-2">
-                                    {current.features.map((feature, i) => (
-                                      <div key={feature} className="flex items-center gap-3 text-gray-300">
-                                        <div className="w-2 h-2 bg-green-500 rounded-full" />
-                                        {feature}
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
                               </div>
 
-                              {/* CTA Buttons */}
-                              <div className="flex gap-4">
-                                <Button variant="outline" className="flex-1 bg-white/10 border-white/20 text-white hover:bg-white/20">
-                                  <Award className="w-4 h-4 mr-2" />
-                                  Request Quote
-                                </Button>
-                                <Button variant="outline" className="flex-1 bg-white/10 border-white/20 text-white hover:bg-white/20">
+                              {/* Download Specs Button Only */}
+                              <div className="flex justify-center">
+                                <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
                                   <TrendingUp className="w-4 h-4 mr-2" />
                                   Download Specs
                                 </Button>
@@ -458,7 +322,6 @@ export default function ProductShowcase() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
               </div>
             </div>
           </div>

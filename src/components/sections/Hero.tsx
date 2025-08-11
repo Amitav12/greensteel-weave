@@ -10,6 +10,9 @@ import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
 import { SpringButton } from "@/components/animations/SpringButton";
 import { AnimeText } from "@/components/animations/AnimeText";
 import { useTypewriter } from "@/hooks/useTypewriter";
+import ImageCarousel from "@/components/ui/ImageCarousel";
+import { CarouselErrorBoundary } from "@/components/ui/CarouselErrorBoundary";
+import { carouselImages } from "@/data/carouselImages";
 import { Link } from "react-router-dom";
 import { Recycle, ArrowRight, Leaf, Factory, TrendingUp, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-recycling-steel.jpg";
@@ -293,15 +296,38 @@ export default function Hero() {
         </Canvas>
       </div>
 
-      {/* Background Image with React Spring */}
+      {/* Image Carousel Background with Error Boundary */}
+      <CarouselErrorBoundary
+        fallback={
+          <div className="absolute inset-0 z-10">
+            <img
+              src={heroImage}
+              alt="Recycling and steel operations"
+              className="absolute inset-0 h-full w-full object-cover opacity-25"
+              loading="eager"
+            />
+          </div>
+        }
+      >
+        <ImageCarousel 
+          images={carouselImages}
+          autoPlayInterval={6000}
+          transitionDuration={1500}
+          pauseOnHover={true}
+          respectReducedMotion={true}
+          className="z-10"
+        />
+      </CarouselErrorBoundary>
+
+      {/* Fallback Background Image with React Spring (lower z-index) */}
       <animated.div
         style={backgroundSpring}
-        className="absolute inset-0"
+        className="absolute inset-0 z-5"
       >
         <img
           src={heroImage}
           alt="Recycling and steel operations"
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
+          className="absolute inset-0 h-full w-full object-cover opacity-15"
           loading="eager"
         />
       </animated.div>
@@ -309,25 +335,25 @@ export default function Hero() {
       {/* Enhanced Glass Morphism Overlays with Eco Theme */}
       <animated.div
         style={glassSpring}
-        className="absolute inset-0 bg-gradient-to-br from-white/5 via-green-500/10 to-black/20"
+        className="absolute inset-0 bg-gradient-to-br from-white/5 via-green-500/10 to-black/20 z-20"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 z-20" />
 
       {/* Additional Eco-themed Background Patterns */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10 z-25">
         <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-to-br from-green-400/20 to-transparent rounded-full blur-xl" />
         <div className="absolute top-3/4 right-1/4 w-48 h-48 bg-gradient-to-br from-emerald-400/15 to-transparent rounded-full blur-2xl" />
         <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-br from-teal-400/25 to-transparent rounded-full blur-lg" />
       </div>
 
       {/* Recycling-themed Grid Pattern */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5 z-25">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(34,197,94,0.3),transparent_50%),radial-gradient(circle_at_75%_75%,rgba(16,185,129,0.2),transparent_50%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_49%,rgba(34,197,94,0.1)_50%,transparent_51%)] bg-[length:60px_60px]" />
       </div>
 
       {/* Enhanced Eco-Themed Particles */}
-      <div ref={particlesRef} className="absolute inset-0">
+      <div ref={particlesRef} className="absolute inset-0 z-30">
         {/* Recycling Symbol Particles */}
         {[...Array(8)].map((_, i) => (
           <div
@@ -416,7 +442,7 @@ export default function Hero() {
       {/* Main Content */}
       <animated.div
         style={heroSpring}
-        className="container relative z-10 py-24"
+        className="container relative z-40 py-24"
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -626,7 +652,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 4 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40"
       >
         <motion.div
           animate={{ y: [0, 15, 0] }}
