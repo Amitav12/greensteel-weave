@@ -1,7 +1,6 @@
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { motion } from "framer-motion";
 import { businessProcessSegments } from "@/data/businessProcessSegments";
 
 interface FeaturedVideosProps {
@@ -21,20 +20,17 @@ export default function FeaturedVideos({
 }: FeaturedVideosProps) {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(muted);
-  const [isHovered, setIsHovered] = useState(false);
   
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // Initialize video refs array
   useEffect(() => {
     videoRefs.current = new Array(businessProcessSegments.length).fill(null);
   }, []);
 
-  // Auto-play functionality
+  // Auto-play functionality - sequential playback
   useEffect(() => {
-    if (autoplay && !isHovered) {
+    if (autoplay) {
       const currentVideo = videoRefs.current[currentVideoIndex];
       if (currentVideo) {
         currentVideo.play().catch((error) => {
@@ -44,9 +40,9 @@ export default function FeaturedVideos({
         onVideoStart?.(businessProcessSegments[currentVideoIndex].id);
       }
     }
-  }, [currentVideoIndex, autoplay, isHovered, onVideoStart]);
+  }, [currentVideoIndex, autoplay, onVideoStart]);
 
-  // Handle video end
+  // Handle video end - move to next video automatically
   const handleVideoEnd = () => {
     onVideoComplete?.(businessProcessSegments[currentVideoIndex].id);
     
@@ -58,41 +54,6 @@ export default function FeaturedVideos({
       setCurrentVideoIndex(0);
       onAllVideosComplete?.();
     }
-  };
-
-  // Handle play/pause toggle
-  const togglePlayPause = () => {
-    const currentVideo = videoRefs.current[currentVideoIndex];
-    if (currentVideo) {
-      if (isPlaying) {
-        currentVideo.pause();
-        setIsPlaying(false);
-      } else {
-        currentVideo.play();
-        setIsPlaying(true);
-      }
-    }
-  };
-
-  // Handle mute toggle
-  const toggleMute = () => {
-    const currentVideo = videoRefs.current[currentVideoIndex];
-    if (currentVideo) {
-      currentVideo.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
-
-  // Video selection
-  const selectVideo = (index: number) => {
-    // Pause current video
-    const currentVideo = videoRefs.current[currentVideoIndex];
-    if (currentVideo) {
-      currentVideo.pause();
-    }
-    
-    setCurrentVideoIndex(index);
-    setIsPlaying(false);
   };
 
   return (
@@ -112,43 +73,35 @@ export default function FeaturedVideos({
             <span className="text-red-500">Featured</span>{" "}
             <span className="text-white">Videos</span>
           </h2>
-          <p className="text-lg text-green-300 max-w-2xl mx-auto">
-            Discover our business process through these featured videos
-          </p>
         </motion.div>
 
-        {/* Video Grid Layout - Matches Screenshot */}
-        <div 
-          ref={containerRef}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          {businessProcessSegments.slice(0, 2).map((segment, index) => (
+        {/* Mobile-shaped Video Grid - Three Videos in Row */}
+        <div className="flex flex-col lg:flex-row gap-6 max-w-6xl mx-auto justify-center">
+          {businessProcessSegments.map((segment, index) => (
             <motion.div
               key={segment.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
-              className={`relative rounded-2xl overflow-hidden shadow-2xl border-2 transition-all duration-300 ${
+              className={`relative rounded-3xl overflow-hidden shadow-2xl border-2 transition-all duration-300 ${
                 index === currentVideoIndex 
-                  ? 'border-green-400 shadow-green-400/50' 
-                  : 'border-white/20 hover:border-green-400/50'
-              }`}
-              onClick={() => selectVideo(index)}
+                  ? 'border-green-400 shadow-green-400/50 scale-105' 
+                  : 'border-white/20'
+              } flex-1 max-w-sm mx-auto lg:mx-0`}
             >
-              {/* Video Element */}
-              <div className="relative aspect-video bg-black">
+              {/* Mobile-shaped Video Container */}
+              <div className="relative aspect-[9/16] bg-black">
                 <video
                   ref={(el) => videoRefs.current[index] = el}
                   className="w-full h-full object-cover"
                   poster={segment.poster}
-                  muted={isMuted}
+                  muted={muted}
                   onEnded={handleVideoEnd}
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}
                   preload="metadata"
+                  playsInline
                 >
                   {segment.sources.map((source, sourceIndex) => (
                     <source
@@ -169,88 +122,62 @@ export default function FeaturedVideos({
                 {/* Video Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
-                {/* Play Indicator */}
-                {index === currentVideoIndex && (
+                {/* Active Playing Indicator */}
+                {index === currentVideoIndex && isPlaying && (
                   <div className="absolute top-4 right-4">
                     <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
                   </div>
                 )}
 
-                {/* Video Controls */}
-                <AnimatePresence>
-                  {(isHovered || !isPlaying) && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute inset-0 flex items-center justify-center"
-                    >
-                      {index === currentVideoIndex && (
-                        <div className="flex items-center space-x-4">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              togglePlayPause();
-                            }}
-                            className="w-16 h-16 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 border border-white/30"
-                          >
-                            {isPlaying ? (
-                              <Pause className="w-8 h-8" />
-                            ) : (
-                              <Play className="w-8 h-8 ml-1" />
-                            )}
-                          </button>
-                          
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleMute();
-                            }}
-                            className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300 border border-white/30"
-                          >
-                            {isMuted ? (
-                              <VolumeX className="w-5 h-5" />
-                            ) : (
-                              <Volume2 className="w-5 h-5" />
-                            )}
-                          </button>
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Step Indicator */}
+                <div className="absolute top-4 left-4">
+                  <div className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                    Step {index + 1}
+                  </div>
+                </div>
 
-                {/* Video Info Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="bg-white/10 backdrop-blur-xl rounded-lg p-4 border border-white/20">
-                    <h3 className="text-xl font-bold text-white mb-2">
+                {/* Video Info Overlay - Bottom */}
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <div className="bg-black/40 backdrop-blur-sm rounded-lg p-3 border border-white/20">
+                    <h3 className="text-lg font-bold text-white mb-1">
                       {segment.title}
                     </h3>
-                    <p className="text-white/80 text-sm line-clamp-2">
-                      {segment.description}
+                    <p className="text-white/80 text-xs line-clamp-2">
+                      {segment.description.substring(0, 100)}...
                     </p>
                   </div>
                 </div>
+
+                {/* Now Playing Indicator */}
+                {index === currentVideoIndex && (
+                  <div className="absolute bottom-20 left-4">
+                    <div className="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold flex items-center">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse mr-2"></div>
+                      Now Playing
+                    </div>
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Video Progress Indicators */}
+        {/* Progress Indicators */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           className="flex justify-center mt-8 space-x-3"
         >
-          {businessProcessSegments.slice(0, 2).map((_, index) => (
-            <button
+          {businessProcessSegments.map((_, index) => (
+            <div
               key={index}
-              onClick={() => selectVideo(index)}
-              className={`w-4 h-4 rounded-full transition-all duration-300 ${
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentVideoIndex
                   ? 'bg-green-400 scale-125 shadow-lg shadow-green-400/50'
-                  : 'bg-white/40 hover:bg-white/60'
+                  : index < currentVideoIndex
+                  ? 'bg-green-600'
+                  : 'bg-white/40'
               }`}
             />
           ))}
@@ -263,7 +190,7 @@ export default function FeaturedVideos({
           animate={{ opacity: 1, y: 0 }}
           className="text-center mt-6"
         >
-          <h3 className="text-2xl font-bold text-white">
+          <h3 className="text-xl font-bold text-white">
             Now Playing: {businessProcessSegments[currentVideoIndex]?.title}
           </h3>
         </motion.div>
