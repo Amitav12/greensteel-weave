@@ -18,9 +18,8 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
   onVideoComplete,
   onAllVideosComplete
 }) => {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(muted);
+  const [videoMutedStates, setVideoMutedStates] = useState<boolean[]>([]);
   const [isInView, setIsInView] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -30,7 +29,7 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
       id: 'initial-contact',
       title: 'Initial Contact',
       description: 'Comprehensive consultation and assessment',
-      thumbnail: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=600&fit=crop&crop=center',
+      thumbnail: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop&crop=center',
       src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
       step: 1
     },
@@ -38,7 +37,7 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
       id: 'processing-logistics',
       title: 'Processing & Logistics',
       description: 'Advanced processing and coordination',
-      thumbnail: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=600&fit=crop&crop=center',
+      thumbnail: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop&crop=center',
       src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
       step: 2
     },
@@ -46,11 +45,16 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
       id: 'delivery-completion',
       title: 'Final Delivery',
       description: 'Seamless delivery and completion',
-      thumbnail: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=600&fit=crop&crop=center',
+      thumbnail: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&h=300&fit=crop&crop=center',
       src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
       step: 3
     }
   ];
+
+  // Initialize muted states
+  useEffect(() => {
+    setVideoMutedStates(new Array(videos.length).fill(muted));
+  }, [muted, videos.length]);
 
   // Intersection Observer for autoplay when section comes into view
   useEffect(() => {
@@ -59,8 +63,8 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
         setIsInView(entry.isIntersecting);
       },
       {
-        threshold: 0.3, // Trigger when 30% of the section is visible
-        rootMargin: '0px 0px -100px 0px' // Offset to trigger earlier
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
       }
     );
 
@@ -75,50 +79,62 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
     };
   }, []);
 
-  // Auto-start video when section comes into view
+  // Auto-start all videos when section comes into view
   useEffect(() => {
     if (isInView && autoplay && !isPlaying) {
-      playCurrentVideo();
+      playAllVideos();
     }
   }, [isInView, autoplay]);
 
-  useEffect(() => {
-    if (autoplay && videos.length > 0 && isInView) {
-      playCurrentVideo();
-    }
-  }, [autoplay, currentVideoIndex, isInView]);
-
-  const playCurrentVideo = () => {
-    const currentVideo = videoRefs.current[currentVideoIndex];
-    if (currentVideo) {
-      currentVideo.currentTime = 0;
-      currentVideo.muted = isMuted;
-      currentVideo.play().then(() => {
-        setIsPlaying(true);
-        onVideoStart?.(videos[currentVideoIndex].id);
-      }).catch(console.error);
-    }
+  const playAllVideos = () => {
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        video.currentTime = 0;
+        video.muted = videoMutedStates[index];
+        video.play().then(() => {
+          onVideoStart?.(videos[index].id);
+        }).catch(console.error);
+      }
+    });
+    setIsPlaying(true);
   };
 
-  const handleVideoEnd = () => {
-    const currentVideoId = videos[currentVideoIndex].id;
-    onVideoComplete?.(currentVideoId);
-    
-    if (currentVideoIndex < videos.length - 1) {
-      setCurrentVideoIndex(prev => prev + 1);
-    } else {
-      // All videos completed, restart from beginning
-      setCurrentVideoIndex(0);
-      onAllVideosComplete?.();
-    }
+  const pauseAllVideos = () => {
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        video.pause();
+      }
+    });
     setIsPlaying(false);
   };
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-    const currentVideo = videoRefs.current[currentVideoIndex];
-    if (currentVideo) {
-      currentVideo.muted = !isMuted;
+  const toggleVideoMute = (index: number) => {
+    const newMutedStates = [...videoMutedStates];
+    newMutedStates[index] = !newMutedStates[index];
+    setVideoMutedStates(newMutedStates);
+    
+    const video = videoRefs.current[index];
+    if (video) {
+      video.muted = newMutedStates[index];
+    }
+  };
+
+  const handleVideoEnd = (index: number) => {
+    onVideoComplete?.(videos[index].id);
+    
+    // Check if all videos have ended
+    const allEnded = videoRefs.current.every(video => video?.ended);
+    if (allEnded) {
+      setIsPlaying(false);
+      onAllVideosComplete?.();
+    }
+  };
+
+  const togglePlayPause = () => {
+    if (isPlaying) {
+      pauseAllVideos();
+    } else {
+      playAllVideos();
     }
   };
 
@@ -146,9 +162,25 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
           </p>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-8">
+          {/* Global Play/Pause Control */}
+          <div className="flex gap-4">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={togglePlayPause}
+              className="p-4 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200"
+            >
+              {isPlaying ? (
+                <Pause className="w-6 h-6 text-green-600" />
+              ) : (
+                <Play className="w-6 h-6 text-green-600" />
+              )}
+            </motion.button>
+          </div>
+
           {/* Video Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl w-full">
             {videos.map((video, index) => (
               <motion.div
                 key={video.id}
@@ -156,10 +188,8 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.6 }}
-                className={`relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ${
-                  currentVideoIndex === index ? 'ring-4 ring-green-500 ring-opacity-50' : ''
-                }`}
-                style={{ aspectRatio: '9/16' }} // Mobile-like aspect ratio
+                className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                style={{ aspectRatio: '16/10' }} // Wider and shorter aspect ratio
               >
                 {/* Step Badge */}
                 <div className="absolute top-4 left-4 z-20">
@@ -168,18 +198,34 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
                   </div>
                 </div>
 
+                {/* Individual Mute Button */}
+                <div className="absolute top-4 right-4 z-20">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => toggleVideoMute(index)}
+                    className="p-2 bg-black/50 backdrop-blur-sm rounded-full hover:bg-black/70 transition-all duration-300"
+                  >
+                    {videoMutedStates[index] ? (
+                      <VolumeX className="w-4 h-4 text-white" />
+                    ) : (
+                      <Volume2 className="w-4 h-4 text-white" />
+                    )}
+                  </motion.button>
+                </div>
+
                 {/* Now Playing Indicator */}
                 <AnimatePresence>
-                  {currentVideoIndex === index && isPlaying && (
+                  {isPlaying && (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
-                      className="absolute top-4 right-4 z-20"
+                      className="absolute top-16 right-4 z-20"
                     >
-                      <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-2">
-                        <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                        Now Playing
+                      <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                        <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+                        Playing
                       </div>
                     </motion.div>
                   )}
@@ -191,10 +237,11 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
                     ref={el => videoRefs.current[index] = el}
                     className="w-full h-full object-cover"
                     poster={video.thumbnail}
-                    onEnded={handleVideoEnd}
-                    muted={isMuted}
+                    onEnded={() => handleVideoEnd(index)}
+                    muted={videoMutedStates[index]}
                     playsInline
                     preload="metadata"
+                    loop
                   >
                     <source src={video.src} type="video/mp4" />
                   </video>
@@ -210,7 +257,7 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
                 </div>
 
                 {/* Progress Bar */}
-                {currentVideoIndex === index && (
+                {isPlaying && (
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/30">
                     <motion.div
                       initial={{ width: 0 }}
@@ -223,37 +270,6 @@ const FeaturedVideos: React.FC<FeaturedVideosProps> = ({
               </motion.div>
             ))}
           </div>
-
-          {/* Controls */}
-          <div className="flex lg:flex-col gap-4">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={toggleMute}
-              className="p-4 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200"
-            >
-              {isMuted ? (
-                <VolumeX className="w-6 h-6 text-gray-600" />
-              ) : (
-                <Volume2 className="w-6 h-6 text-green-600" />
-              )}
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Video Indicators */}
-        <div className="flex justify-center gap-3 mt-8">
-          {videos.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentVideoIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                currentVideoIndex === index 
-                  ? 'bg-green-600 scale-125' 
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-            />
-          ))}
         </div>
       </div>
     </motion.section>
