@@ -28,17 +28,17 @@ const getCurrencySymbol = (code: string): string => {
 const getCountryFlag = (code: string): string => {
   const flags: { [key: string]: string } = {
     'CNY': '/lovable-uploads/82b77987-9612-46f8-b031-ef5aee1370fe.png', // China
-    'IDR': '/lovable-uploads/b83671c2-d48e-4e87-8bde-f2cc8567ca27.png', // Indonesia
+    'IDR': '/lovable-uploads/99f834fc-dfc1-42ce-85b2-4aaa0bd32dab.png', // Indonesia
     'INR': '/lovable-uploads/8b4fb8cf-d20a-42f9-8bde-f2cc8567ca27.png', // India
     'EUR': '/lovable-uploads/52d6deef-90b7-44d0-b157-6e1d09de914b.png', // European Union
     'ZAR': '/lovable-uploads/024f0f84-0553-4da3-bd3a-a551e8fe0db0.png', // South Africa
     'PLN': '/lovable-uploads/f9b0fca8-13e9-4800-8575-21f017d07f78.png', // Poland
     'TRY': '/lovable-uploads/d126b7a6-4374-4148-bb0a-981f4cb4712c.png', // Turkey
     'RUB': '/lovable-uploads/28fc1481-cd9f-4227-ac00-3d3d69ad1ad8.png', // Russia
-    'BDT': '\uD83C\uDDE7\uD83C\uDDE9', // 🇧🇩 Bangladesh (fallback to emoji)
-    'JPY': '\uD83C\uDDEF\uD83C\uDDF5', // 🇯🇵 Japan (fallback to emoji)
-    'GBP': '\uD83C\uDDEC\uD83C\uDDE7', // 🇬🇧 United Kingdom (fallback to emoji)
-    'BRL': '\uD83C\uDDE7\uD83C\uDDF7', // 🇧🇷 Brazil (fallback to emoji)
+    'BDT': '/lovable-uploads/fe1ebe27-8179-45a7-9f22-26472a7aa721.png', // Bangladesh
+    'JPY': '/lovable-uploads/ea0c61f5-6f70-4afd-818b-62a304aad636.png', // Japan
+    'GBP': '/lovable-uploads/e3391ddb-c67b-46f2-b5a9-16003379cb87.png', // United Kingdom
+    'BRL': '/lovable-uploads/cb1b0667-e557-499d-ab88-38faa1be7f9d.png', // Brazil
   };
   return flags[code] || '\uD83C\uDFF3\uFE0F'; // 🏳️ fallback
 };
@@ -95,65 +95,132 @@ const CurrencyCardSkeleton = () => (
 // Enhanced stock market background animation component
 const StockMarketBackground = () => {
   const [points, setPoints] = useState<{ x: number; y: number }[]>([]);
+  const [secondaryPoints, setSecondaryPoints] = useState<{ x: number; y: number }[]>([]);
 
   useEffect(() => {
     const generatePoints = () => {
       const newPoints = [];
-      for (let i = 0; i <= 100; i += 2) {
+      const newSecondaryPoints = [];
+      
+      // Main chart line
+      for (let i = 0; i <= 100; i += 1) {
         newPoints.push({
           x: i,
-          y: 50 + Math.sin(i * 0.1) * 20 + Math.random() * 10
+          y: 20 + Math.sin(i * 0.08) * 25 + Math.cos(i * 0.12) * 15 + Math.random() * 8
         });
       }
+      
+      // Secondary chart line
+      for (let i = 0; i <= 100; i += 1) {
+        newSecondaryPoints.push({
+          x: i,
+          y: 60 + Math.sin(i * 0.06) * 20 + Math.cos(i * 0.1) * 12 + Math.random() * 6
+        });
+      }
+      
       setPoints(newPoints);
+      setSecondaryPoints(newSecondaryPoints);
     };
 
     generatePoints();
-    const interval = setInterval(generatePoints, 3000);
+    const interval = setInterval(generatePoints, 4000);
     return () => clearInterval(interval);
   }, []);
 
-  const pathD = points.map((point, index) => 
+  const mainPathD = points.map((point, index) => 
+    `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
+  ).join(' ');
+  
+  const secondaryPathD = secondaryPoints.map((point, index) => 
     `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
   ).join(' ');
 
   return (
-    <div className="absolute inset-0 opacity-5 overflow-hidden pointer-events-none">
-      <svg width="100%" height="100%" className="absolute inset-0">
+    <div className="absolute inset-0 opacity-15 overflow-hidden pointer-events-none">
+      <svg width="100%" height="100%" className="absolute inset-0" viewBox="0 0 100 100" preserveAspectRatio="none">
         <defs>
           <linearGradient id="stockGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#10B981" stopOpacity="0.1" />
-            <stop offset="50%" stopColor="#059669" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#10B981" stopOpacity="0.1" />
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.3" />
+            <stop offset="50%" stopColor="#059669" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#10B981" stopOpacity="0.3" />
           </linearGradient>
+          <linearGradient id="stockGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#34D399" stopOpacity="0.2" />
+            <stop offset="50%" stopColor="#10B981" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#34D399" stopOpacity="0.2" />
+          </linearGradient>
+          <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#10B981" stopOpacity="0.1" />
+            <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
+          </radialGradient>
         </defs>
+        
+        {/* Background glow effect */}
+        <ellipse cx="50" cy="50" rx="60" ry="40" fill="url(#glowGradient)" />
+        
+        {/* Main chart line */}
         <motion.path
-          d={pathD}
+          d={mainPathD}
           stroke="url(#stockGradient)"
-          strokeWidth="2"
+          strokeWidth="0.8"
           fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 3, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
         />
-        {/* Additional floating elements */}
-        {[...Array(8)].map((_, i) => (
+        
+        {/* Secondary chart line */}
+        <motion.path
+          d={secondaryPathD}
+          stroke="url(#stockGradient2)"
+          strokeWidth="0.6"
+          fill="none"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 3.5, ease: "easeInOut", repeat: Infinity, repeatType: "reverse", delay: 0.5 }}
+        />
+        
+        {/* Animated data points */}
+        {points.filter((_, i) => i % 8 === 0).map((point, i) => (
           <motion.circle
-            key={i}
-            cx={`${10 + i * 12}%`}
-            cy={`${30 + Math.sin(i) * 20}%`}
-            r="2"
+            key={`main-${i}`}
+            cx={point.x}
+            cy={point.y}
+            r="0.3"
             fill="#10B981"
-            opacity="0.2"
+            opacity="0.6"
             animate={{
-              cy: [`${30 + Math.sin(i) * 20}%`, `${50 + Math.sin(i) * 20}%`],
-              opacity: [0.2, 0.6, 0.2]
+              r: [0.3, 0.6, 0.3],
+              opacity: [0.6, 1, 0.6]
             }}
             transition={{
-              duration: 2 + i * 0.3,
+              duration: 2,
               ease: "easeInOut",
               repeat: Infinity,
-              repeatType: "reverse"
+              delay: i * 0.2
+            }}
+          />
+        ))}
+        
+        {/* Floating grid lines */}
+        {[...Array(6)].map((_, i) => (
+          <motion.line
+            key={`grid-${i}`}
+            x1="0"
+            y1={20 + i * 12}
+            x2="100"
+            y2={20 + i * 12}
+            stroke="#10B981"
+            strokeWidth="0.1"
+            opacity="0.3"
+            animate={{
+              opacity: [0.1, 0.4, 0.1]
+            }}
+            transition={{
+              duration: 3 + i * 0.5,
+              ease: "easeInOut",
+              repeat: Infinity,
+              delay: i * 0.3
             }}
           />
         ))}
@@ -310,22 +377,17 @@ export default function CurrencyExchangeRates() {
                        whileHover={{ scale: 1.1 }}
                        transition={{ duration: 0.15 }}
                      >
-                       {getCountryFlag(currency.code).startsWith('/lovable-uploads/') ? (
-                         <img 
-                           src={getCountryFlag(currency.code)}
-                           alt={`${getCountryName(currency.code)} Flag`}
-                           className="w-full h-full object-cover rounded-sm"
-                           loading="lazy"
-                         />
-                       ) : (
-                         <span 
-                           className="text-lg font-bold" 
-                           title={`${getCountryName(currency.code)} Flag`}
-                           style={{ fontFamily: '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif' }}
-                         >
-                           {getCountryFlag(currency.code)}
-                         </span>
-                       )}
+                        <img 
+                          src={getCountryFlag(currency.code)}
+                          alt={`${getCountryName(currency.code)} Flag`}
+                          className="w-full h-full object-cover rounded-sm"
+                          loading="lazy"
+                          onError={(e) => {
+                            // Fallback to emoji if image fails to load
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.parentElement!.innerHTML = `<span class="text-lg font-bold" title="${getCountryName(currency.code)} Flag">🏳️</span>`;
+                          }}
+                        />
                      </motion.div>
                     <div>
                       <span className="font-bold text-sm text-gray-900">{currency.code}</span>
