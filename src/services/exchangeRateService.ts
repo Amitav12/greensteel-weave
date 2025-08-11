@@ -258,21 +258,57 @@ export const getExchangeRates = async (): Promise<CurrencyData[]> => {
   }
 };
 
-// Schedule automatic updates at 9 AM and 5 PM UK time
-export const scheduleAutomaticUpdates = (callback: () => void): (() => void) => {
-  const checkAndUpdate = () => {
-    const { lastUpdate } = loadRatesFromStorage();
-    if (shouldUpdateRates(lastUpdate)) {
-      callback();
+// Schedule automatic updates at 9 AM and 5 PM UK time only
+export const scheduleAutomaticUpdates = (callback: () => void) => {
+  // Function to get next update time (9 AM or 5 PM UK time)
+  const getNextUpdateTime = () => {
+    const now = new Date();
+    // Convert to UK time (accounting for BST/GMT)
+    const ukNow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/London" }));
+    
+    const today9AM = new Date(ukNow);
+    today9AM.setHours(9, 0, 0, 0);
+    
+    const today5PM = new Date(ukNow);
+    today5PM.setHours(17, 0, 0, 0);
+    
+    const tomorrow9AM = new Date(ukNow);
+    tomorrow9AM.setDate(tomorrow9AM.getDate() + 1);
+    tomorrow9AM.setHours(9, 0, 0, 0);
+    
+    // Determine next update time
+    if (ukNow < today9AM) {
+      return today9AM;
+    } else if (ukNow < today5PM) {
+      return today5PM;
+    } else {
+      return tomorrow9AM;
     }
   };
 
-  // Check every hour
-  const interval = setInterval(checkAndUpdate, 60 * 60 * 1000);
-  
-  // Initial check
-  checkAndUpdate();
+  // Function to schedule the next update
+  const scheduleNext = () => {
+    const nextUpdate = getNextUpdateTime();
+    const now = new Date();
+    const ukNow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/London" }));
+    const delay = nextUpdate.getTime() - ukNow.getTime();
+    
+    console.log(`Next currency update scheduled for: ${nextUpdate.toLocaleString('en-GB', { timeZone: 'Europe/London' })} (UK time)`);
+    console.log(`Time until next update: ${Math.round(delay / (1000 * 60 * 60 * 24))} days, ${Math.round((delay % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))} hours, ${Math.round((delay % (1000 * 60 * 60)) / (1000 * 60))} minutes`);
+    
+    const timeoutId = setTimeout(() => {
+      callback();
+      scheduleNext(); // Schedule the next update after this one completes
+    }, delay);
+    
+    return timeoutId;
+  };
+
+  // Start the scheduling
+  const timeoutId = scheduleNext();
   
   // Return cleanup function
-  return () => clearInterval(interval);
+  return () => {
+    clearTimeout(timeoutId);
+  };
 };
