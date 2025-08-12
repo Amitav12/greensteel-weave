@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
-// Import video files as assets
-import step1Video from "/Buisness_process_videos/step1-aaasha-trading.mp4";
-import step2Video from "/Buisness_process_videos/step2-aaasha-trading.mp4"; 
-import step3Video from "/Buisness_process_videos/step3-aaasha-trading.mp4";
+// Import video files with proper relative paths
+import step1Video from "../../Buisness_process_videos/step1-aaasha-trading.mp4";
+import step2Video from "../../Buisness_process_videos/step2-aaasha-trading.mp4"; 
+import step3Video from "../../Buisness_process_videos/step3-aaasha-trading.mp4";
 
 interface Video {
   id: string;
