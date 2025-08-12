@@ -1,6 +1,7 @@
+
 import { Helmet } from "react-helmet";
 import SEO from "@/components/seo/SEO";
-import { BusinessProcessVideo } from "@/components/sections/BusinessProcessVideo";
+import BusinessProcessVideo from "@/components/sections/BusinessProcessVideo";
 import HeroSimple from "@/components/sections/HeroSimple";
 import ServicesOverviewSimple from "@/components/sections/ServicesOverviewSimple";
 import EnhancedProductCards from "@/components/sections/EnhancedProductCards";
@@ -58,7 +59,7 @@ export default function Index() {
         <LiveDataTickerSimple />
         
         {/* WhatsApp Float */}
-        <WhatsAppFloat />
+        <WhatsAppFloat phoneNumber="+1234567890" />
       </div>
     </>
   );

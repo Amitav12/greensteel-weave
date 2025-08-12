@@ -1,14 +1,15 @@
 
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 
 interface Props {
   title: string;
   description: string;
   keywords?: string;
   canonical?: string;
+  ogImage?: string;
 }
 
-export default function SEO({ title, description, keywords, canonical }: Props) {
+export default function SEO({ title, description, keywords, canonical, ogImage }: Props) {
   try {
     return (
       <Helmet>
@@ -16,6 +17,8 @@ export default function SEO({ title, description, keywords, canonical }: Props) 
         <meta name="description" content={description} />
         {keywords && <meta name="keywords" content={keywords} />}
         {canonical && <link rel="canonical" href={canonical} />}
+        {ogImage && <meta property="og:image" content={ogImage} />}
+        {ogImage && <meta name="twitter:image" content={ogImage} />}
       </Helmet>
     );
   } catch (error) {
