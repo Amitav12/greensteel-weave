@@ -2,6 +2,11 @@ import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
+// Import video files as assets
+import step1Video from "/Buisness_process_videos/step1-aaasha-trading.mp4";
+import step2Video from "/Buisness_process_videos/step2-aaasha-trading.mp4"; 
+import step3Video from "/Buisness_process_videos/step3-aaasha-trading.mp4";
+
 interface Video {
   id: string;
   step: number;
@@ -25,24 +30,24 @@ const videos: Video[] = [
     step: 1,
     title: "Initial Consultation",
     description: "We start by understanding your specific needs and requirements.",
-    src: "/Buisness_process_videos/step1-aaasha-trading.mp4",
-    captions: "/captions/step1.vtt",
+    src: step1Video,
+    captions: "/captions/segment1.vtt",
   },
   {
     id: "step2",
     step: 2,
     title: "Material Sourcing",
     description: "Our global network ensures the best quality materials at competitive prices.",
-    src: "/Buisness_process_videos/step2-aaasha-trading.mp4",
-    captions: "/captions/step2.vtt",
+    src: step2Video,
+    captions: "/captions/segment2.vtt",
   },
   {
     id: "step3",
     step: 3,
     title: "Processing & Recycling",
     description: "Eco-friendly processes transform scrap into valuable resources.",
-    src: "/Buisness_process_videos/step3-aaasha-trading.mp4",
-    captions: "/captions/step3.vtt",
+    src: step3Video,
+    captions: "/captions/segment3.vtt",
   },
 ];
 
@@ -84,6 +89,7 @@ export default function FeaturedVideos({
   }, [videoPlaying, onAllVideosComplete]);
 
   const handleVideoLoaded = (index: number) => {
+    console.log(`Video ${index} loaded successfully`);
     setVideoLoaded(prev => {
       const newState = [...prev];
       newState[index] = true;
@@ -200,7 +206,7 @@ export default function FeaturedVideos({
                       onVideoComplete?.(video.id);
                     }}
                     onError={(e) => {
-                      console.error("Video error:", e);
+                      console.error("Video error for index", index, ":", e);
                       setVideoLoaded(prev => {
                         const newState = [...prev];
                         newState[index] = false;
