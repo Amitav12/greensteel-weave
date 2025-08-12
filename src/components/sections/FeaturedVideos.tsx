@@ -26,11 +26,8 @@ const videos: Video[] = [
     step: 1,
     title: "Initial Consultation",
     description: "We start by understanding your specific needs and requirements.",
-<<<<<<< HEAD
-    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-=======
+
     src: "src/Buisness_process_videos/step1-aaasha-trading.mp4",
->>>>>>> 344c099 (Update FeaturedVideos component and other changes)
     captions: "/captions/step1.vtt",
   },
   {
@@ -38,23 +35,17 @@ const videos: Video[] = [
     step: 2,
     title: "Material Sourcing",
     description: "Our global network ensures the best quality materials at competitive prices.",
-<<<<<<< HEAD
-    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-=======
+
     src: "src/Buisness_process_videos/step2-aaasha-trading.mp4",
->>>>>>> 344c099 (Update FeaturedVideos component and other changes)
-    captions: "/captions/step2.vtt",
+
   },
   {
     id: "step3",
     step: 3,
     title: "Processing & Recycling",
     description: "Eco-friendly processes transform scrap into valuable resources.",
-<<<<<<< HEAD
-    src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-=======
+
     src: "src/Buisness_process_videos/step3-aaasha-trading.mp4",
->>>>>>> 344c099 (Update FeaturedVideos component and other changes)
     captions: "/captions/step3.vtt",
   },
 ];
