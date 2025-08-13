@@ -3,16 +3,16 @@ import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ContactModal from "@/components/ui/ContactModal";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Recycle, Menu, X, Factory, Award, Users, FileText, Newspaper, Sun, Moon } from "lucide-react";
+import { Phone, Recycle, Menu, X, Factory, Award, Users, Newspaper } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { Switch } from "@/components/ui/switch";
 
 const nav = [
   { to: "/", label: "Home", icon: Recycle },
   { to: "/about", label: "About", icon: Users },
   { to: "/products", label: "Products", icon: Factory },
   { to: "/partners", label: "Partners", icon: Award },
-  { to: "/certifications", label: "Certifications", icon: FileText },
   { to: "/news", label: "News", icon: Newspaper },
 ];
 
@@ -42,8 +42,8 @@ export default function SiteHeader() {
     <>
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? "bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-[#81C784]/20 dark:border-[#4CAF50]/20 shadow-lg" 
-          : "bg-white dark:bg-gray-900 border-b border-[#81C784]/10 dark:border-[#4CAF50]/10 shadow-sm"
+          ? "bg-white/20 dark:bg-gray-900/20 backdrop-blur-lg border-b border-[#81C784]/20 dark:border-[#4CAF50]/20 shadow-lg" 
+          : "bg-white/20 dark:bg-gray-900/20 border-b border-[#81C784]/10 dark:border-[#4CAF50]/10 shadow-sm"
       }`}>
         <div className="container flex h-20 items-center justify-between px-6">
           {/* Logo */}
@@ -74,38 +74,19 @@ export default function SiteHeader() {
           
           {/* Desktop CTA and Theme Toggle */}
           <div className="hidden md:flex items-center gap-4">
-            {/* Theme Toggle Button */}
-            <motion.button
-              onClick={toggleTheme}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-3 rounded-lg bg-[#81C784]/10 dark:bg-[#4CAF50]/10 hover:bg-[#81C784]/20 dark:hover:bg-[#4CAF50]/20 text-[#2E7D32] dark:text-[#4CAF50] transition-all duration-300"
-              aria-label="Toggle theme"
-            >
-              <AnimatePresence mode="wait">
-                {isDark ? (
-                  <motion.div
-                    key="sun"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Sun className="w-5 h-5" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="moon"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Moon className="w-5 h-5" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+            {/* Theme Toggle Switch */}
+            <div className="flex items-center">
+              <label htmlFor="theme-toggle" className="sr-only">Toggle dark mode</label>
+              <Switch
+                id="theme-toggle"
+                checked={isDark}
+                onCheckedChange={(checked) => {
+                  if (checked !== isDark) toggleTheme();
+                }}
+                aria-label="Toggle theme"
+                className="h-7 w-12 data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-gray-300 dark:data-[state=unchecked]:bg-gray-600"
+              />
+            </div>
             
             <Button 
               onClick={() => setIsContactModalOpen(true)}
@@ -119,38 +100,19 @@ export default function SiteHeader() {
           
           {/* Mobile Menu Button and Theme Toggle */}
           <div className="md:hidden flex items-center gap-2">
-            {/* Mobile Theme Toggle */}
-            <motion.button
-              onClick={toggleTheme}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-3 rounded-lg bg-[#81C784]/10 dark:bg-[#4CAF50]/10 hover:bg-[#81C784]/20 dark:hover:bg-[#4CAF50]/20 text-[#2E7D32] dark:text-[#4CAF50] transition-all duration-300"
-              aria-label="Toggle theme"
-            >
-              <AnimatePresence mode="wait">
-                {isDark ? (
-                  <motion.div
-                    key="sun"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Sun className="w-5 h-5" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="moon"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Moon className="w-5 h-5" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+            {/* Mobile Theme Toggle Switch */}
+            <div className="flex items-center">
+              <label htmlFor="theme-toggle-mobile" className="sr-only">Toggle dark mode</label>
+              <Switch
+                id="theme-toggle-mobile"
+                checked={isDark}
+                onCheckedChange={(checked) => {
+                  if (checked !== isDark) toggleTheme();
+                }}
+                aria-label="Toggle theme"
+                className="h-6 w-11 data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-gray-300 dark:data-[state=unchecked]:bg-gray-600"
+              />
+            </div>
             
             {/* Mobile Menu Button */}
             <motion.button
