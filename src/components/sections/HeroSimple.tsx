@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Recycle, Leaf, Factory, TrendingUp, Sparkles } from "lucide-react";
-import SimpleImageCarousel from "@/components/ui/SimpleImageCarousel";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -84,28 +83,28 @@ export default function HeroSimple() {
 
   return (
     <section ref={containerRef} className="relative h-screen flex items-start justify-center overflow-hidden bg-transparent pt-8">
-      {/* Enhanced Background with Image Carousel */}
+      {/* Enhanced Background with Video */}
       <animated.div
         style={backgroundSpring}
         className="absolute inset-0"
       >
-        {/* Enhanced Image Carousel with only the 5 new industrial images */}
-        <SimpleImageCarousel 
-          images={[
-            "/lovable-uploads/b388c060-872e-4f0e-bfbc-528b4f713584.png",
-            "/lovable-uploads/c731af5f-b373-492b-8a87-5f5bb800df2b.png",
-            "/lovable-uploads/2ea524d3-9629-4e45-a879-2e407f5cc008.png",
-            "/lovable-uploads/cb1ebe87-f93f-43ef-875a-ecee4a3223ec.png",
-            "/lovable-uploads/68d07f7b-3ac2-47a4-a5cb-b1ae1872ad90.png"
-          ]}
-          interval={5000}
-          className="z-10"
-          pauseOnHover={true}
-          respectReducedMotion={true}
-        />
+        {/* Background Video */}
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-10"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        >
+          <source src="/buisness1-video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         
-        {/* Dark overlay for text readability - removed white background */}
-        <div className="absolute inset-0 bg-black/20 z-15" />
+        {/* Enhanced dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/30 to-black/50 z-15" />
+        {/* Additional subtle overlay for consistent contrast */}
+        <div className="absolute inset-0 bg-black/15 z-16" />
       </animated.div>
 
       {/* Floating Particles Effect */}
@@ -141,15 +140,15 @@ export default function HeroSimple() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-center">
             {/* Left Column - Main Content */}
             <div ref={heroContentRef} className="text-left space-y-1 md:space-y-2 flex flex-col justify-center">
-              {/* Company Badge - removed white/glass background */}
-              <div className="inline-flex items-center rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 text-sm font-bold bg-black/40 backdrop-blur-2xl text-white shadow-2xl border border-green-400/30 -mt-8 md:-mt-6 lg:-mt-4 -mb-4 md:-mb-3 lg:-mb-2">
+              {/* Company Badge - enhanced for better visibility */}
+              <div className="inline-flex items-center rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 text-sm font-bold bg-black/60 backdrop-blur-3xl text-white shadow-2xl border border-green-400/40 -mt-8 md:-mt-6 lg:-mt-4 -mb-4 md:-mb-3 lg:-mb-2" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                 >
                   <Recycle className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 mr-2 md:mr-3 lg:mr-4 text-green-400" />
                 </motion.div>
-                <div className="text-sm md:text-base lg:text-lg font-black">
+                <div className="text-sm md:text-base lg:text-lg font-black" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
                   AAASHA TRADING LTD
                 </div>
               </div>
@@ -162,42 +161,63 @@ export default function HeroSimple() {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
+                    style={{ textShadow: '0 4px 16px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.7)' }}
                   >
                     Transforming
-                    {/* Subtle glow effect */}
-                    <div className="absolute inset-0 text-white/20 blur-sm">Transforming</div>
+                    {/* Enhanced glow effect for better visibility */}
+                    <div className="absolute inset-0 text-white/30 blur-md">Transforming</div>
+                    <div className="absolute inset-0 text-white/15 blur-lg">Transforming</div>
                   </motion.span>
 
                   <motion.span
-                    className="block bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent drop-shadow-2xl relative"
+                    className="block relative"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                   >
-                    Waste into
-                    {/* Animated shimmer effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent bg-clip-text text-transparent animate-pulse opacity-50">
+                    {/* Dark text shadow for contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent blur-sm opacity-80">
+                      Waste into
+                    </div>
+                    <div className="absolute inset-0 text-black/60 blur-md">
+                      Waste into
+                    </div>
+                    <span className="relative bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent font-black" style={{ textShadow: '0 4px 16px rgba(0,0,0,0.8)' }}>
+                      Waste into
+                    </span>
+                    {/* Enhanced shimmer effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-clip-text text-transparent animate-pulse opacity-60">
                       Waste into
                     </div>
                   </motion.span>
 
                   <motion.span
-                    className="block bg-gradient-to-r from-emerald-400 via-teal-400 to-green-400 bg-clip-text text-transparent drop-shadow-2xl relative"
+                    className="block relative"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                   >
-                    Value
-                    {/* Glowing underline */}
-                    <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full opacity-60 blur-sm" />
+                    {/* Dark text shadow for contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-teal-400 to-green-400 bg-clip-text text-transparent blur-sm opacity-80">
+                      Value
+                    </div>
+                    <div className="absolute inset-0 text-black/60 blur-md">
+                      Value
+                    </div>
+                    <span className="relative bg-gradient-to-r from-emerald-400 via-teal-400 to-green-400 bg-clip-text text-transparent font-black" style={{ textShadow: '0 4px 16px rgba(0,0,0,0.8)' }}>
+                      Value
+                    </span>
+                    {/* Enhanced glowing underline */}
+                    <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full opacity-70 blur-sm shadow-lg" />
+                    <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full opacity-90" />
                   </motion.span>
                 </h1>
               </div>
 
-              {/* Subtitle */}
-              <div className="text-sm md:text-base lg:text-lg text-green-300 font-medium max-w-xl">
+              {/* Subtitle - enhanced for better readability */}
+              <div className="text-sm md:text-base lg:text-lg text-green-200 font-medium max-w-xl" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8), 0 1px 4px rgba(0,0,0,0.6)' }}>
                 Leading the future of{" "}
-                <span className="text-green-400 font-bold">
+                <span className="text-green-300 font-bold" style={{ textShadow: '0 2px 12px rgba(0,0,0,0.8), 0 1px 4px rgba(0,0,0,0.6)' }}>
                   Sustainable Recycling Solutions
                 </span>
               </div>

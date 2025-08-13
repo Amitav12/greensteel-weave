@@ -30,41 +30,24 @@ const videos: Video[] = [
     step: 1,
     title: "Initial Consultation",
     description: "We start by understanding your specific needs and requirements.",
-
-
-    src: "src/Buisness_process_videos/step1-aaasha-trading.mp4",
-    captions: "/captions/step1.vtt",
-
     src: step1Video,
     captions: "/captions/segment1.vtt",
-
   },
   {
     id: "step2",
     step: 2,
     title: "Material Sourcing",
     description: "Our global network ensures the best quality materials at competitive prices.",
-
-
-    src: "src/Buisness_process_videos/step2-aaasha-trading.mp4",
-
-
     src: step2Video,
     captions: "/captions/segment2.vtt",
-
   },
   {
     id: "step3",
     step: 3,
     title: "Processing & Recycling",
     description: "Eco-friendly processes transform scrap into valuable resources.",
-
-
-    src: "src/Buisness_process_videos/step3-aaasha-trading.mp4",
-    captions: "/captions/step3.vtt",
-
     src: step3Video,
-
+    captions: "/captions/step3.vtt",
   },
 ];
 

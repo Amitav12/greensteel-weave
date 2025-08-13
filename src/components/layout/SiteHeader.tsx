@@ -32,10 +32,10 @@ export default function SiteHeader() {
   }, []);
 
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
-    `px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 ${
+    `relative px-5 py-3 rounded-xl text-sm font-bold tracking-wide transition-all duration-500 group ${
       isActive 
-        ? "text-white bg-[#2E7D32] dark:bg-[#4CAF50] shadow-lg" 
-        : "text-[#2E7D32] dark:text-[#4CAF50] hover:text-white hover:bg-[#4CAF50] hover:shadow-md"
+        ? "text-white bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 shadow-lg shadow-green-500/25 dark:shadow-green-400/20" 
+        : "text-slate-700 dark:text-slate-200 hover:text-white hover:bg-gradient-to-r hover:from-emerald-500 hover:via-green-500 hover:to-teal-500 hover:shadow-lg hover:shadow-green-500/20 hover:scale-105"
     }`;
 
   return (

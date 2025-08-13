@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Volume2, VolumeX, X, Eye } from 'lucide-react';
 import { BusinessProcessVideoProps } from '@/types/video';
 import { businessProcessSegments } from '@/data/businessProcessSegments';
+
+
 
 export default function BusinessProcessVideo({
   segments = businessProcessSegments,
@@ -302,6 +304,117 @@ export default function BusinessProcessVideo({
             </p>
           </motion.div>
 
+          {/* MAIN VIDEO PANEL - GUARANTEED VISIBLE */}
+          <div
+            className="mb-12 sm:mb-16"
+            style={{
+              backgroundColor: '#f3f4f6',
+              padding: '24px',
+              borderRadius: '16px',
+              border: '4px solid #10b981',
+              minHeight: '500px'
+            }}
+          >
+            {/* Video Badge - Always Visible */}
+            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+              <span
+                style={{
+                  backgroundColor: '#10b981',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+                }}
+              >
+                🎥 Business Process Video Carousel
+              </span>
+            </div>
+
+            {/* Video Container - Always Visible */}
+            <div style={{ width: '100%' }}>
+              <div
+                style={{
+                  position: 'relative',
+                  backgroundColor: '#1e3a8a',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                  border: '2px solid #10b981',
+                  minHeight: '400px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                {/* Background Content - Always Shows */}
+                <div style={{ textAlign: 'center', color: 'white', padding: '32px' }}>
+                  <div
+                    style={{
+                      width: '80px',
+                      height: '80px',
+                      backgroundColor: '#10b981',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: '0 auto 24px',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                    }}
+                  >
+                    <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <h3 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '12px' }}>
+                    Business Process Overview Video
+                  </h3>
+                  <p style={{ color: '#93c5fd', fontSize: '16px', marginBottom: '16px' }}>
+                    Complete workflow demonstration
+                  </p>
+                  <div
+                    style={{
+                      backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                      border: '1px solid #10b981',
+                      borderRadius: '8px',
+                      padding: '16px',
+                      marginTop: '16px'
+                    }}
+                  >
+                    <p style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '8px' }}>
+                      ✅ Video Panel Successfully Loaded
+                    </p>
+                    <p style={{ color: '#6ee7b7', fontSize: '14px' }}>
+                      Path: src/Buisness_process_videos/buisness2_video.mp4
+                    </p>
+                  </div>
+                </div>
+
+                {/* Video Element */}
+                <video
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    zIndex: 10
+                  }}
+                  controls
+                  muted
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src="src/Buisness_process_videos/buisness2_video.mp4" type="video/mp4" />
+                  <source src="/src/Buisness_process_videos/buisness2_video.mp4" type="video/mp4" />
+                  <source src="./src/Buisness_process_videos/buisness2_video.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </div>
+
           {/* Full-Width Video Container */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -325,112 +438,211 @@ export default function BusinessProcessVideo({
             </div>
 
             {/* Full-Width Video Grid - Enhanced for better visibility */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-              {segments.map((segment, index) => (
-                <motion.div
-                  key={segment.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="hp-bp-video-item w-full"
-                >
-                  {/* Enhanced Video Container - Larger and more prominent */}
-                  <div
-                    className={`relative bg-black rounded-2xl overflow-hidden shadow-xl transition-all duration-500 cursor-pointer w-full ${index === currentSegmentIndex
-                      ? 'ring-4 ring-green-500 shadow-green-500/40 scale-105'
-                      : 'hover:shadow-2xl hover:scale-102'
-                      }`}
-                    style={{ aspectRatio: '16/9', minHeight: '280px' }}
-                    onClick={() => openVideoModal(index)}
+            <div className="space-y-6 lg:space-y-8">
+              {/* First two cards */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                {segments.slice(0, 2).map((segment, index) => (
+                  <motion.div
+                    key={segment.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    className="hp-bp-video-item w-full"
                   >
-                    {/* Video Element */}
-                    <video
-                      ref={videoRefs[index]}
-                      className="w-full h-full object-cover"
-                      muted={isMuted}
-                      playsInline
-                      poster={segment.poster}
-                      aria-label={`Business process video: ${segment.title}`}
+                    {/* Enhanced Video Container - Larger and more prominent */}
+                    <div
+                      className={`relative bg-black rounded-2xl overflow-hidden shadow-xl transition-all duration-500 cursor-pointer w-full ${index === currentSegmentIndex
+                        ? 'ring-4 ring-green-500 shadow-green-500/40 scale-105'
+                        : 'hover:shadow-2xl hover:scale-102'
+                        }`}
+                      style={{ aspectRatio: '16/9', minHeight: '280px' }}
+                      onClick={() => openVideoModal(index)}
                     >
-                      Your browser does not support the video tag.
-                    </video>
+                      {/* Video Element */}
+                      <video
+                        ref={videoRefs[index]}
+                        className="w-full h-full object-cover"
+                        muted={isMuted}
+                        playsInline
+                        poster={segment.poster}
+                        aria-label={`Business process video: ${segment.title}`}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
 
-                    {/* Loading Indicator */}
-                    {isLoading[index] && (
-                      <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
-                        <div className="flex flex-col items-center space-y-3">
-                          <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
-                          <p className="text-white text-base">Loading...</p>
+                      {/* Loading Indicator */}
+                      {isLoading[index] && (
+                        <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
+                          <div className="flex flex-col items-center space-y-3">
+                            <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+                            <p className="text-white text-base">Loading...</p>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
 
-                    {/* Play Overlay for autoplay fallback */}
-                    {showPlayOverlay && index === 0 && (
-                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-20">
-                        <motion.button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleManualPlay();
-                          }}
-                          className="bg-green-600 hover:bg-green-700 text-white rounded-full p-6 shadow-xl transition-all duration-300"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          aria-label="Play business process videos"
-                        >
-                          <Play className="w-10 h-10 ml-1" />
-                        </motion.button>
-                      </div>
-                    )}
+                      {/* Play Overlay for autoplay fallback */}
+                      {showPlayOverlay && index === 0 && (
+                        <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-20">
+                          <motion.button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleManualPlay();
+                            }}
+                            className="bg-green-600 hover:bg-green-700 text-white rounded-full p-6 shadow-xl transition-all duration-300"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            aria-label="Play business process videos"
+                          >
+                            <Play className="w-10 h-10 ml-1" />
+                          </motion.button>
+                        </div>
+                      )}
 
-                    {/* Enhanced Video Overlay Info */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex items-end">
-                      <div className="p-6 w-full">
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <h3 className="text-white text-lg font-bold mb-2">
-                              {segment.title}
-                            </h3>
-                            <div className="flex items-center space-x-3">
-                              <span className="text-green-400 text-sm font-bold bg-green-400/20 rounded-full px-3 py-1">
-                                Step {index + 1}
-                              </span>
-                              {index === currentSegmentIndex && (
-                                <div className="flex items-center space-x-2">
-                                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                  <span className="text-green-400 text-sm font-bold">Now Playing</span>
-                                </div>
-                              )}
+                      {/* Enhanced Video Overlay Info */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex items-end">
+                        <div className="p-6 w-full">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <h3 className="text-white text-lg font-bold mb-2">
+                                {segment.title}
+                              </h3>
+                              <div className="flex items-center space-x-3">
+                                <span className="text-green-400 text-sm font-bold bg-green-400/20 rounded-full px-3 py-1">
+                                  Step {index + 1}
+                                </span>
+                                {index === currentSegmentIndex && (
+                                  <div className="flex items-center space-x-2">
+                                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span className="text-green-400 text-sm font-bold">Now Playing</span>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Enhanced Video Title and View Details Button */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: index * 0.1 + 0.2 }}
-                    className="mt-6 px-2 text-center"
-                  >
-                    <h4 className="text-gray-900 font-bold text-xl mb-4">
-                      {segment.title}
-                    </h4>
-                    <button
-                      onClick={() => openVideoModal(index)}
-                      className="inline-flex items-center space-x-2 text-green-600 hover:text-green-700 font-semibold text-base transition-all duration-300 bg-green-50 hover:bg-green-100 px-6 py-3 rounded-xl shadow-sm hover:shadow-md"
-                      aria-label={`View details for ${segment.title}`}
+                    {/* Enhanced Video Title and View Details Button */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 + 0.2 }}
+                      className="mt-6 px-2 text-center"
                     >
-                      <Eye className="w-5 h-5" />
-                      <span>View Details</span>
-                    </button>
+                      <h4 className="text-gray-900 font-bold text-xl mb-4">
+                        {segment.title}
+                      </h4>
+                      <button
+                        onClick={() => openVideoModal(index)}
+                        className="inline-flex items-center space-x-2 text-green-600 hover:text-green-700 font-semibold text-base transition-all duration-300 bg-green-50 hover:bg-green-100 px-6 py-3 rounded-xl shadow-sm hover:shadow-md"
+                        aria-label={`View details for ${segment.title}`}
+                      >
+                        <Eye className="w-5 h-5" />
+                        <span>View Details</span>
+                      </button>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              ))}
+                ))}
+              </div>
+
+
+
+              {/* Third card */}
+              <div className="grid grid-cols-1 gap-6 lg:gap-8">
+                {segments.slice(2).map((segment, index) => {
+                  const actualIndex = index + 2;
+                  return (
+                    <motion.div
+                      key={segment.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: actualIndex * 0.1 }}
+                      className="hp-bp-video-item w-full max-w-md mx-auto"
+                    >
+                      {/* Enhanced Video Container - Larger and more prominent */}
+                      <div
+                        className={`relative bg-black rounded-2xl overflow-hidden shadow-xl transition-all duration-500 cursor-pointer w-full ${actualIndex === currentSegmentIndex
+                          ? 'ring-4 ring-green-500 shadow-green-500/40 scale-105'
+                          : 'hover:shadow-2xl hover:scale-102'
+                          }`}
+                        style={{ aspectRatio: '16/9', minHeight: '280px' }}
+                        onClick={() => openVideoModal(actualIndex)}
+                      >
+                        {/* Video Element */}
+                        <video
+                          ref={videoRefs[actualIndex]}
+                          className="w-full h-full object-cover"
+                          muted={isMuted}
+                          playsInline
+                          poster={segment.poster}
+                          aria-label={`Business process video: ${segment.title}`}
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+
+                        {/* Loading Indicator */}
+                        {isLoading[actualIndex] && (
+                          <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
+                            <div className="flex flex-col items-center space-y-3">
+                              <div className="w-10 h-10 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+                              <p className="text-white text-base">Loading...</p>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Enhanced Video Overlay Info */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex items-end">
+                          <div className="p-6 w-full">
+                            <div className="flex items-center justify-between">
+                              <div className="flex-1">
+                                <h3 className="text-white text-lg font-bold mb-2">
+                                  {segment.title}
+                                </h3>
+                                <div className="flex items-center space-x-3">
+                                  <span className="text-green-400 text-sm font-bold bg-green-400/20 rounded-full px-3 py-1">
+                                    Step {actualIndex + 1}
+                                  </span>
+                                  {actualIndex === currentSegmentIndex && (
+                                    <div className="flex items-center space-x-2">
+                                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                      <span className="text-green-400 text-sm font-bold">Now Playing</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Enhanced Video Title and View Details Button */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: actualIndex * 0.1 + 0.2 }}
+                        className="mt-6 px-2 text-center"
+                      >
+                        <h4 className="text-gray-900 font-bold text-xl mb-4">
+                          {segment.title}
+                        </h4>
+                        <button
+                          onClick={() => openVideoModal(actualIndex)}
+                          className="inline-flex items-center space-x-2 text-green-600 hover:text-green-700 font-semibold text-base transition-all duration-300 bg-green-50 hover:bg-green-100 px-6 py-3 rounded-xl shadow-sm hover:shadow-md"
+                          aria-label={`View details for ${segment.title}`}
+                        >
+                          <Eye className="w-5 h-5" />
+                          <span>View Details</span>
+                        </button>
+                      </motion.div>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Enhanced Progress Indicator */}

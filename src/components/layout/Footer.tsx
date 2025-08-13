@@ -32,7 +32,7 @@ export default function Footer() {
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-green-900 text-white">
       {/* Main Footer */}
       <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-1">
             <motion.div
@@ -101,31 +101,6 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </motion.div>
-          </div>
-
-          {/* Newsletter */}
-          <div className="lg:col-span-1">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h4 className="text-lg font-bold text-white mb-4">Stay Updated</h4>
-              <p className="text-gray-300 mb-4 text-sm">
-                Get latest steel industry updates and news.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="flex-1 px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm"
-                />
-                <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors">
-                  Subscribe
-                </button>
-              </div>
             </motion.div>
           </div>
         </div>
