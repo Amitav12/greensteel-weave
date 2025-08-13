@@ -10,6 +10,7 @@ import {
   CheckCircle,
   Quote
 } from "lucide-react";
+import businessProcessMp4 from "@/Buisness_process_videos/BusinessProcess.mp4";
 
 const values = [
   {
@@ -164,12 +165,24 @@ export default function About() {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="w-full aspect-[6/7] bg-gradient-to-br from-green-100 to-emerald-200 rounded-3xl shadow-2xl flex items-center justify-center">
-                <div className="text-center text-green-700">
-                  <Factory className="w-16 h-16 mx-auto mb-4" />
-                  <p className="text-lg font-semibold">Steel Recycling Facility</p>
+              {/* Video card replaces the static gradient card */}
+              <div className="w-full aspect-[6/7] rounded-3xl overflow-hidden shadow-2xl relative">
+                <video
+                  className="absolute inset-0 w-full h-full object-cover"
+                  src={businessProcessMp4}
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label="Steel Recycling Facility"
+                />
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/40 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm border border-white/20">
+                  Steel Recycling Facility
                 </div>
               </div>
+              {/* CO₂ badge (unchanged) */}
               <div className="absolute -bottom-6 -left-6 bg-green-600 text-white p-6 rounded-2xl shadow-xl">
                 <div className="text-3xl font-black mb-2">890K+</div>
                 <div className="text-green-200">Tons CO₂ Saved</div>
@@ -231,7 +244,7 @@ export default function About() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-white dark:from-gray-800 dark:to-gray-700 transition-colors duration-300">
+      <section className="py-20 bg-gradient-to-br from-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -247,12 +260,12 @@ export default function About() {
             <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
               Meet Our{" "}
               <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                Leadership
+                Expert Team
               </span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Our experienced team combines industry expertise with innovative thinking
-              to drive sustainable growth and deliver exceptional results.
+              Our dedicated team of professionals brings together decades of experience
+              in steel trading, sustainability, and business excellence.
             </p>
           </motion.div>
 

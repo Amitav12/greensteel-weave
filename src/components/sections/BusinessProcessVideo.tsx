@@ -304,112 +304,23 @@ export default function BusinessProcessVideo({
             </p>
           </motion.div>
 
-          {/* MAIN VIDEO PANEL - GUARANTEED VISIBLE */}
-          <div
-            className="mb-12 sm:mb-16"
-            style={{
-              backgroundColor: '#f3f4f6',
-              padding: '24px',
-              borderRadius: '16px',
-              border: '4px solid #10b981',
-              minHeight: '500px'
-            }}
-          >
-            {/* Video Badge - Always Visible */}
-            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-              <span
-                style={{
-                  backgroundColor: '#10b981',
-                  color: 'white',
-                  padding: '12px 24px',
-                  borderRadius: '8px',
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-                }}
-              >
-                🎥 Business Process Video Carousel
-              </span>
-            </div>
-
-            {/* Video Container - Always Visible */}
-            <div style={{ width: '100%' }}>
-              <div
-                style={{
-                  position: 'relative',
-                  backgroundColor: '#1e3a8a',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                  border: '2px solid #10b981',
-                  minHeight: '400px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
-                {/* Background Content - Always Shows */}
-                <div style={{ textAlign: 'center', color: 'white', padding: '32px' }}>
-                  <div
-                    style={{
-                      width: '80px',
-                      height: '80px',
-                      backgroundColor: '#10b981',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: '0 auto 24px',
-                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-                    }}
-                  >
-                    <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  <h3 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '12px' }}>
-                    Business Process Overview Video
-                  </h3>
-                  <p style={{ color: '#93c5fd', fontSize: '16px', marginBottom: '16px' }}>
-                    Complete workflow demonstration
-                  </p>
-                  <div
-                    style={{
-                      backgroundColor: 'rgba(16, 185, 129, 0.2)',
-                      border: '1px solid #10b981',
-                      borderRadius: '8px',
-                      padding: '16px',
-                      marginTop: '16px'
-                    }}
-                  >
-                    <p style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '8px' }}>
-                      ✅ Video Panel Successfully Loaded
-                    </p>
-                    <p style={{ color: '#6ee7b7', fontSize: '14px' }}>
-                      Path: src/Buisness_process_videos/buisness2_video.mp4
-                    </p>
-                  </div>
-                </div>
-
-                {/* Video Element */}
+          {/* Single Centered Business Process Video Card (50% width) */}
+          <div className="mb-12 sm:mb-16">
+            <div className="w-1/2 mx-auto">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-green-500/30 bg-black/30 backdrop-blur-sm">
                 <video
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    zIndex: 10
-                  }}
+                  className="w-full h-full object-cover"
                   controls
+                  autoPlay
                   muted
+                  loop
                   playsInline
                   preload="metadata"
+                  aria-label="Business Process Overview"
                 >
-                  <source src="src/Buisness_process_videos/buisness2_video.mp4" type="video/mp4" />
-                  <source src="/src/Buisness_process_videos/buisness2_video.mp4" type="video/mp4" />
-                  <source src="./src/Buisness_process_videos/buisness2_video.mp4" type="video/mp4" />
+                  <source src={businessProcessMp4} type="video/mp4" /> {/* use imported asset */}
+                  <source src="/buisness1-video.mp4" type="video/mp4" /> {/* public fallback */}
+                  Your browser does not support the video tag.
                 </video>
               </div>
             </div>

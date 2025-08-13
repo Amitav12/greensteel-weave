@@ -140,19 +140,7 @@ export default function HeroSimple() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-center">
             {/* Left Column - Main Content */}
             <div ref={heroContentRef} className="text-left space-y-1 md:space-y-2 flex flex-col justify-center">
-              {/* Company Badge - enhanced for better visibility */}
-              <div className="inline-flex items-center rounded-full px-4 md:px-6 lg:px-8 py-2 md:py-3 lg:py-4 text-sm font-bold bg-black/60 backdrop-blur-3xl text-white shadow-2xl border border-green-400/40 -mt-8 md:-mt-6 lg:-mt-4 -mb-4 md:-mb-3 lg:-mb-2" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                >
-                  <Recycle className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 mr-2 md:mr-3 lg:mr-4 text-green-400" />
-                </motion.div>
-                <div className="text-sm md:text-base lg:text-lg font-black" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
-                  AAASHA TRADING LTD
-                </div>
-              </div>
-
+              {/* Company Badge - removed as requested */}
               {/* Enhanced Main Headline */}
               <div className="space-y-2">
                 <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black tracking-tight leading-tight relative">
@@ -164,52 +152,29 @@ export default function HeroSimple() {
                     style={{ textShadow: '0 4px 16px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.7)' }}
                   >
                     Transforming
-                    {/* Enhanced glow effect for better visibility */}
-                    <div className="absolute inset-0 text-white/30 blur-md">Transforming</div>
-                    <div className="absolute inset-0 text-white/15 blur-lg">Transforming</div>
-                  </motion.span>
+            
+                   </motion.span>
 
+                  {/* Make "Waste into" white */}
                   <motion.span
-                    className="block relative"
+                    className="block text-white drop-shadow-2xl relative"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
+                    style={{ textShadow: '0 4px 16px rgba(0,0,0,0.8)' }}
                   >
-                    {/* Dark text shadow for contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent blur-sm opacity-80">
-                      Waste into
-                    </div>
-                    <div className="absolute inset-0 text-black/60 blur-md">
-                      Waste into
-                    </div>
-                    <span className="relative bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent font-black" style={{ textShadow: '0 4px 16px rgba(0,0,0,0.8)' }}>
-                      Waste into
-                    </span>
-                    {/* Enhanced shimmer effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent bg-clip-text text-transparent animate-pulse opacity-60">
-                      Waste into
-                    </div>
+                    Waste into
                   </motion.span>
 
+                  {/* Make "Value" white */}
                   <motion.span
-                    className="block relative"
+                    className="block text-white drop-shadow-2xl relative"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
+                    style={{ textShadow: '0 4px 16px rgba(0,0,0,0.8)' }}
                   >
-                    {/* Dark text shadow for contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-teal-400 to-green-400 bg-clip-text text-transparent blur-sm opacity-80">
-                      Value
-                    </div>
-                    <div className="absolute inset-0 text-black/60 blur-md">
-                      Value
-                    </div>
-                    <span className="relative bg-gradient-to-r from-emerald-400 via-teal-400 to-green-400 bg-clip-text text-transparent font-black" style={{ textShadow: '0 4px 16px rgba(0,0,0,0.8)' }}>
-                      Value
-                    </span>
-                    {/* Enhanced glowing underline */}
-                    <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full opacity-70 blur-sm shadow-lg" />
-                    <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full opacity-90" />
+                    Value
                   </motion.span>
                 </h1>
               </div>
@@ -273,14 +238,14 @@ export default function HeroSimple() {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
-                className="bg-black/20 backdrop-blur-3xl rounded-lg md:rounded-xl p-2 md:p-3 lg:p-4 border border-green-400/30 shadow-2xl relative overflow-hidden hover:border-green-300/50 transition-all duration-500 max-w-sm mx-auto"
+                className="bg-black/5 backdrop-blur-xl rounded-lg md:rounded-xl p-2 md:p-3 lg:p-4 border border-green-400/20 shadow-2xl relative overflow-hidden hover:border-green-300/40 transition-all duration-500 max-w-sm mx-auto"
               >
                 {/* Enhanced glass effect background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-emerald-400/10 to-teal-500/15" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(34,197,94,0.2),transparent_70%)]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-emerald-400/5 to-teal-500/8" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(34,197,94,0.08),transparent_70%)]" />
 
                 {/* Animated border glow */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-green-400/20 via-emerald-500/20 to-teal-500/20 opacity-0 hover:opacity-100 transition-opacity duration-500 blur-sm" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-green-400/15 via-emerald-500/15 to-teal-500/15 opacity-0 hover:opacity-100 transition-opacity duration-500 blur-sm" />
 
                 {/* Floating orbs */}
                 <div className="absolute top-4 right-4 w-3 h-3 bg-green-400/60 rounded-full animate-pulse" />

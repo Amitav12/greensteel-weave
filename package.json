@@ -17,6 +17,7 @@
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.5",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@react-spring/web": "^10.0.1",
     "@supabase/auth-helpers-react": "^0.4.0",
