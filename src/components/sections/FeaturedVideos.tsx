@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 
 // Import video files with proper relative paths
 import step1Video from "../../Buisness_process_videos/step1-aaasha-trading.mp4";
-import step2Video from "../../Buisness_process_videos/step2-aaasha-trading.mp4"; 
+import step2Video from "../../Buisness_process_videos/step2-aaasha-trading.mp4";
 import step3Video from "../../Buisness_process_videos/step3-aaasha-trading.mp4";
 
 interface Video {
@@ -51,12 +51,12 @@ const videos: Video[] = [
   },
 ];
 
-export default function FeaturedVideos({ 
-  autoplay = false, 
-  muted = false, 
-  onVideoStart, 
-  onVideoComplete, 
-  onAllVideosComplete 
+export default function FeaturedVideos({
+  autoplay = false,
+  muted = false,
+  onVideoStart,
+  onVideoComplete,
+  onAllVideosComplete
 }: FeaturedVideosProps) {
   const [videoLoaded, setVideoLoaded] = useState(videos.map(() => false));
   const [videoPlaying, setVideoPlaying] = useState(videos.map(() => autoplay));
@@ -103,7 +103,7 @@ export default function FeaturedVideos({
       newState[index] = !newState[index];
       return newState;
     });
-    
+
     if (videoRefs.current[index]) {
       videoRefs.current[index].muted = !videoMuted[index];
     }
@@ -143,7 +143,7 @@ export default function FeaturedVideos({
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.6 }}
                 className="relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
-                style={{ 
+                style={{
                   aspectRatio: '20/30',
                   minHeight: '500px'
                 }}
@@ -163,8 +163,8 @@ export default function FeaturedVideos({
                     onClick={() => toggleMute(index)}
                     className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
                   >
-                    {videoMuted[index] ? 
-                      <VolumeX className="w-4 h-4" /> : 
+                    {videoMuted[index] ?
+                      <VolumeX className="w-4 h-4" /> :
                       <Volume2 className="w-4 h-4" />
                     }
                   </motion.button>
@@ -229,7 +229,7 @@ export default function FeaturedVideos({
 
                   {/* Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  
+
                   {/* Video Info */}
                   <div className="absolute bottom-6 left-4 right-4 text-white">
                     <h3 className="font-bold text-lg md:text-xl mb-2">{video.title}</h3>
