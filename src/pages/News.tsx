@@ -1,67 +1,19 @@
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { Calendar, User, ArrowRight, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { TrendingUp, Award, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-const newsArticles = [
-  {
-    id: 1,
-    title: "AAASHA TRADING Achieves Record Recycling Milestone",
-    excerpt: "We're proud to announce that we've successfully recycled over 125,000 tons of steel materials, contributing significantly to environmental sustainability.",
-    category: "Company News",
-    author: "Rajesh Kumar",
-    date: "2024-01-15",
-    readTime: "3 min read"
-  },
-  {
-    id: 2,
-    title: "New Partnership with Leading Steel Manufacturers",
-    excerpt: "Strategic partnerships established with major steel producers to enhance our supply chain and provide better value to our customers.",
-    category: "Partnerships",
-    author: "Sunita Reddy",
-    date: "2024-01-10",
-    readTime: "5 min read"
-  },
-  {
-    id: 3,
-    title: "Steel Market Trends: Q1 2024 Analysis",
-    excerpt: "Comprehensive analysis of current steel market trends, pricing dynamics, and future outlook for the Indian steel industry.",
-    category: "Market Analysis",
-    author: "Amit Patel",
-    date: "2024-01-05",
-    readTime: "7 min read"
-  },
-  {
-    id: 4,
-    title: "Sustainability Initiative: Zero Waste Goal",
-    excerpt: "Our commitment to achieving zero waste to landfill by 2025 through innovative recycling processes and circular economy principles.",
-    category: "Sustainability",
-    author: "Priya Sharma",
-    date: "2023-12-28",
-    readTime: "4 min read"
-  },
-  {
-    id: 5,
-    title: "Digital Transformation in Steel Trading",
-    excerpt: "How digital technologies are revolutionizing the steel trading industry and improving customer experience and operational efficiency.",
-    category: "Technology",
-    author: "Rajesh Kumar",
-    date: "2023-12-20",
-    readTime: "6 min read"
-  },
-  {
-    id: 6,
-    title: "Quality Certification: ISO 9001:2015 Renewed",
-    excerpt: "Successfully renewed our ISO 9001:2015 certification, demonstrating our continued commitment to quality management excellence.",
-    category: "Quality",
-    author: "Priya Sharma",
-    date: "2023-12-15",
-    readTime: "2 min read"
-  }
-];
-
-const categories = ["All", "Company News", "Partnerships", "Market Analysis", "Sustainability", "Technology", "Quality"];
+const featuredArticle = {
+  id: 1,
+  title: "AAASHA TRADING Participates in Steel Summit 2024",
+  excerpt: "Our company was honored to participate in the 1st International Steel Industry & Global Market Summit organized by SteelRadar, celebrating 50 years of industry excellence.",
+  category: "Events",
+  author: "Rajesh Kumar",
+  date: "2024-01-20",
+  readTime: "4 min read",
+  image: "/lovable-uploads/steel-summit-award.jpg",
+  content: "The Steel Summit 2024 brought together industry leaders from across the globe to discuss the future of steel trading, sustainability initiatives, and market trends. AAASHA TRADING was proud to be recognized among the leading companies contributing to the steel industry's growth."
+};
 
 export default function News() {
   return (
@@ -102,10 +54,9 @@ export default function News() {
         </div>
       </section>
 
-      {/* News Articles */}
+      {/* Featured Article - Steel Summit */}
       <section className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-6">
-          {/* Featured Article */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -113,161 +64,130 @@ export default function News() {
             transition={{ duration: 0.8 }}
             className="mb-16"
           >
-            <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl p-8 text-white relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-600/20 to-emerald-600/20" />
-              <div className="relative z-10 grid lg:grid-cols-2 gap-8 items-center">
-                <div>
-                  <Badge className="bg-white/20 text-white mb-4">Featured Story</Badge>
-                  <h2 className="text-3xl md:text-4xl font-black mb-4">
-                    {newsArticles[0].title}
-                  </h2>
-                  <p className="text-green-100 mb-6 text-lg leading-relaxed">
-                    {newsArticles[0].excerpt}
-                  </p>
-                  <div className="flex items-center space-x-6 mb-6">
-                    <div className="flex items-center space-x-2">
-                      <User className="w-4 h-4" />
-                      <span className="text-sm">{newsArticles[0].author}</span>
+            <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-3xl overflow-hidden shadow-2xl">
+              <div className="grid lg:grid-cols-2 gap-0">
+                {/* Content Side */}
+                <div className="p-8 lg:p-12 text-white relative z-10">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-600/20 to-emerald-600/20" />
+                  <div className="relative z-10">
+                    <Badge className="bg-white/20 text-white mb-4 flex items-center w-fit">
+                      <Award className="w-4 h-4 mr-2" />
+                      Featured Story
+                    </Badge>
+                    <h2 className="text-3xl md:text-4xl font-black mb-4">
+                      {featuredArticle.title}
+                    </h2>
+                    <p className="text-green-100 mb-6 text-lg leading-relaxed">
+                      {featuredArticle.excerpt}
+                    </p>
+                    <p className="text-green-50 mb-8 leading-relaxed">
+                      {featuredArticle.content}
+                    </p>
+                    {/* Removed author/date row */}
+                    {/* Previously here:
+                    <div className="flex items-center space-x-6 mb-6">
+                      <div className="flex items-center space-x-2">
+                        <User className="w-4 h-4" />
+                        <span className="text-sm">{featuredArticle.author}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="w-4 h-4" />
+                        <span className="text-sm">{new Date(featuredArticle.date).toLocaleDateString()}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Calendar className="w-4 h-4" />
-                      <span className="text-sm">{new Date(newsArticles[0].date).toLocaleDateString()}</span>
-                    </div>
+                    */}
+                    {/* Removed the button below */}
+                    {/* <Button className="bg-white text-green-600 hover:bg-green-50">
+                      Read Full Article
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button> */}
                   </div>
-                  <Button className="bg-white text-green-600 hover:bg-green-50">
-                    Read Full Article
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
                 </div>
-                <div className="relative">
-                  <div className="w-full aspect-video bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl shadow-2xl flex items-center justify-center">
-                    <div className="text-center text-green-700">
-                      <TrendingUp className="w-16 h-16 mx-auto mb-4" />
-                      <p className="text-lg font-semibold">Featured News</p>
-                    </div>
-                  </div>
+                
+                {/* Image Side */}
+                <div className="relative h-[400px] lg:h-auto">
+                  <img
+                    src={featuredArticle.image}
+                    alt="Steel Summit Award Ceremony"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-black/20" />
                 </div>
               </div>
             </div>
           </motion.div>
-
-          {/* Category Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-wrap justify-center gap-3 mb-12"
-          >
-            {categories.map((category) => (
-              <button
-                key={category}
-                className="px-6 py-2 rounded-full font-semibold transition-all duration-300 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-green-800 hover:text-green-600 dark:hover:text-green-400"
-              >
-                {category}
-              </button>
-            ))}
-          </motion.div>
-
-          {/* Articles Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {newsArticles.slice(1).map((article, index) => (
-              <motion.article
-                key={article.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 dark:border-gray-700 overflow-hidden"
-              >
-                <div className="relative overflow-hidden">
-                  <div className="w-full h-48 bg-gradient-to-br from-green-100 to-emerald-200 flex items-center justify-center group-hover:scale-110 transition-transform duration-700">
-                    <TrendingUp className="w-12 h-12 text-green-600" />
-                  </div>
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-green-600 text-white">
-                      {article.category}
-                    </Badge>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors line-clamp-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed line-clamp-3">
-                    {article.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-1">
-                        <User className="w-4 h-4" />
-                        <span>{article.author}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>{new Date(article.date).toLocaleDateString()}</span>
-                      </div>
-                    </div>
-                    <span className="text-green-600 font-medium">{article.readTime}</span>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="w-full border-green-200 text-green-600 hover:bg-green-50 group-hover:bg-green-600 group-hover:text-white transition-all duration-300"
-                  >
-                    Read More
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-
-          {/* Load More */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mt-12"
-          >
-            <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
-              Load More Articles
-            </Button>
-          </motion.div>
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-white">
+      {/* Steel Summit Gallery Section */}
+      <section className="py-16 bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-700">
         <div className="container mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-3xl mx-auto"
+            className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6">
-              Stay Updated with{" "}
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4">
+              Steel Summit 2024{" "}
               <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                Industry News
+                Highlights
               </span>
             </h2>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Subscribe to our newsletter and get the latest updates on steel market trends,
-              sustainability initiatives, and company news delivered to your inbox.
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              A glimpse into the prestigious international steel industry summit where AAASHA TRADING was recognized for excellence
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              />
-              <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold">
-                Subscribe
-              </Button>
-            </div>
           </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* Award Ceremony Image */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                src="/lovable-uploads/steel-summit-award.jpg"
+                alt="Award Ceremony at Steel Summit"
+                className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <div className="flex items-center mb-2">
+                  <Award className="w-5 h-5 text-yellow-400 mr-2" />
+                  <Badge className="bg-yellow-500 text-black">Recognition</Badge>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Industry Excellence Award</h3>
+                <p className="text-gray-200 text-sm">AAASHA TRADING receives recognition for outstanding contribution to sustainable steel trading</p>
+              </div>
+            </motion.div>
+
+            {/* International Delegates Image */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                src="/lovable-uploads/steel-summit-delegates.jpg"
+                alt="International Delegates at Steel Summit"
+                className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <div className="flex items-center mb-2">
+                  <Users className="w-5 h-5 text-blue-400 mr-2" />
+                  <Badge className="bg-blue-500 text-white">Global Partnership</Badge>
+                </div>
+                <h3 className="text-xl font-bold mb-2">International Collaboration</h3>
+                <p className="text-gray-200 text-sm">Building bridges across continents with industry leaders from around the world</p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
     </>
