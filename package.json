@@ -9,7 +9,6 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build:dev": "vite build --mode development",
-
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -25,6 +24,7 @@
     "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/supabase-js": "^2.39.1",
     "@tanstack/react-query": "^5.85.0",
+    "animejs": "^4.1.3",
     "axios": "^1.4.0",
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.3.2",
