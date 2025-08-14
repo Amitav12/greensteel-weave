@@ -157,19 +157,19 @@ export default function HeroSimple() {
         ))}
       </div>
 
-      {/* Main Content - Fixed positioning for better viewport control */}
+      {/* Main Content - Repositioned higher and with smaller text */}
       <animated.div
         style={heroSpring}
         className="container relative z-40 px-4 sm:px-6 lg:px-8 flex items-start justify-start w-full h-full"
       >
-        <div className="max-w-7xl w-full flex items-start justify-start h-full pt-20 sm:pt-24 md:pt-28 lg:pt-32 xl:pt-36">
+        <div className="max-w-7xl w-full flex items-start justify-start h-full pt-12 sm:pt-16 md:pt-20 lg:pt-24 xl:pt-28">
           <div className="flex items-start justify-start w-full h-full">
-            {/* Left Column - Main Content - Positioned at top-left with proper spacing */}
+            {/* Left Column - Main Content - Positioned higher with smaller text */}
             <div className="w-full max-w-4xl flex flex-col justify-start h-full">
-              <div ref={heroContentRef} className="text-left space-y-4 sm:space-y-6 md:space-y-6 lg:space-y-8">
-                {/* Headline */}
-                <div className="space-y-2 sm:space-y-3">
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-tight">
+              <div ref={heroContentRef} className="text-left space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
+                {/* Headline - Significantly reduced size */}
+                <div className="space-y-1 sm:space-y-2">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-tight">
                     <motion.span
                       className="block text-white drop-shadow-2xl"
                       initial={{ opacity: 0, y: 30 }}
@@ -197,8 +197,8 @@ export default function HeroSimple() {
                   </h1>
                 </div>
 
-                {/* Environmental Impact Stats Card - Positioned below headline */}
-                <div ref={countersRef} className="mt-4 sm:mt-6">
+                {/* Environmental Impact Stats Card - Positioned below headline with reduced spacing */}
+                <div ref={countersRef} className="mt-3 sm:mt-4">
                   <div className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-black/30 backdrop-blur-md border border-white/15 rounded-xl p-3 sm:p-4 md:p-5 shadow-lg">
                     {/* Header */}
                     <div className="flex items-center gap-2 mb-3 sm:mb-4">
@@ -249,8 +249,8 @@ export default function HeroSimple() {
                   </div>
                 </div>
 
-                {/* Subtitle */}
-                <div className="text-xs sm:text-sm md:text-base lg:text-lg text-green-200 font-medium max-w-sm sm:max-w-md md:max-w-xl mt-3 sm:mt-4">
+                {/* Subtitle - Reduced spacing */}
+                <div className="text-xs sm:text-sm md:text-base lg:text-lg text-green-200 font-medium max-w-sm sm:max-w-md md:max-w-xl mt-2 sm:mt-3">
                   Leading the future of{" "}
                   <span className="text-green-300 font-bold">
                     Sustainable Recycling Solutions
