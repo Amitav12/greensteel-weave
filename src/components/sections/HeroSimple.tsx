@@ -162,14 +162,14 @@ export default function HeroSimple() {
         style={heroSpring}
         className="container relative z-40 px-4 sm:px-6 lg:px-8 flex items-start justify-start w-full h-full"
       >
-        <div className="max-w-7xl w-full flex items-start justify-start h-full pt-12 sm:pt-16 md:pt-20 lg:pt-24 xl:pt-28">
+        <div className="max-w-7xl w-full flex items-start justify-start h-full pt-4 sm:pt-6 md:pt-8 lg:pt-10">
           <div className="flex items-start justify-start w-full h-full">
-            {/* Left Column - Main Content - Positioned higher with smaller text */}
-            <div className="w-full max-w-4xl flex flex-col justify-start h-full">
-              <div ref={heroContentRef} className="text-left space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
-                {/* Headline - Significantly reduced size */}
-                <div className="space-y-1 sm:space-y-2">
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-tight">
+            {/* Left Column - Main Content - Positioned higher with much smaller text */}
+            <div className="w-full max-w-3xl flex flex-col justify-start h-full">
+              <div ref={heroContentRef} className="text-left space-y-2 sm:space-y-3 md:space-y-3 lg:space-y-4">
+                {/* Headline - Much smaller size */}
+                <div className="space-y-0.5 sm:space-y-1">
+                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black tracking-tight leading-tight">
                     <motion.span
                       className="block text-white drop-shadow-2xl"
                       initial={{ opacity: 0, y: 30 }}
@@ -197,9 +197,9 @@ export default function HeroSimple() {
                   </h1>
                 </div>
 
-                {/* Environmental Impact Stats Card - Positioned below headline with reduced spacing */}
-                <div ref={countersRef} className="mt-3 sm:mt-4">
-                  <div className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-black/30 backdrop-blur-md border border-white/15 rounded-xl p-3 sm:p-4 md:p-5 shadow-lg">
+                {/* Environmental Impact Stats Card - More compact */}
+                <div ref={countersRef} className="mt-2 sm:mt-3">
+                  <div className="w-full max-w-xs sm:max-w-sm md:max-w-md bg-black/30 backdrop-blur-md border border-white/15 rounded-lg p-2 sm:p-3 md:p-4 shadow-lg">
                     {/* Header */}
                     <div className="flex items-center gap-2 mb-3 sm:mb-4">
                       <span className="inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-md bg-green-500/20 border border-green-400/30">
