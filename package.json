@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "build:dev": "vite build --mode development"
+    "build:dev": "vite build --mode development",
 
     "format": "prettier --write .",
     "test": "vitest run",
