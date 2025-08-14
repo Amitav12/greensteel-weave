@@ -1,8 +1,8 @@
 // Open Exchange Rates API Service
 const API_BASE_URL = 'https://openexchangerates.org/api';
 
-// Get API key from Vite environment variables
-const API_KEY = import.meta.env.VITE_OPEN_EXCHANGE_RATES_API_KEY || 'YOUR_OXR_API_KEY_HERE';
+// Since VITE_ environment variables are not supported in Lovable, we'll use default rates
+const API_KEY = 'demo-key-for-lovable';
 
 // Currency codes and countries in the specified order
 const CURRENCY_CONFIG = [
@@ -175,6 +175,12 @@ const getDefaultUSDRates = (): USDCurrencyData[] => [
 // Main function to get USD exchange rates (from API or storage)
 export const getUSDExchangeRates = async (): Promise<USDCurrencyData[]> => {
   const { rates: storedRates, lastUpdate } = loadUSDRatesFromStorage();
+  
+  // For Lovable demo, return default rates directly since API requires a valid key
+  if (API_KEY === 'demo-key-for-lovable') {
+    console.warn('Using default USD exchange rates (API key not configured)');
+    return getDefaultUSDRates();
+  }
   
   // Check if we need to update
   if (!shouldUpdateUSDRates(lastUpdate) && storedRates && storedRates.length > 0) {
