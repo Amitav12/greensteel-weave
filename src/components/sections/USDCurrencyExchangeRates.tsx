@@ -216,14 +216,25 @@ export default function USDCurrencyExchangeRates() {
             left: 0;
             right: 0;
             bottom: 0;
-            opacity: 0.03;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 50 Q 30 20 50 50 T 90 50' stroke='%233b82f6' stroke-width='2' fill='none'/%3E%3C/svg%3E") repeat;
-            animation: stockMove 20s linear infinite;
+            opacity: 0.08;
+            background: url("data:image/svg+xml,%3Csvg width='200' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 80 L30 60 L50 40 L70 30 L90 50 L110 20 L130 35 L150 25 L170 45 L190 15' stroke='%2310b981' stroke-width='1.5' fill='none' opacity='0.6'/%3E%3Cpath d='M10 70 L30 85 L50 65 L70 75 L90 55 L110 70 L130 60 L150 80 L170 50 L190 65' stroke='%233b82f6' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3Cpath d='M10 90 L30 75 L50 85 L70 70 L90 80 L110 65 L130 85 L150 75 L170 85 L190 70' stroke='%236366f1' stroke-width='1' fill='none' opacity='0.3'/%3E%3C/svg%3E") repeat-x;
+            animation: stockMove 25s linear infinite;
+          }
+          
+          .stock-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='150' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 60 L25 40 L45 55 L65 25 L85 45 L105 20 L125 40 L145 30' stroke='%2359a96a' stroke-width='1' fill='none' opacity='0.5'/%3E%3C/svg%3E") repeat-x;
+            animation: stockMove 18s linear infinite reverse;
           }
           
           @keyframes stockMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 100px 0; }
+            0% { background-position-x: 0; }
+            100% { background-position-x: 200px; }
           }
         `}
       </style>
@@ -244,17 +255,6 @@ export default function USDCurrencyExchangeRates() {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
               Real-time exchange rates from US Dollar (USD) for international markets
             </p>
-            
-            <div className="flex justify-center items-center space-x-4">
-              <button
-                onClick={fetchExchangeRates}
-                disabled={loading}
-                className="usd-refresh-button"
-              >
-                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                {loading ? 'Updating...' : 'Refresh Rates'}
-              </button>
-            </div>
             
             {lastUpdated && (
               <p className="usd-last-updated">
