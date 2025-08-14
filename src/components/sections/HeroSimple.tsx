@@ -3,9 +3,7 @@ import { motion } from "framer-motion";
 import { useSpring, animated, config } from '@react-spring/web';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Recycle, Leaf, Factory, TrendingUp, Sparkles } from "lucide-react";
+import { Factory, TrendingUp, Leaf } from "lucide-react";
 import { useResponsive } from "@/hooks/useResponsive";
 
 // Register GSAP plugins
@@ -109,7 +107,7 @@ export default function HeroSimple() {
   }, [isMobile]);
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-start justify-start overflow-hidden bg-transparent">
+    <section ref={containerRef} className="relative h-screen flex items-start justify-start overflow-hidden bg-transparent">
       {/* Enhanced Background with Video */}
       <animated.div
         style={backgroundSpring}
@@ -159,16 +157,16 @@ export default function HeroSimple() {
         ))}
       </div>
 
-      {/* Main Content - Positioned to top-left */}
+      {/* Main Content - Fixed positioning for better viewport control */}
       <animated.div
         style={heroSpring}
-        className="container relative z-40 px-4 sm:px-6 lg:px-8 flex items-start justify-start w-full"
+        className="container relative z-40 px-4 sm:px-6 lg:px-8 flex items-start justify-start w-full h-full"
       >
-        <div className="max-w-7xl w-full pt-16 sm:pt-20 md:pt-24 lg:pt-28 xl:pt-32">
-          <div className="flex items-start justify-start w-full">
-            {/* Left Column - Main Content - Positioned at top-left */}
-            <div className="w-full max-w-4xl">
-              <div ref={heroContentRef} className="text-left space-y-4 sm:space-y-6 md:space-y-8">
+        <div className="max-w-7xl w-full flex items-start justify-start h-full pt-20 sm:pt-24 md:pt-28 lg:pt-32 xl:pt-36">
+          <div className="flex items-start justify-start w-full h-full">
+            {/* Left Column - Main Content - Positioned at top-left with proper spacing */}
+            <div className="w-full max-w-4xl flex flex-col justify-start h-full">
+              <div ref={heroContentRef} className="text-left space-y-4 sm:space-y-6 md:space-y-6 lg:space-y-8">
                 {/* Headline */}
                 <div className="space-y-2 sm:space-y-3">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-tight">
@@ -257,56 +255,6 @@ export default function HeroSimple() {
                   <span className="text-green-300 font-bold">
                     Sustainable Recycling Solutions
                   </span>
-                </div>
-
-                {/* CTA Button - mobile optimized */}
-                <div className="flex justify-start pt-3 sm:pt-4">
-                  <Link to="/products">
-                    <motion.div
-                      whileHover={!isMobile ? {
-                        scale: 1.05,
-                        y: -3
-                      } : {}}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="group relative"
-                    >
-                      {/* Glowing background effect - disabled on mobile for performance */}
-                      {!isMobile && (
-                        <div className="absolute -inset-1 bg-gradient-to-r from-green-400 via-emerald-500 to-teal-500 rounded-full opacity-0 group-hover:opacity-75 blur-lg transition-all duration-500" />
-                      )}
-
-                      <Button
-                        variant="eco-gradient"
-                        size={isMobile ? "default" : "lg"}
-                        className="text-xs sm:text-sm md:text-base px-4 sm:px-6 md:px-8 lg:px-10 py-2.5 sm:py-3 md:py-4 font-bold relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-green-500/50 border-2 border-green-400/30 hover:border-green-300/60 min-h-[40px] sm:min-h-[44px]"
-                        greenTint="medium"
-                      >
-                        {/* Animated background shimmer - simplified on mobile */}
-                        {!isMobile && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                        )}
-
-                        {/* Button content */}
-                        <div className="flex items-center relative z-10">
-                          <motion.div
-                            whileHover={!isMobile ? { rotate: 360 } : {}}
-                            transition={{ duration: 0.8 }}
-                          >
-                            <Recycle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1.5 sm:mr-2 drop-shadow-lg" />
-                          </motion.div>
-                          <span className="text-white drop-shadow-lg tracking-wide">
-                            Explore Products
-                          </span>
-                        </div>
-
-                        {/* Pulsing inner glow - disabled on mobile */}
-                        {!isMobile && (
-                          <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
-                        )}
-                      </Button>
-                    </motion.div>
-                  </Link>
                 </div>
               </div>
             </div>
