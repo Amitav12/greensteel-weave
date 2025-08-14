@@ -1,13 +1,13 @@
-
 "use client"
 
 import * as React from "react"
-import { Bar, Line, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
+import { Bar, Line, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from "recharts"
 import {
   NameType,
   Payload,
   ValueType,
 } from "recharts/types/component/DefaultTooltipContent"
+import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 
@@ -42,6 +42,8 @@ const ChartContainer = React.forwardRef<
 ChartContainer.displayName = "ChartContainer"
 
 const ChartStyle = ({ id, config }: { id: string; config: Record<string, any> }) => {
+  const { resolvedTheme } = useTheme()
+  
   const colorConfig = Object.entries(config).filter(
     ([_, config]) => config.theme || config.color
   )
@@ -56,7 +58,7 @@ const ChartStyle = ({ id, config }: { id: string; config: Record<string, any> })
         __html: [
           `[data-chart=${id}] {`,
           ...colorConfig.map(([key, itemConfig]) => {
-            const color = itemConfig.theme?.[resolvedTheme] || itemConfig.color
+            const color = itemConfig.theme?.[resolvedTheme || 'light'] || itemConfig.color
             return color ? `  --color-${key}: ${color};` : null
           }).filter(Boolean),
           `}`,
@@ -68,8 +70,10 @@ const ChartStyle = ({ id, config }: { id: string; config: Record<string, any> })
 
 const ChartTooltip = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<typeof Tooltip>
->(({ active, payload, className, indicator = "dot", hideLabel = false, hideIndicator = false, label, labelFormatter, labelClassName, formatter, color, nameKey, labelKey, ...props }, ref) => {
+  React.ComponentProps<typeof Tooltip> & {
+    config?: Record<string, any>
+  }
+>(({ active, payload, className, indicator = "dot", hideLabel = false, hideIndicator = false, label, labelFormatter, labelClassName, formatter, color, nameKey, labelKey, config = {}, ...props }, ref) => {
   const tooltipPayload = React.useMemo(() => {
     if (active && payload && payload.length) {
       return payload.filter((item, index) => {
