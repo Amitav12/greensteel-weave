@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, User, Mail, Phone, MessageSquare } from "lucide-react";
+import { X, Send, User, Mail, Phone, MessageSquare, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -13,28 +15,57 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     name: "",
     email: "",
     phone: "",
+    company: "",
     message: ""
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Handle form submission logic here
-    console.log("Form submitted:", formData);
-    
-    // Reset form and close modal
-    setFormData({ name: "", email: "", phone: "", message: "" });
-    setIsSubmitting(false);
-    onClose();
-    
-    // You could show a success message here
-    alert("Thank you for your message! We'll get back to you soon.");
+    try {
+      const { error } = await supabase
+        .from('inquiries')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone || null,
+            company: formData.company || null,
+            message: formData.message,
+          }
+        ]);
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to submit your inquiry. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Reset form and close modal
+      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+      onClose();
+      
+      toast({
+        title: "Success",
+        description: "Thank you for your message! We'll get back to you soon.",
+      });
+    } catch (error) {
+      console.error('Error submitting inquiry:', error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -45,7 +76,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   };
 
   const handleCancel = () => {
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setFormData({ name: "", email: "", phone: "", company: "", message: "" });
     onClose();
   };
 
@@ -135,6 +166,22 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
                     placeholder="+91 98765 43210"
+                  />
+                </div>
+
+                {/* Company Field */}
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <Building className="w-4 h-4 inline mr-2" />
+                    Company
+                  </label>
+                  <input
+                    type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                    placeholder="Your company name"
                   />
                 </div>
 

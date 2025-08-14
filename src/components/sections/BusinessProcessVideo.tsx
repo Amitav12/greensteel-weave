@@ -4,7 +4,8 @@ import { Play, Volume2, VolumeX, X, Eye } from 'lucide-react';
 import { BusinessProcessVideoProps } from '@/types/video';
 import { businessProcessSegments } from '@/data/businessProcessSegments';
 
-
+// Import the business process video
+import businessProcessMp4 from '../../Buisness_process_videos/BusinessProcess.mp4';
 
 export default function BusinessProcessVideo({
   segments = businessProcessSegments,
@@ -318,8 +319,8 @@ export default function BusinessProcessVideo({
                   preload="metadata"
                   aria-label="Business Process Overview"
                 >
-                  <source src={businessProcessMp4} type="video/mp4" /> {/* use imported asset */}
-                  <source src="/buisness1-video.mp4" type="video/mp4" /> {/* public fallback */}
+                  <source src={businessProcessMp4} type="video/mp4" />
+                  <source src="/buisness1-video.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -458,8 +459,6 @@ export default function BusinessProcessVideo({
                   </motion.div>
                 ))}
               </div>
-
-
 
               {/* Third card */}
               <div className="grid grid-cols-1 gap-6 lg:gap-8">

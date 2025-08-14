@@ -169,25 +169,46 @@
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply bg-background text-foreground font-sans antialiased;
     background-image: var(--gradient-subtle);
-    /* Responsive guardrail: Ensure consistent background across all devices */
+    /* Enhanced mobile optimization */
     min-height: 100vh;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Improved mobile text rendering */
+    text-rendering: optimizeLegibility;
   }
 
-  /* Responsive typography guardrail */
+  /* Mobile-first responsive typography */
   html {
-    font-size: 16px;
+    font-size: 14px;
+    /* Mobile base */
   }
 
-  @media (max-width: 768px) {
+  @media (min-width: 640px) {
     html {
-      font-size: 14px;
+      font-size: 15px;
+      /* Small tablets */
     }
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+      /* Tablets and up */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 17px;
+      /* Desktop */
+    }
+  }
+
+  @media (min-width: 1280px) {
     html {
       font-size: 18px;
+      /* Large desktop */
     }
   }
 
@@ -196,7 +217,7 @@
     color: hsl(var(--primary-foreground));
   }
 
-  /* Motion preferences */
+  /* Motion preferences - enhanced mobile handling */
   @media (prefers-reduced-motion: reduce) {
     *,
     ::before,
@@ -204,16 +225,26 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 
-  /* Responsive container guardrail */
+  /* Enhanced responsive container with better mobile handling */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    /* Better mobile margins */
+    max-width: 100vw;
+  }
+
+  @media (min-width: 475px) {
+    .container {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
   }
 
   @media (min-width: 640px) {
@@ -254,11 +285,10 @@
 /* stylelint-disable at-rule-no-unknown */
 @layer utilities {
 
-  /* Enhanced Glass Utilities - Fixed color references */
+  /* Enhanced Glass Utilities with mobile optimization */
   .glass-card {
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply bg-white/70 backdrop-blur-md border border-green-500/15 shadow-lg;
-    /* Guardrail: Consistent glass effect across all screen sizes */
     min-height: fit-content;
   }
 
@@ -277,7 +307,7 @@
     @apply border-t border-green-500/15;
   }
 
-  /* Eco-Themed Glass Effects - Fixed */
+  /* Eco-Themed Glass Effects with mobile optimization */
   .glass-eco {
     /* stylelint-disable-next-line at-rule-no-unknown */
     @apply bg-green-50/80 backdrop-blur-lg border border-green-500/20 shadow-lg;
@@ -293,15 +323,34 @@
     @apply bg-transparent backdrop-blur-sm border border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300;
   }
 
-  /* Responsive guardrails for glass effects */
+  /* Mobile-optimized glass effects */
   @media (max-width: 768px) {
     .glass-card,
     .glass-eco {
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(6px);
+      /* Reduced blur for mobile performance */
+    }
+    
+    .glass-card-hover:hover,
+    .glass-eco-hover:hover {
+      transform: none;
+      /* Disable hover transforms on mobile */
     }
   }
 
-  /* Recycling-Themed Background Effects - Fixed gradients */
+  /* Touch-optimized glass effects */
+  @media (hover: none) and (pointer: coarse) {
+    .glass-card-hover:hover,
+    .glass-eco-hover:hover,
+    .glass-transparent:hover {
+      transform: none;
+      background: inherit;
+      border-color: inherit;
+      box-shadow: inherit;
+    }
+  }
+
+  /* Recycling-Themed Background Effects - mobile optimized */
   .eco-noise {
     background-image:
       radial-gradient(circle at 20% 80%, hsl(122 39% 32% / 0.03) 0%, transparent 50%),
@@ -314,24 +363,20 @@
       repeating-linear-gradient(45deg, transparent, transparent 2px, hsl(122 39% 32% / 0.02) 2px, hsl(122 39% 32% / 0.02) 4px);
   }
 
-  /* Enhanced Animation Effects */
+  /* Mobile-optimized animations */
   .eco-shimmer {
     background: linear-gradient(90deg, transparent, hsl(122 39% 32% / 0.2), transparent);
     background-size: 200% 100%;
     animation: eco-shimmer 2.5s infinite;
   }
 
+  /* Mobile-safe hover effects */
   .magnetic-hover {
     transition: var(--transition-smooth);
-    /* Guardrail: Maintain accessibility on touch devices */
-    @media (hover: hover) {
-      transform: translateZ(0);
-    }
   }
 
   .magnetic-hover:hover {
-    /* Guardrail: Only apply hover effects on devices that support hover */
-    @media (hover: hover) {
+    @media (hover: hover) and (pointer: fine) {
       transform: translateY(-3px) scale(1.02);
     }
   }
@@ -342,10 +387,12 @@
   }
 
   .eco-glow:hover {
-    box-shadow: 0 0 30px hsl(122 39% 32% / 0.5);
+    @media (hover: hover) and (pointer: fine) {
+      box-shadow: 0 0 30px hsl(122 39% 32% / 0.5);
+    }
   }
 
-  /* Gradient Utilities - Fixed */
+  /* Gradient Utilities */
   .gradient-eco {
     background: linear-gradient(135deg, hsl(122 39% 49%), hsl(122 39% 85%));
   }
@@ -354,23 +401,34 @@
     background: linear-gradient(135deg, hsl(122 39% 32% / 0.1), hsl(160 84% 39% / 0.05));
   }
 
-  /* Responsive button utilities with guardrails */
+  /* Mobile-first responsive button utilities */
   .btn-responsive {
-    /* Guardrail: Consistent button sizing across devices */
-    min-height: 44px; /* Minimum touch target size */
+    min-height: 44px;
+    /* WCAG compliant touch target */
     padding: 0.75rem 1.5rem;
     font-weight: 600;
     transition: var(--transition-smooth);
+    touch-action: manipulation;
+    /* Prevent double-tap zoom */
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 640px) {
+    .btn-responsive {
+      padding: 1rem 1.5rem;
+      font-size: 0.9rem;
+      min-height: 48px;
+      /* Larger touch target on mobile */
+    }
+  }
+
+  @media (min-width: 768px) {
     .btn-responsive {
       padding: 1rem 2rem;
       font-size: 1rem;
     }
   }
 
-  /* Blur Utilities */
+  /* Optimized blur utilities for mobile */
   .blur-eco-sm {
     backdrop-filter: blur(var(--blur-sm));
   }
@@ -387,7 +445,19 @@
     backdrop-filter: blur(var(--blur-xl));
   }
 
-  /* Advanced Button Effects - Fixed colors */
+  @media (max-width: 768px) {
+    .blur-eco-lg {
+      backdrop-filter: blur(8px);
+      /* Reduced for mobile performance */
+    }
+    
+    .blur-eco-xl {
+      backdrop-filter: blur(12px);
+      /* Reduced for mobile performance */
+    }
+  }
+
+  /* // ... keep existing code (advanced button effects and animations) */
   .bg-size-200 {
     background-size: 200% 100%;
   }
@@ -423,7 +493,6 @@
     height: 300px;
   }
 
-  /* Shimmer Effect for Hero Buttons */
   .shimmer-effect {
     position: relative;
     overflow: hidden;
@@ -441,14 +510,22 @@
   }
 
   .shimmer-effect:hover::after {
-    left: 100%;
+    @media (hover: hover) and (pointer: fine) {
+      left: 100%;
+    }
   }
 
-  /* Responsive grid guardrails */
+  /* Enhanced responsive grid with mobile-first approach */
   .responsive-grid {
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 475px) {
+    .responsive-grid {
+      gap: 1.25rem;
+    }
   }
 
   @media (min-width: 640px) {
@@ -472,94 +549,53 @@
   }
 }
 
-/* Fixed keyframe animations */
+/* Mobile-optimized keyframe animations */
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 @keyframes eco-shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* Enhanced animations with guardrails */
 @keyframes animate-gradient-x {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 @keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px hsl(122 39% 32% / 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px hsl(122 39% 32% / 0.6);
-  }
+  0%, 100% { box-shadow: 0 0 20px hsl(122 39% 32% / 0.3); }
+  50% { box-shadow: 0 0 40px hsl(122 39% 32% / 0.6); }
 }
 
 @keyframes slide-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes rotate-3d {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
 }
 
-/* Utility classes for animations with responsive guardrails */
+/* Mobile-optimized utility animations */
 .animate-gradient-x {
   background-size: 200% 200%;
   animation: animate-gradient-x 3s ease infinite;
@@ -570,10 +606,8 @@
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
-  /* Guardrail: Disable on touch devices to prevent interference */
-  @media (hover: none) {
-    animation: none;
+  @media (hover: hover) and (pointer: fine) {
+    animation: float 3s ease-in-out infinite;
   }
 }
 
@@ -590,10 +624,12 @@
 }
 
 .animate-rotate-3d {
-  animation: rotate-3d 10s linear infinite;
+  @media (hover: hover) and (pointer: fine) {
+    animation: rotate-3d 10s linear infinite;
+  }
 }
 
-/* Enhanced Button Styles - Fixed with proper HSL colors */
+/* Enhanced mobile-optimized button styles */
 .btn-primary-enhanced {
   background: linear-gradient(135deg, hsl(122 39% 32%), hsl(122 39% 49%));
   border: none;
@@ -605,8 +641,8 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  /* Guardrail: Minimum touch target */
   min-height: 44px;
+  touch-action: manipulation;
 }
 
 .btn-primary-enhanced::before {
@@ -621,12 +657,24 @@
 }
 
 .btn-primary-enhanced:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 15px 35px -10px hsl(122 39% 32% / 0.5);
+  @media (hover: hover) and (pointer: fine) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 15px 35px -10px hsl(122 39% 32% / 0.5);
+  }
 }
 
 .btn-primary-enhanced:hover::before {
-  left: 100%;
+  @media (hover: hover) and (pointer: fine) {
+    left: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .btn-primary-enhanced {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    min-height: 48px;
+  }
 }
 
 .btn-secondary-enhanced {
@@ -640,18 +688,29 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  /* Guardrail: Minimum touch target */
   min-height: 44px;
+  touch-action: manipulation;
 }
 
 .btn-secondary-enhanced:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 15px 35px -10px rgba(255, 255, 255, 0.2);
+  @media (hover: hover) and (pointer: fine) {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 15px 35px -10px rgba(255, 255, 255, 0.2);
+  }
 }
 
-/* Carousel Enhancement Styles - Fixed */
+@media (max-width: 640px) {
+  .btn-secondary-enhanced {
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    min-height: 48px;
+    backdrop-filter: blur(6px);
+  }
+}
+
+/* // ... keep existing code (carousel and card styles with mobile optimization) */
 .carousel-container {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
   backdrop-filter: blur(20px);
@@ -663,22 +722,30 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
-  /* Guardrail: Accessible touch target */
   min-width: 44px;
   min-height: 44px;
+  touch-action: manipulation;
 }
 
 .carousel-nav-button:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.05);
+  @media (hover: hover) and (pointer: fine) {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+  }
 }
 
-/* Skipper.UI 3D Card Carousel Styles - Enhanced with guardrails */
+@media (max-width: 768px) {
+  .carousel-nav-button {
+    min-width: 48px;
+    min-height: 48px;
+    backdrop-filter: blur(6px);
+  }
+}
+
 .skipper-card-3d {
   transform-style: preserve-3d;
   backface-visibility: hidden;
   will-change: transform;
-  /* Guardrail: Ensure cards remain accessible */
   min-height: fit-content;
 }
 
@@ -697,10 +764,11 @@
 }
 
 .skipper-card-3d:hover::before {
-  opacity: 1;
+  @media (hover: hover) and (pointer: fine) {
+    opacity: 1;
+  }
 }
 
-/* Enhanced 3D hover effects with responsive guardrails */
 .card-3d-container {
   perspective: 1000px;
   transform-style: preserve-3d;
@@ -712,14 +780,12 @@
   will-change: transform;
 }
 
-/* Smooth 60fps animations */
 .card-3d-smooth {
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
 }
 
-/* Glassmorphism enhancement - Fixed */
 .glass-card-enhanced {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
@@ -729,17 +795,23 @@
 }
 
 .glass-card-enhanced:hover {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.15);
-  transform: translateY(-8px) scale(1.02);
+  @media (hover: hover) and (pointer: fine) {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px) scale(1.02);
+  }
 }
 
-/* Dynamic shadow effects */
+@media (max-width: 768px) {
+  .glass-card-enhanced {
+    backdrop-filter: blur(12px);
+  }
+}
+
 .dynamic-shadow {
   transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Carousel fade transitions */
 .carousel-fade-enter {
   opacity: 0;
   transform: translateX(30px);
@@ -762,24 +834,22 @@
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-/* Performance optimizations */
 .gpu-accelerated {
   transform: translateZ(0);
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
 
-/* Responsive card scaling with guardrails */
+/* Enhanced mobile responsiveness */
 @media (max-width: 768px) {
   .skipper-card-3d {
+    transform: scale(0.98);
+  }
+  
+  .skipper-card-3d:active {
     transform: scale(0.95);
   }
   
-  .skipper-card-3d:hover {
-    transform: scale(1);
-  }
-  
-  /* Disable complex 3D effects on mobile for performance */
   .card-3d-container {
     perspective: none;
   }
@@ -791,23 +861,30 @@
 
 @media (min-width: 1280px) {
   .skipper-card-3d:hover {
-    transform: scale(1.05) rotateY(var(--rotate-y, 0deg)) rotateX(var(--rotate-x, 0deg));
+    @media (hover: hover) and (pointer: fine) {
+      transform: scale(1.05) rotateY(var(--rotate-y, 0deg)) rotateX(var(--rotate-x, 0deg));
+    }
   }
 }
 
-/* Additional responsive guardrails */
+/* Performance optimizations for mobile */
 @media (max-width: 640px) {
-  /* Reduce animation complexity on small screens */
   .animate-float,
   .animate-rotate-3d {
     animation: none;
   }
   
-  /* Simplify glass effects for better mobile performance */
   .glass-card,
   .glass-eco,
   .glass-card-enhanced {
     backdrop-filter: blur(4px);
+  }
+  
+  * {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 }
 
@@ -818,6 +895,18 @@
   .glass-card-enhanced {
     border-width: 2px;
     background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .glass-card-enhanced:hover,
+  .btn-primary-enhanced:hover,
+  .btn-secondary-enhanced:hover,
+  .magnetic-hover:hover,
+  .eco-glow:hover {
+    transform: none;
+    animation: none;
   }
 }
 

@@ -5,7 +5,7 @@ import ContactModal from "@/components/ui/ContactModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Recycle, Menu, X, Factory, Award, Users, Newspaper } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "next-themes";
 import { Switch } from "@/components/ui/switch";
 
 const nav = [
@@ -20,7 +20,13 @@ export default function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const { isDark, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Handle hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Handle scroll effect
   useEffect(() => {
@@ -37,6 +43,13 @@ export default function SiteHeader() {
         ? "text-white bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 shadow-lg shadow-green-500/25 dark:shadow-green-400/20" 
         : "text-slate-700 dark:text-slate-200 hover:text-white hover:bg-gradient-to-r hover:from-emerald-500 hover:via-green-500 hover:to-teal-500 hover:shadow-lg hover:shadow-green-500/20 hover:scale-105"
     }`;
+
+  // Don't render until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
+  const isDark = theme === 'dark';
 
   return (
     <>
@@ -81,7 +94,7 @@ export default function SiteHeader() {
                 id="theme-toggle"
                 checked={isDark}
                 onCheckedChange={(checked) => {
-                  if (checked !== isDark) toggleTheme();
+                  setTheme(checked ? 'dark' : 'light');
                 }}
                 aria-label="Toggle theme"
                 className="h-7 w-12 data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-gray-300 dark:data-[state=unchecked]:bg-gray-600"
@@ -107,7 +120,7 @@ export default function SiteHeader() {
                 id="theme-toggle-mobile"
                 checked={isDark}
                 onCheckedChange={(checked) => {
-                  if (checked !== isDark) toggleTheme();
+                  setTheme(checked ? 'dark' : 'light');
                 }}
                 aria-label="Toggle theme"
                 className="h-6 w-11 data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-gray-300 dark:data-[state=unchecked]:bg-gray-600"
