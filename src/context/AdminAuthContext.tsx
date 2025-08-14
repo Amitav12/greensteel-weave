@@ -100,8 +100,20 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    setIsAdmin(false);
+    try {
+      setLoading(true);
+      // Clear admin status first to prevent state updates
+      setIsAdmin(false);
+      // Then sign out
+      await supabase.auth.signOut();
+      // Clear user and session
+      setUser(null);
+      setSession(null);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const value = {

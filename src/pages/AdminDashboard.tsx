@@ -180,11 +180,15 @@ export default function AdminDashboard() {
   };
 
   const handleSignOut = async () => {
-    await signOut();
-    toast({
-      title: "Success",
-      description: "Signed out successfully",
-    });
+    try {
+      await signOut();
+      toast({
+        title: "Success",
+        description: "Signed out successfully",
+      });
+    } catch (error) {
+      console.error('Error during sign out:', error);
+    }
   };
 
   if (loading || isLoading) {
