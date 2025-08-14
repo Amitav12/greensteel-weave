@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -68,12 +69,40 @@ const ChartStyle = ({ id, config }: { id: string; config: Record<string, any> })
   )
 }
 
-const ChartTooltip = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<typeof Tooltip> & {
-    config?: Record<string, any>
-  }
->(({ active, payload, className, indicator = "dot", hideLabel = false, hideIndicator = false, label, labelFormatter, labelClassName, formatter, color, nameKey, labelKey, config = {}, ...props }, ref) => {
+interface ChartTooltipProps extends React.HTMLAttributes<HTMLDivElement> {
+  active?: boolean
+  payload?: Payload<ValueType, NameType>[]
+  label?: string
+  indicator?: "dot" | "line" | "dashed"
+  hideLabel?: boolean
+  hideIndicator?: boolean
+  labelFormatter?: ((label: any, payload: Payload<ValueType, NameType>[]) => React.ReactNode) | React.ReactNode
+  labelClassName?: string
+  formatter?: (value: any, name: any, item: any, index: number, payload: any[]) => React.ReactNode
+  color?: string
+  nameKey?: string
+  labelKey?: string
+  config?: Record<string, any>
+}
+
+const ChartTooltip = React.forwardRef<HTMLDivElement, ChartTooltipProps>(
+  ({ 
+    active, 
+    payload, 
+    className, 
+    indicator = "dot", 
+    hideLabel = false, 
+    hideIndicator = false, 
+    label, 
+    labelFormatter, 
+    labelClassName, 
+    formatter, 
+    color, 
+    nameKey, 
+    labelKey, 
+    config = {}, 
+    ...props 
+  }, ref) => {
   const tooltipPayload = React.useMemo(() => {
     if (active && payload && payload.length) {
       return payload.filter((item, index) => {
