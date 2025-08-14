@@ -163,30 +163,6 @@ export default function USDCurrencyExchangeRates() {
             margin: 0.5rem 0 0 0;
           }
           
-          .usd-refresh-button {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-          }
-          
-          .usd-refresh-button:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
-          }
-          
-          .usd-refresh-button:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-            transform: none;
-          }
           
           .usd-last-updated {
             color: #6b7280;
