@@ -19,7 +19,7 @@ export default function HeroSimple() {
 
   // React Spring animations - adjusted for mobile
   const heroSpring = useSpring({
-    from: { opacity: 0, transform: isMobile ? 'scale(0.95) translateY(50px)' : 'scale(0.9) translateY(100px)' },
+    from: { opacity: 0, transform: isMobile ? 'scale(0.95) translateY(30px)' : 'scale(0.9) translateY(50px)' },
     to: { opacity: 1, transform: 'scale(1) translateY(0px)' },
     config: isMobile ? config.gentle : config.slow,
     delay: isMobile ? 200 : 300
@@ -109,7 +109,7 @@ export default function HeroSimple() {
   }, [isMobile]);
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center justify-start overflow-hidden bg-transparent">
+    <section ref={containerRef} className="relative min-h-screen flex items-start justify-start overflow-hidden bg-transparent">
       {/* Enhanced Background with Video */}
       <animated.div
         style={backgroundSpring}
@@ -159,19 +159,19 @@ export default function HeroSimple() {
         ))}
       </div>
 
-      {/* Main Content - Positioned to left side and centered vertically */}
+      {/* Main Content - Positioned to top-left */}
       <animated.div
         style={heroSpring}
-        className="container relative z-40 px-4 sm:px-6 lg:px-8 flex items-center min-h-screen"
+        className="container relative z-40 px-4 sm:px-6 lg:px-8 flex items-start justify-start w-full"
       >
-        <div className="max-w-7xl w-full">
-          <div className="flex items-center justify-start min-h-screen py-20">
-            {/* Left Column - Main Content - Centered vertically and positioned left */}
+        <div className="max-w-7xl w-full pt-16 sm:pt-20 md:pt-24 lg:pt-28 xl:pt-32">
+          <div className="flex items-start justify-start w-full">
+            {/* Left Column - Main Content - Positioned at top-left */}
             <div className="w-full max-w-4xl">
-              <div ref={heroContentRef} className="text-left space-y-4 sm:space-y-6 md:space-y-8 flex flex-col justify-center">
+              <div ref={heroContentRef} className="text-left space-y-4 sm:space-y-6 md:space-y-8">
                 {/* Headline */}
                 <div className="space-y-2 sm:space-y-3">
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-tight">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-tight">
                     <motion.span
                       className="block text-white drop-shadow-2xl"
                       initial={{ opacity: 0, y: 30 }}
@@ -200,50 +200,50 @@ export default function HeroSimple() {
                 </div>
 
                 {/* Environmental Impact Stats Card - Positioned below headline */}
-                <div ref={countersRef} className="mt-6 sm:mt-8">
-                  <div className="w-full max-w-lg bg-black/30 backdrop-blur-md border border-white/15 rounded-xl p-4 sm:p-5 md:p-6 shadow-lg">
+                <div ref={countersRef} className="mt-4 sm:mt-6">
+                  <div className="w-full max-w-sm sm:max-w-md md:max-w-lg bg-black/30 backdrop-blur-md border border-white/15 rounded-xl p-3 sm:p-4 md:p-5 shadow-lg">
                     {/* Header */}
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="inline-flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-green-500/20 border border-green-400/30">
-                        <svg width="12" height="12" viewBox="0 0 24 24" className="text-green-300 fill-current sm:w-3.5 sm:h-3.5">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                      <span className="inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 rounded-md bg-green-500/20 border border-green-400/30">
+                        <svg width="10" height="10" viewBox="0 0 24 24" className="text-green-300 fill-current sm:w-3 sm:h-3 md:w-3.5 md:h-3.5">
                           <circle cx="12" cy="12" r="10" opacity="0.25" />
                           <path d="M7 13l3 3 7-7" stroke="currentColor" strokeWidth="2" fill="none" />
                         </svg>
                       </span>
-                      <span className="text-white font-extrabold text-sm sm:text-base md:text-lg tracking-wide">
+                      <span className="text-white font-extrabold text-xs sm:text-sm md:text-base lg:text-lg tracking-wide">
                         Environmental Impact
                       </span>
                     </div>
 
-                    <div className="h-px w-full bg-white/15 mb-4" />
+                    <div className="h-px w-full bg-white/15 mb-3 sm:mb-4" />
 
-                    <div className="space-y-3">
+                    <div className="space-y-2 sm:space-y-3">
                       {/* KPI: Tons Recycled */}
-                      <div className="flex items-center gap-2 w-full">
-                        <Factory className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-green-300 shrink-0" />
-                        <span className="counter-number text-lg sm:text-xl md:text-2xl font-black text-white">0</span>
-                        <span className="text-green-300 font-bold text-sm md:text-base">+</span>
-                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-1">
+                      <div className="flex items-center gap-1.5 sm:gap-2 w-full">
+                        <Factory className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-green-300 shrink-0" />
+                        <span className="counter-number text-base sm:text-lg md:text-xl lg:text-2xl font-black text-white">0</span>
+                        <span className="text-green-300 font-bold text-xs sm:text-sm md:text-base">+</span>
+                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-0.5 sm:ml-1">
                           Tons Recycled
                         </span>
                       </div>
 
                       {/* KPI: Tons CO₂ Saved */}
-                      <div className="flex items-center gap-2 w-full">
-                        <Leaf className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-emerald-300 shrink-0" />
-                        <span className="counter-number text-lg sm:text-xl md:text-2xl font-black text-white">0</span>
-                        <span className="text-green-300 font-bold text-sm md:text-base">+</span>
-                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-1">
+                      <div className="flex items-center gap-1.5 sm:gap-2 w-full">
+                        <Leaf className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-emerald-300 shrink-0" />
+                        <span className="counter-number text-base sm:text-lg md:text-xl lg:text-2xl font-black text-white">0</span>
+                        <span className="text-green-300 font-bold text-xs sm:text-sm md:text-base">+</span>
+                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-0.5 sm:ml-1">
                           Tons CO₂ Saved
                         </span>
                       </div>
 
                       {/* KPI: Happy Clients */}
-                      <div className="flex items-center gap-2 w-full">
-                        <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-teal-300 shrink-0" />
-                        <span className="counter-number text-lg sm:text-xl md:text-2xl font-black text-white">0</span>
-                        <span className="text-green-300 font-bold text-sm md:text-base">+</span>
-                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-1">
+                      <div className="flex items-center gap-1.5 sm:gap-2 w-full">
+                        <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-teal-300 shrink-0" />
+                        <span className="counter-number text-base sm:text-lg md:text-xl lg:text-2xl font-black text-white">0</span>
+                        <span className="text-green-300 font-bold text-xs sm:text-sm md:text-base">+</span>
+                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-0.5 sm:ml-1">
                           Happy Clients
                         </span>
                       </div>
@@ -252,7 +252,7 @@ export default function HeroSimple() {
                 </div>
 
                 {/* Subtitle */}
-                <div className="text-sm sm:text-base lg:text-lg text-green-200 font-medium max-w-xl mt-4">
+                <div className="text-xs sm:text-sm md:text-base lg:text-lg text-green-200 font-medium max-w-sm sm:max-w-md md:max-w-xl mt-3 sm:mt-4">
                   Leading the future of{" "}
                   <span className="text-green-300 font-bold">
                     Sustainable Recycling Solutions
@@ -260,7 +260,7 @@ export default function HeroSimple() {
                 </div>
 
                 {/* CTA Button - mobile optimized */}
-                <div className="flex justify-start pt-4">
+                <div className="flex justify-start pt-3 sm:pt-4">
                   <Link to="/products">
                     <motion.div
                       whileHover={!isMobile ? {
@@ -279,7 +279,7 @@ export default function HeroSimple() {
                       <Button
                         variant="eco-gradient"
                         size={isMobile ? "default" : "lg"}
-                        className="text-sm sm:text-base px-6 sm:px-8 md:px-10 py-3 sm:py-4 font-bold relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-green-500/50 border-2 border-green-400/30 hover:border-green-300/60 min-h-[44px]"
+                        className="text-xs sm:text-sm md:text-base px-4 sm:px-6 md:px-8 lg:px-10 py-2.5 sm:py-3 md:py-4 font-bold relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-green-500/50 border-2 border-green-400/30 hover:border-green-300/60 min-h-[40px] sm:min-h-[44px]"
                         greenTint="medium"
                       >
                         {/* Animated background shimmer - simplified on mobile */}
@@ -293,7 +293,7 @@ export default function HeroSimple() {
                             whileHover={!isMobile ? { rotate: 360 } : {}}
                             transition={{ duration: 0.8 }}
                           >
-                            <Recycle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 drop-shadow-lg" />
+                            <Recycle className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1.5 sm:mr-2 drop-shadow-lg" />
                           </motion.div>
                           <span className="text-white drop-shadow-lg tracking-wide">
                             Explore Products
