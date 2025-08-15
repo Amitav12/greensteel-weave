@@ -402,26 +402,6 @@ export default function OurPartners() {
             );
           })}
         </motion.div>
-
-        {/* Optional: Partnership CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-12 sm:mt-16"
-        >
-          <p className="text-gray-600 mb-6">
-            Interested in partnering with us?
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
-          >
-            Become a Partner
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   );

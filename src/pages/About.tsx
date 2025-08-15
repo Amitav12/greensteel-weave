@@ -17,6 +17,7 @@ import {
   Heart,
   ArrowRight
 } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import businessProcessMp4 from "@/Buisness_process_videos/BusinessProcess.mp4";
 import { Link } from "react-router-dom";
 
@@ -91,22 +92,30 @@ const team = [
   {
     name: "Rajesh Kumar",
     position: "Chief Executive Officer",
-    bio: "20+ years of experience in steel trading and sustainable business practices."
+    bio: "20+ years of experience in steel trading and sustainable business practices.",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    initials: "RK"
   },
   {
     name: "Priya Sharma",
     position: "Head of Operations",
-    bio: "Expert in supply chain management and quality assurance processes."
+    bio: "Expert in supply chain management and quality assurance processes.",
+    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    initials: "PS"
   },
   {
     name: "Amit Patel",
     position: "Sustainability Director",
-    bio: "Leading our environmental initiatives and recycling innovations."
+    bio: "Leading our environmental initiatives and recycling innovations.",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    initials: "AP"
   },
   {
     name: "Sunita Reddy",
     position: "Business Development",
-    bio: "Building strategic partnerships and expanding market presence."
+    bio: "Building strategic partnerships and expanding market presence.",
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1288&q=80",
+    initials: "SR"
   }
 ];
 
@@ -496,11 +505,18 @@ export default function About() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-green-100 dark:border-gray-700"
               >
-                <div className="relative mb-6">
-                  <div className="w-full aspect-square bg-gradient-to-br from-green-100 to-emerald-200 rounded-2xl flex items-center justify-center">
-                    <Users className="w-12 h-12 text-green-600" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-green-600/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative mb-6 flex justify-center">
+                  <Avatar className="w-24 h-24 border-4 border-green-100 dark:border-green-800 group-hover:border-green-300 dark:group-hover:border-green-600 transition-colors duration-300">
+                    <AvatarImage 
+                      src={member.avatar} 
+                      alt={member.name}
+                      className="object-cover"
+                    />
+                    <AvatarFallback className="bg-gradient-to-br from-green-100 to-emerald-200 dark:from-green-800 dark:to-emerald-700 text-green-600 dark:text-green-400 font-bold text-lg">
+                      {member.initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute inset-0 bg-gradient-to-t from-green-600/10 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                   {member.name}
