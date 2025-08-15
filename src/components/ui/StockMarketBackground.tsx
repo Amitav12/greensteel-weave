@@ -88,30 +88,43 @@ export default function StockMarketBackground() {
         ctx.stroke();
       }
       
-      // Draw animated vertical bars (bottom to top animation)
+      // Draw animated vertical bars with up/down movement
       const barWidth = width / bars.length;
       bars.forEach((bar, i) => {
         const x = i * barWidth;
-        const animatedHeight = Math.sin(time * bar.speed + bar.phase) * 0.3 + 0.7;
+        const baseHeight = 0.2; // Minimum height
+        const variationHeight = Math.sin(time * (bar.speed * 2) + bar.phase) * 0.6 + 0.4;
+        const animatedHeight = baseHeight + variationHeight;
         const barHeight = height * bar.maxHeight * animatedHeight;
         
-        // Create gradient for bars
+        // Determine if bar is rising or falling for color variation
+        const currentTrend = Math.sin(time * (bar.speed * 2) + bar.phase);
+        const previousTrend = Math.sin((time - 0.1) * (bar.speed * 2) + bar.phase);
+        const isRising = currentTrend > previousTrend;
+        
+        // Create gradient for bars with dynamic colors
         const barGradient = ctx.createLinearGradient(0, height, 0, height - barHeight);
-        barGradient.addColorStop(0, 'rgba(6, 182, 212, 0.8)');
-        barGradient.addColorStop(0.5, 'rgba(14, 165, 233, 0.6)');
-        barGradient.addColorStop(1, 'rgba(59, 130, 246, 0.3)');
+        if (isRising) {
+          barGradient.addColorStop(0, 'rgba(34, 197, 94, 0.9)');   // Green for rising
+          barGradient.addColorStop(0.5, 'rgba(16, 185, 129, 0.7)');
+          barGradient.addColorStop(1, 'rgba(34, 197, 94, 0.4)');
+        } else {
+          barGradient.addColorStop(0, 'rgba(239, 68, 68, 0.9)');   // Red for falling
+          barGradient.addColorStop(0.5, 'rgba(249, 115, 22, 0.7)');
+          barGradient.addColorStop(1, 'rgba(239, 68, 68, 0.4)');
+        }
         
         // Draw bar with glow effect
-        ctx.shadowColor = 'rgba(6, 182, 212, 0.5)';
-        ctx.shadowBlur = 10;
+        ctx.shadowColor = isRising ? 'rgba(34, 197, 94, 0.6)' : 'rgba(239, 68, 68, 0.6)';
+        ctx.shadowBlur = 12;
         ctx.fillStyle = barGradient;
         ctx.fillRect(x + barWidth * 0.1, height - barHeight, barWidth * 0.8, barHeight);
         
-        // Add extra glow on top
-        ctx.shadowColor = 'rgba(6, 182, 212, 0.8)';
-        ctx.shadowBlur = 5;
-        ctx.fillStyle = 'rgba(6, 182, 212, 0.9)';
-        ctx.fillRect(x + barWidth * 0.2, height - barHeight, barWidth * 0.6, 2);
+        // Add extra glow on top with trend color
+        ctx.shadowColor = isRising ? 'rgba(34, 197, 94, 0.9)' : 'rgba(239, 68, 68, 0.9)';
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = isRising ? 'rgba(34, 197, 94, 1)' : 'rgba(239, 68, 68, 1)';
+        ctx.fillRect(x + barWidth * 0.2, height - barHeight - 1, barWidth * 0.6, 3);
         
         ctx.shadowBlur = 0;
       });
