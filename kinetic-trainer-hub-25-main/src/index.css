@@ -1,0 +1,342 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern Fitness Design System
+   Using oklch color space for better perceptual uniformity
+   All colors MUST be HSL converted from oklch.
+*/
+
+@layer base {
+  :root {
+    /* Base Colors - Enhanced dark theme */
+    --background: 220 30% 8%;
+    --foreground: 210 40% 98%;
+
+    /* Card & Surface Colors */
+    --card: 220 25% 10%;
+    --card-foreground: 210 40% 95%;
+
+    --popover: 220 25% 10%;
+    --popover-foreground: 210 40% 95%;
+
+    /* Primary - Deep Purple (from oklch(42.4% 0.199 265.638)) */
+    --primary: 266 50% 42%;
+    --primary-foreground: 210 40% 98%;
+    --primary-glow: 266 60% 55%;
+
+    /* Secondary - Vibrant Purple (from oklch(49.1% 0.27 292.581)) */
+    --secondary: 293 65% 49%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Accent - Electric Purple (from oklch(43.8% 0.218 303.724)) */
+    --accent: 304 55% 44%;
+    --accent-foreground: 210 40% 98%;
+
+    /* Muted & Neutral */
+    --muted: 220 20% 15%;
+    --muted-foreground: 210 25% 70%;
+
+    /* Destructive - Red */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Success - Green */
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+
+    /* Border & Input */
+    --border: 220 20% 20%;
+    --input: 220 20% 15%;
+    --ring: 266 50% 42%;
+
+    --radius: 1rem;
+
+    /* Enhanced Gradients with new color palette */
+    --gradient-primary: linear-gradient(135deg, hsl(266 50% 42%), hsl(266 60% 55%));
+    --gradient-secondary: linear-gradient(135deg, hsl(293 65% 49%), hsl(304 55% 44%));
+    --gradient-hero: linear-gradient(135deg, hsl(266 50% 42% / 0.95), hsl(293 65% 49% / 0.9), hsl(304 55% 44% / 0.85));
+    --gradient-card: linear-gradient(135deg, hsl(220 25% 10%), hsl(220 20% 15%));
+    --gradient-accent: linear-gradient(45deg, hsl(266 50% 42%), hsl(304 55% 44%));
+    
+    /* Enhanced Shadows & Effects */
+    --shadow-glow: 0 0 50px hsl(266 50% 42% / 0.5);
+    --shadow-card: 0 25px 50px hsl(220 30% 4% / 0.6);
+    --shadow-hero: 0 30px 60px hsl(266 50% 42% / 0.3);
+    --shadow-accent: 0 15px 30px hsl(304 55% 44% / 0.4);
+    
+    /* Animation Variables */
+    --animation-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --animation-bounce: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer components {
+  /* Enhanced Animation classes */
+  .fade-in {
+    animation: fadeIn var(--animation-normal) forwards;
+  }
+  
+  .slide-up {
+    animation: slideUp var(--animation-normal) forwards;
+  }
+  
+  .bounce-in {
+    animation: bounceIn var(--animation-bounce) forwards;
+  }
+  
+  .glow-effect {
+    box-shadow: var(--shadow-glow);
+    transition: box-shadow var(--animation-normal);
+  }
+  
+  .glow-pulse {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+  
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .gradient-accent-text {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .floating-element {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .rotate-slow {
+    animation: rotateSlow 20s linear infinite;
+  }
+  
+  .scale-pulse {
+    animation: scalePulse 2s ease-in-out infinite;
+  }
+  
+  /* Enhanced Button variants */
+  .btn-hero {
+    background: var(--gradient-primary);
+    color: hsl(var(--primary-foreground));
+    border: none;
+    transition: all var(--animation-normal);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .btn-hero:hover::before {
+    left: 100%;
+  }
+  
+  .btn-hero:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-hero);
+  }
+  
+  .btn-secondary {
+    background: var(--gradient-secondary);
+    color: hsl(var(--secondary-foreground));
+    border: none;
+    transition: all var(--animation-normal);
+  }
+  
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-accent);
+  }
+  
+  /* Enhanced Card variants */
+  .card-glow {
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card);
+    border: 1px solid hsl(var(--border));
+    transition: all var(--animation-normal);
+  }
+  
+  .card-glow:hover {
+    box-shadow: var(--shadow-card), var(--shadow-glow);
+    transform: translateY(-8px) scale(1.02);
+    border-color: hsl(var(--primary) / 0.5);
+  }
+  
+  .card-interactive {
+    background: var(--gradient-card);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-interactive::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: var(--gradient-accent);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    opacity: 0;
+    transition: opacity var(--animation-normal);
+  }
+  
+  .card-interactive:hover::before {
+    opacity: 1;
+  }
+}
+
+@layer base {
+  /* Enhanced Keyframe animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) translateY(50px);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1) translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+      transform: translateY(-15px) rotate(2deg);
+    }
+    66% {
+      transform: translateY(-5px) rotate(-2deg);
+    }
+  }
+  
+  @keyframes glowPulse {
+    0%, 100% {
+      box-shadow: var(--shadow-glow);
+    }
+    50% {
+      box-shadow: var(--shadow-glow), var(--shadow-accent);
+    }
+  }
+  
+  @keyframes rotateSlow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes scalePulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  /* Particle system animations */
+  @keyframes particleFloat1 {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+    }
+    25% {
+      transform: translateY(-20px) translateX(10px);
+    }
+    50% {
+      transform: translateY(-10px) translateX(-15px);
+    }
+    75% {
+      transform: translateY(-30px) translateX(5px);
+    }
+  }
+  
+  @keyframes particleFloat2 {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px) rotate(0deg);
+    }
+    33% {
+      transform: translateY(-25px) translateX(-10px) rotate(120deg);
+    }
+    66% {
+      transform: translateY(-5px) translateX(20px) rotate(240deg);
+    }
+  }
+  
+  @keyframes particleFloat3 {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px) scale(1);
+    }
+    50% {
+      transform: translateY(-40px) translateX(-20px) scale(1.2);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+}
