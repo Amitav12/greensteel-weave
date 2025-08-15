@@ -1,8 +1,8 @@
 // Open Exchange Rates API Service
 const API_BASE_URL = 'https://openexchangerates.org/api';
 
-// Since VITE_ environment variables are not supported in Lovable, we'll use default rates
-const API_KEY = 'demo-key-for-lovable';
+// Get API key from environment variable
+const API_KEY = import.meta.env.VITE_OPEN_EXCHANGE_RATES_API_KEY;
 
 // Currency codes and countries in the specified order
 const CURRENCY_CONFIG = [
@@ -176,9 +176,9 @@ const getDefaultUSDRates = (): USDCurrencyData[] => [
 export const getUSDExchangeRates = async (): Promise<USDCurrencyData[]> => {
   const { rates: storedRates, lastUpdate } = loadUSDRatesFromStorage();
   
-  // For Lovable demo, return default rates directly since API requires a valid key
-  if (API_KEY === 'demo-key-for-lovable') {
-    console.warn('Using default USD exchange rates (API key not configured)');
+  // If no API key is configured, return default rates
+  if (!API_KEY) {
+    console.warn('Open Exchange Rates API key not configured, using default rates');
     return getDefaultUSDRates();
   }
   
@@ -238,28 +238,34 @@ export const scheduleUSDAutomaticUpdates = (callback: () => void) => {
     }
   };
 
+  let currentTimeoutId: NodeJS.Timeout | null = null;
+
   // Function to schedule the next update
   const scheduleNext = () => {
     const nextUpdate = getNextUpdateTime();
     const now = new Date();
     const ukNow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/London" }));
-    const delay = nextUpdate.getTime() - ukNow.getTime();
+    const delay = Math.max(0, nextUpdate.getTime() - ukNow.getTime());
     
     console.log(`Next USD currency update scheduled for: ${nextUpdate.toLocaleString('en-GB', { timeZone: 'Europe/London' })} (UK time)`);
     
-    const timeoutId = setTimeout(() => {
+    currentTimeoutId = setTimeout(() => {
+      console.log('Executing scheduled USD currency update...');
       callback();
       scheduleNext(); // Schedule the next update after this one completes
     }, delay);
     
-    return timeoutId;
+    return currentTimeoutId;
   };
 
   // Start the scheduling
-  const timeoutId = scheduleNext();
+  scheduleNext();
   
   // Return cleanup function
   return () => {
-    clearTimeout(timeoutId);
+    if (currentTimeoutId) {
+      clearTimeout(currentTimeoutId);
+      currentTimeoutId = null;
+    }
   };
 };
