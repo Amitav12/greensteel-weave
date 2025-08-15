@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { RefreshCw, AlertCircle } from 'lucide-react';
 import { getUSDExchangeRates, scheduleUSDAutomaticUpdates, USDCurrencyData } from '@/services/openExchangeRatesService';
 import ExchangeRateChart from '@/components/ui/ExchangeRateChart';
+import StockMarketBackground from '@/components/ui/StockMarketBackground';
 
 export default function USDCurrencyExchangeRates() {
   const [rates, setRates] = useState<USDCurrencyData[]>([]);
@@ -187,40 +188,13 @@ export default function USDCurrencyExchangeRates() {
           .fade-in-up {
             animation: fadeInUp 0.6s ease-out;
           }
-          
-          .stock-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0.08;
-            background: url("data:image/svg+xml,%3Csvg width='200' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 80 L30 60 L50 40 L70 30 L90 50 L110 20 L130 35 L150 25 L170 45 L190 15' stroke='%2310b981' stroke-width='1.5' fill='none' opacity='0.6'/%3E%3Cpath d='M10 70 L30 85 L50 65 L70 75 L90 55 L110 70 L130 60 L150 80 L170 50 L190 65' stroke='%233b82f6' stroke-width='1.5' fill='none' opacity='0.4'/%3E%3Cpath d='M10 90 L30 75 L50 85 L70 70 L90 80 L110 65 L130 85 L150 75 L170 85 L190 70' stroke='%236366f1' stroke-width='1' fill='none' opacity='0.3'/%3E%3C/svg%3E") repeat-x;
-            animation: stockMove 25s linear infinite;
-          }
-          
-          .stock-background::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='150' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 60 L25 40 L45 55 L65 25 L85 45 L105 20 L125 40 L145 30' stroke='%2359a96a' stroke-width='1' fill='none' opacity='0.5'/%3E%3C/svg%3E") repeat-x;
-            animation: stockMove 18s linear infinite reverse;
-          }
-          
-          @keyframes stockMove {
-            0% { background-position-x: 0; }
-            100% { background-position-x: 200px; }
-          }
         `}
       </style>
 
       <section className="py-12 bg-gradient-to-br from-green-50 to-emerald-100 relative overflow-hidden">
-        <div className="stock-background"></div>
+        {/* Remove the old stock background */}
         
-        <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <div className="container mx-auto px-4 max-w-6xl relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -324,6 +298,11 @@ export default function USDCurrencyExchangeRates() {
               </div>
             </motion.div>
           )}
+        </div>
+        
+        {/* Stock Market Background Animation */}
+        <div className="absolute inset-0 mt-48 h-96">
+          <StockMarketBackground />
         </div>
       </section>
     </>
