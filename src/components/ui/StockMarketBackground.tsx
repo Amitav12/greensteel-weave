@@ -25,30 +25,33 @@ export default function StockMarketBackground() {
     let animationId: number;
     let time = 0;
 
-    // Generate stock price points
-    const generateStockData = (points: number, volatility: number = 0.3) => {
-      const data = [];
-      let price = 100;
-      
-      for (let i = 0; i < points; i++) {
-        const change = (Math.random() - 0.5) * volatility;
-        price = Math.max(20, price + change);
-        data.push(price);
-      }
-      
-      return data;
+    // Generate bar chart data
+    const generateBarData = (count: number) => {
+      return Array.from({ length: count }, () => ({
+        height: Math.random() * 0.8 + 0.2,
+        speed: Math.random() * 0.02 + 0.01,
+        phase: Math.random() * Math.PI * 2,
+        maxHeight: Math.random() * 0.9 + 0.1
+      }));
     };
 
-    // Create multiple stock lines
-    const stockLines = [
-      { data: generateStockData(100, 0.8), color: 'rgba(16, 185, 129, 0.6)', width: 2 },
-      { data: generateStockData(100, 0.6), color: 'rgba(59, 130, 246, 0.5)', width: 1.5 },
-      { data: generateStockData(100, 0.4), color: 'rgba(139, 92, 246, 0.4)', width: 1 },
-      { data: generateStockData(100, 0.5), color: 'rgba(236, 72, 153, 0.3)', width: 1.2 },
-    ];
+    const bars = generateBarData(50);
+    
+    // Generate curve data points
+    const generateCurveData = (points: number) => {
+      const data = [];
+      for (let i = 0; i < points; i++) {
+        const progress = i / (points - 1);
+        const baseY = 0.3 + Math.sin(progress * Math.PI * 2) * 0.2;
+        data.push(baseY);
+      }
+      return data;
+    };
+    
+    const curveData = generateCurveData(100);
 
     const animate = () => {
-      time += 0.005;
+      time += 0.01;
       
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width / 2, canvas.height / 2);
@@ -56,44 +59,20 @@ export default function StockMarketBackground() {
       const width = canvas.width / 2;
       const height = canvas.height / 2;
       
-      // Draw animated stock lines
-      stockLines.forEach((line, lineIndex) => {
-        ctx.beginPath();
-        ctx.strokeStyle = line.color;
-        ctx.lineWidth = line.width;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        
-        // Create glow effect
-        ctx.shadowColor = line.color;
-        ctx.shadowBlur = 8;
-        
-        const points = line.data.length;
-        const xStep = width / (points - 1);
-        
-        for (let i = 0; i < points; i++) {
-          const x = i * xStep + Math.sin(time + lineIndex) * 10;
-          const baseY = (height * 0.7) - (line.data[i] / 150) * height * 0.4;
-          const y = baseY + Math.sin(time * 2 + i * 0.1 + lineIndex) * 5;
-          
-          if (i === 0) {
-            ctx.moveTo(x, y);
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-        
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-      });
+      // Draw dark background with world map effect
+      const gradient = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, width);
+      gradient.addColorStop(0, 'rgba(15, 23, 42, 0.9)');
+      gradient.addColorStop(1, 'rgba(3, 7, 18, 0.95)');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
       
-      // Draw grid lines
-      ctx.strokeStyle = 'rgba(16, 185, 129, 0.1)';
+      // Draw grid pattern
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.1)';
       ctx.lineWidth = 0.5;
       
       // Horizontal grid lines
-      for (let i = 0; i <= 5; i++) {
-        const y = (height / 5) * i;
+      for (let i = 0; i <= 10; i++) {
+        const y = (height / 10) * i;
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
@@ -101,23 +80,81 @@ export default function StockMarketBackground() {
       }
       
       // Vertical grid lines
-      for (let i = 0; i <= 10; i++) {
-        const x = (width / 10) * i;
+      for (let i = 0; i <= 20; i++) {
+        const x = (width / 20) * i;
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
         ctx.stroke();
       }
       
+      // Draw animated vertical bars (bottom to top animation)
+      const barWidth = width / bars.length;
+      bars.forEach((bar, i) => {
+        const x = i * barWidth;
+        const animatedHeight = Math.sin(time * bar.speed + bar.phase) * 0.3 + 0.7;
+        const barHeight = height * bar.maxHeight * animatedHeight;
+        
+        // Create gradient for bars
+        const barGradient = ctx.createLinearGradient(0, height, 0, height - barHeight);
+        barGradient.addColorStop(0, 'rgba(6, 182, 212, 0.8)');
+        barGradient.addColorStop(0.5, 'rgba(14, 165, 233, 0.6)');
+        barGradient.addColorStop(1, 'rgba(59, 130, 246, 0.3)');
+        
+        // Draw bar with glow effect
+        ctx.shadowColor = 'rgba(6, 182, 212, 0.5)';
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = barGradient;
+        ctx.fillRect(x + barWidth * 0.1, height - barHeight, barWidth * 0.8, barHeight);
+        
+        // Add extra glow on top
+        ctx.shadowColor = 'rgba(6, 182, 212, 0.8)';
+        ctx.shadowBlur = 5;
+        ctx.fillStyle = 'rgba(6, 182, 212, 0.9)';
+        ctx.fillRect(x + barWidth * 0.2, height - barHeight, barWidth * 0.6, 2);
+        
+        ctx.shadowBlur = 0;
+      });
+      
+      // Draw animated curve line
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.8)';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.shadowColor = 'rgba(6, 182, 212, 0.6)';
+      ctx.shadowBlur = 15;
+      
+      const curvePoints = curveData.length;
+      const xStep = width / (curvePoints - 1);
+      
+      for (let i = 0; i < curvePoints; i++) {
+        const x = i * xStep;
+        const baseY = height * curveData[i];
+        const animatedY = baseY + Math.sin(time * 2 + i * 0.1) * 10;
+        
+        if (i === 0) {
+          ctx.moveTo(x, animatedY);
+        } else {
+          ctx.lineTo(x, animatedY);
+        }
+      }
+      
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      
       // Draw floating particles
-      for (let i = 0; i < 20; i++) {
-        const x = (Math.sin(time + i) * 50) + (width / 2) + (i * 30);
-        const y = (Math.cos(time * 1.5 + i) * 20) + (height / 2);
+      for (let i = 0; i < 15; i++) {
+        const x = (Math.sin(time * 0.5 + i) * width * 0.3) + (width / 2);
+        const y = (Math.cos(time * 0.7 + i) * height * 0.2) + (height / 2);
+        const opacity = 0.3 + Math.sin(time + i) * 0.2;
         
         ctx.beginPath();
-        ctx.fillStyle = `rgba(16, 185, 129, ${0.1 + Math.sin(time + i) * 0.1})`;
-        ctx.arc(x % width, y % height, 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(6, 182, 212, ${opacity})`;
+        ctx.shadowColor = 'rgba(6, 182, 212, 0.8)';
+        ctx.shadowBlur = 8;
+        ctx.arc(x, y, 1.5, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0;
       }
       
       animationId = requestAnimationFrame(animate);
