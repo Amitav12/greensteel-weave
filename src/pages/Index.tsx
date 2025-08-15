@@ -26,7 +26,7 @@ export default function Index() {
       once: true
     }} transition={{
       duration: 0.6
-    }} className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-700 transition-colors duration-300">
+    }} className="py-8 sm:py-12 bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-700 transition-colors duration-300">
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <motion.div initial={{
           opacity: 0,
@@ -83,7 +83,7 @@ export default function Index() {
       once: true
     }} transition={{
       duration: 0.6
-    }} className="py-12 sm:py-16 bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-700 transition-colors duration-300">
+    }} className="py-8 sm:py-12 bg-gradient-to-br from-gray-50 to-green-50 dark:from-gray-800 dark:to-gray-700 transition-colors duration-300">
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <motion.div initial={{
           opacity: 0,
@@ -159,7 +159,7 @@ export default function Index() {
       once: true
     }} transition={{
       duration: 0.8
-    }} className="py-20 bg-gradient-to-br from-gray-900 via-green-900 to-black relative overflow-hidden">
+    }} className="py-16 bg-gradient-to-br from-gray-900 via-green-900 to-black relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(34,197,94,0.1),transparent_70%)]" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RefreshCw, AlertCircle } from 'lucide-react';
 import { getUSDExchangeRates, scheduleUSDAutomaticUpdates, USDCurrencyData } from '@/services/openExchangeRatesService';
+import ExchangeRateChart from '@/components/ui/ExchangeRateChart';
 
 export default function USDCurrencyExchangeRates() {
   const [rates, setRates] = useState<USDCurrencyData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
   const fetchExchangeRates = async () => {
     try {
@@ -215,7 +217,7 @@ export default function USDCurrencyExchangeRates() {
         `}
       </style>
 
-      <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-100 relative overflow-hidden">
+      <section className="py-12 bg-gradient-to-br from-green-50 to-emerald-100 relative overflow-hidden">
         <div className="stock-background"></div>
         
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
@@ -261,7 +263,16 @@ export default function USDCurrencyExchangeRates() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="usd-currency-card"
+                className="usd-currency-card cursor-pointer"
+                onClick={() => {
+                  const newExpanded = new Set(expandedCards);
+                  if (newExpanded.has(rate.code)) {
+                    newExpanded.delete(rate.code);
+                  } else {
+                    newExpanded.add(rate.code);
+                  }
+                  setExpandedCards(newExpanded);
+                }}
               >
                 <div className="flex items-center justify-between relative z-10">
                   <div className="flex items-center">
@@ -283,8 +294,20 @@ export default function USDCurrencyExchangeRates() {
                     <p className="usd-currency-rate">
                       {formatRate(rate.rate)}
                     </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {expandedCards.has(rate.code) ? 'Hide Chart' : 'View Chart'}
+                    </p>
                   </div>
                 </div>
+                
+                {expandedCards.has(rate.code) && (
+                  <ExchangeRateChart
+                    currency={rate.code}
+                    data={[]}
+                    currentRate={rate.rate}
+                    trend={Math.random() > 0.5 ? 'up' : 'down'}
+                  />
+                )}
               </motion.div>
             ))}
           </motion.div>
