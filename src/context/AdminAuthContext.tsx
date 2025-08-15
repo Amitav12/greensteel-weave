@@ -106,14 +106,12 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setIsAdmin(false);
       // Then sign out
       await supabase.auth.signOut();
-      // Clear user and session
-      setUser(null);
-      setSession(null);
+      // Note: Don't manually clear user/session here as auth state change will handle it
     } catch (error) {
       console.error('Error signing out:', error);
-    } finally {
       setLoading(false);
     }
+    // Don't set loading to false here - let the auth state change handle it
   };
 
   const value = {
