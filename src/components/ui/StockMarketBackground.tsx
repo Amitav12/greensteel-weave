@@ -102,40 +102,40 @@ export default function StockMarketBackground() {
         const previousTrend = Math.sin((time - 0.1) * (bar.speed * 2) + bar.phase);
         const isRising = currentTrend > previousTrend;
         
-        // Create gradient for bars with dynamic colors
+        // Create gradient for bars with blue color scheme
         const barGradient = ctx.createLinearGradient(0, height, 0, height - barHeight);
         if (isRising) {
-          barGradient.addColorStop(0, 'rgba(34, 197, 94, 0.9)');   // Green for rising
-          barGradient.addColorStop(0.5, 'rgba(16, 185, 129, 0.7)');
-          barGradient.addColorStop(1, 'rgba(34, 197, 94, 0.4)');
+          barGradient.addColorStop(0, 'rgba(59, 130, 246, 0.9)');   // Bright blue for rising
+          barGradient.addColorStop(0.5, 'rgba(6, 182, 212, 0.8)');   // Cyan middle
+          barGradient.addColorStop(1, 'rgba(147, 197, 253, 0.5)');   // Light blue top
         } else {
-          barGradient.addColorStop(0, 'rgba(239, 68, 68, 0.9)');   // Red for falling
-          barGradient.addColorStop(0.5, 'rgba(249, 115, 22, 0.7)');
-          barGradient.addColorStop(1, 'rgba(239, 68, 68, 0.4)');
+          barGradient.addColorStop(0, 'rgba(6, 182, 212, 0.9)');     // Cyan for falling
+          barGradient.addColorStop(0.5, 'rgba(14, 165, 233, 0.7)');  // Sky blue middle
+          barGradient.addColorStop(1, 'rgba(59, 130, 246, 0.4)');    // Blue top
         }
         
-        // Draw bar with glow effect
-        ctx.shadowColor = isRising ? 'rgba(34, 197, 94, 0.6)' : 'rgba(239, 68, 68, 0.6)';
-        ctx.shadowBlur = 12;
+        // Draw bar with enhanced glow effect
+        ctx.shadowColor = isRising ? 'rgba(59, 130, 246, 0.8)' : 'rgba(6, 182, 212, 0.8)';
+        ctx.shadowBlur = 15;
         ctx.fillStyle = barGradient;
         ctx.fillRect(x + barWidth * 0.1, height - barHeight, barWidth * 0.8, barHeight);
         
-        // Add extra glow on top with trend color
-        ctx.shadowColor = isRising ? 'rgba(34, 197, 94, 0.9)' : 'rgba(239, 68, 68, 0.9)';
-        ctx.shadowBlur = 8;
-        ctx.fillStyle = isRising ? 'rgba(34, 197, 94, 1)' : 'rgba(239, 68, 68, 1)';
+        // Add extra bright glow on top
+        ctx.shadowColor = isRising ? 'rgba(59, 130, 246, 1)' : 'rgba(6, 182, 212, 1)';
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = isRising ? 'rgba(147, 197, 253, 1)' : 'rgba(34, 211, 238, 1)';
         ctx.fillRect(x + barWidth * 0.2, height - barHeight - 1, barWidth * 0.6, 3);
         
         ctx.shadowBlur = 0;
       });
       
-      // Draw animated curve line
+      // Draw animated curve line with enhanced blue glow
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(6, 182, 212, 0.8)';
-      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.9)';
+      ctx.lineWidth = 4;
       ctx.lineCap = 'round';
-      ctx.shadowColor = 'rgba(6, 182, 212, 0.6)';
-      ctx.shadowBlur = 15;
+      ctx.shadowColor = 'rgba(59, 130, 246, 0.8)';
+      ctx.shadowBlur = 20;
       
       const curvePoints = curveData.length;
       const xStep = width / (curvePoints - 1);
@@ -143,7 +143,7 @@ export default function StockMarketBackground() {
       for (let i = 0; i < curvePoints; i++) {
         const x = i * xStep;
         const baseY = height * curveData[i];
-        const animatedY = baseY + Math.sin(time * 2 + i * 0.1) * 10;
+        const animatedY = baseY + Math.sin(time * 2 + i * 0.1) * 15;
         
         if (i === 0) {
           ctx.moveTo(x, animatedY);
@@ -155,17 +155,26 @@ export default function StockMarketBackground() {
       ctx.stroke();
       ctx.shadowBlur = 0;
       
-      // Draw floating particles
-      for (let i = 0; i < 15; i++) {
+      // Draw floating particles with blue glow
+      for (let i = 0; i < 20; i++) {
         const x = (Math.sin(time * 0.5 + i) * width * 0.3) + (width / 2);
         const y = (Math.cos(time * 0.7 + i) * height * 0.2) + (height / 2);
-        const opacity = 0.3 + Math.sin(time + i) * 0.2;
+        const opacity = 0.4 + Math.sin(time + i) * 0.3;
         
         ctx.beginPath();
-        ctx.fillStyle = `rgba(6, 182, 212, ${opacity})`;
+        ctx.fillStyle = `rgba(59, 130, 246, ${opacity})`;
+        ctx.shadowColor = 'rgba(59, 130, 246, 0.9)';
+        ctx.shadowBlur = 12;
+        ctx.arc(x, y, 2, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Add cyan particles for variety
+        const x2 = (Math.cos(time * 0.6 + i) * width * 0.2) + (width / 3);
+        const y2 = (Math.sin(time * 0.8 + i) * height * 0.3) + (height / 3);
+        ctx.fillStyle = `rgba(6, 182, 212, ${opacity * 0.8})`;
         ctx.shadowColor = 'rgba(6, 182, 212, 0.8)';
-        ctx.shadowBlur = 8;
-        ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+        ctx.shadowBlur = 10;
+        ctx.arc(x2, y2, 1.5, 0, Math.PI * 2);
         ctx.fill();
         ctx.shadowBlur = 0;
       }
