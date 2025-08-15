@@ -106,12 +106,14 @@ export default function USDCurrencyExchangeRates() {
           }
           
           .usd-currency-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 0 20px rgba(6, 182, 212, 0.1);
             transition: all 0.3s ease;
-            border-left: 4px solid #3b82f6;
+            border-left: 4px solid #06b6d4;
+            border: 1px solid rgba(6, 182, 212, 0.2);
             position: relative;
             overflow: hidden;
           }
@@ -123,14 +125,16 @@ export default function USDCurrencyExchangeRates() {
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.02) 50%, transparent 70%);
+            background: linear-gradient(45deg, transparent 30%, rgba(6, 182, 212, 0.05) 50%, transparent 70%);
             opacity: 0;
             transition: opacity 0.3s ease;
           }
           
           .usd-currency-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.2), 0 0 30px rgba(6, 182, 212, 0.3);
+            background: rgba(255, 255, 255, 0.98);
+            border-color: rgba(6, 182, 212, 0.4);
           }
           
           .usd-currency-card:hover::before {
@@ -191,8 +195,11 @@ export default function USDCurrencyExchangeRates() {
         `}
       </style>
 
-      <section className="py-12 bg-gradient-to-br from-green-50 to-emerald-100 relative overflow-hidden">
-        {/* Remove the old stock background */}
+      <section className="py-12 bg-gradient-to-br from-slate-900 to-slate-800 relative overflow-hidden">
+        {/* Stock Market Background Animation - Full Coverage */}
+        <div className="absolute inset-0 z-10">
+          <StockMarketBackground />
+        </div>
         
         <div className="container mx-auto px-4 max-w-6xl relative z-20">
           <motion.div
@@ -201,15 +208,15 @@ export default function USDCurrencyExchangeRates() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Live <span className="text-green-600">USD Exchange</span> Rates
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Live <span className="text-cyan-400">USD Exchange</span> Rates
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-6">
               Real-time exchange rates from US Dollar (USD) for international markets
             </p>
             
             {lastUpdated && (
-              <p className="usd-last-updated">
+              <p className="text-gray-400 text-sm text-center mt-4">
                 Last updated: {lastUpdated.toLocaleString('en-GB', { 
                   timeZone: 'Europe/London',
                   hour12: false,
@@ -292,17 +299,12 @@ export default function USDCurrencyExchangeRates() {
               animate={{ opacity: 1 }}
               className="mt-8 text-center"
             >
-              <div className="inline-flex items-center space-x-2 text-yellow-600 bg-yellow-50 px-4 py-2 rounded-lg">
+              <div className="inline-flex items-center space-x-2 text-yellow-400 bg-yellow-900/30 px-4 py-2 rounded-lg">
                 <AlertCircle className="w-5 h-5" />
                 <span>Some rates may be outdated due to API issues</span>
               </div>
             </motion.div>
           )}
-        </div>
-        
-        {/* Stock Market Background Animation */}
-        <div className="absolute inset-0 mt-48 h-96">
-          <StockMarketBackground />
         </div>
       </section>
     </>
