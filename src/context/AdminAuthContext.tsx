@@ -26,6 +26,7 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(true);
 
   const checkAdminStatus = async (userId: string) => {
     try {
@@ -51,15 +52,29 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   useEffect(() => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
+        if (!isMounted) return;
+        
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
+          // Use setTimeout to avoid blocking the auth state change
           setTimeout(async () => {
-            const adminStatus = await checkAdminStatus(session.user.id);
-            setIsAdmin(adminStatus);
-            setLoading(false);
+            if (!isMounted) return;
+            try {
+              const adminStatus = await checkAdminStatus(session.user.id);
+              if (isMounted) {
+                setIsAdmin(adminStatus);
+                setLoading(false);
+              }
+            } catch (error) {
+              console.error('Error checking admin status:', error);
+              if (isMounted) {
+                setIsAdmin(false);
+                setLoading(false);
+              }
+            }
           }, 0);
         } else {
           setIsAdmin(false);
@@ -70,22 +85,40 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!isMounted) return;
+      
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
         setTimeout(async () => {
-          const adminStatus = await checkAdminStatus(session.user.id);
-          setIsAdmin(adminStatus);
-          setLoading(false);
+          if (!isMounted) return;
+          try {
+            const adminStatus = await checkAdminStatus(session.user.id);
+            if (isMounted) {
+              setIsAdmin(adminStatus);
+              setLoading(false);
+            }
+          } catch (error) {
+            console.error('Error checking admin status:', error);
+            if (isMounted) {
+              setIsAdmin(false);
+              setLoading(false);
+            }
+          }
         }, 0);
       } else {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     });
 
-    return () => subscription.unsubscribe();
-  }, []);
+    return () => {
+      subscription.unsubscribe();
+      setIsMounted(false);
+    };
+  }, [isMounted]);
 
   const signIn = async (email: string, password: string) => {
     try {
@@ -100,19 +133,17 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const signOut = async () => {
+    if (!isMounted) return;
+    
     try {
       setLoading(true);
-      // Clear admin status first to prevent state updates
       setIsAdmin(false);
-      // Then sign out
       await supabase.auth.signOut();
-      // Clear user and session
-      setUser(null);
-      setSession(null);
     } catch (error) {
       console.error('Error signing out:', error);
-    } finally {
-      setLoading(false);
+      if (isMounted) {
+        setLoading(false);
+      }
     }
   };
 

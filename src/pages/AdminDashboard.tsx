@@ -50,11 +50,6 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
 
-  // Redirect if not authenticated or not admin
-  if (!loading && (!user || !isAdmin)) {
-    return <Navigate to="/admin/login" replace />;
-  }
-
   const fetchInquiries = async () => {
     try {
       setIsLoading(true);
@@ -132,6 +127,11 @@ export default function AdminDashboard() {
 
     setFilteredInquiries(filtered);
   }, [inquiries, searchTerm, statusFilter, dateFilter]);
+
+  // Redirect if not authenticated or not admin - AFTER all hooks
+  if (!loading && (!user || !isAdmin)) {
+    return <Navigate to="/admin/login" replace />;
+  }
 
   const updateInquiryStatus = async (id: string, status: Inquiry['status']) => {
     try {
