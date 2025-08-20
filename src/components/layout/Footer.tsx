@@ -43,8 +43,16 @@ export default function Footer() {
             >
               {/* Logo */}
               <Link to="/" className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                  <Recycle className="w-6 h-6 text-white" />
+                <div className="w-28 h-28 flex items-center justify-center rounded-2xl overflow-hidden">
+                  <img
+                    src="/src/logo.gif"
+                    alt="AAASHA TRADING LTD Logo"
+                    className="w-28 h-28 object-contain"
+                    style={{
+                      imageRendering: 'crisp-edges',
+                      filter: 'contrast(1.2) brightness(1.1) saturate(1.1)'
+                    }}
+                  />
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-white">

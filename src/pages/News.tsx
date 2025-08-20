@@ -5,13 +5,13 @@ import { Badge } from "@/components/ui/badge";
 
 const featuredArticle = {
   id: 1,
-  title: "AAASHA TRADING Participates in Steel Summit 2024",
+  title: "Recycling in School Initiative taken by our CEO",
   excerpt: "Our company was honored to participate in the 1st International Steel Industry & Global Market Summit organized by SteelRadar, celebrating 50 years of industry excellence.",
   category: "Events",
   author: "Rajesh Kumar",
   date: "2024-01-20",
   readTime: "4 min read",
-  image: "/lovable-uploads/steel-summit-award.jpg",
+  image: "/src/News1.jpg",
   content: "The Steel Summit 2024 brought together industry leaders from across the globe to discuss the future of steel trading, sustainability initiatives, and market trends. AAASHA TRADING was proud to be recognized among the leading companies contributing to the steel industry's growth."
 };
 
@@ -108,7 +108,7 @@ export default function News() {
                 <div className="relative h-[400px] lg:h-auto">
                   <img
                     src={featuredArticle.image}
-                    alt="Steel Summit Award Ceremony"
+                    alt="Educating school kids about recycling"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-black/20" />
@@ -149,7 +149,7 @@ export default function News() {
               className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
-                src="/lovable-uploads/steel-summit-award.jpg"
+                src="/src/News1.jpg"
                 alt="Award Ceremony at Steel Summit"
                 className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -173,7 +173,7 @@ export default function News() {
               className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
-                src="/lovable-uploads/steel-summit-delegates.jpg"
+                src="/src/News2.jpg"
                 alt="International Delegates at Steel Summit"
                 className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
               />
