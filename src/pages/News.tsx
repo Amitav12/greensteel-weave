@@ -5,13 +5,13 @@ import { Badge } from "@/components/ui/badge";
 
 const featuredArticle = {
   id: 1,
-  title: "Recycling in School Initiative taken by our CEO",
+  title: "AAASHA TRADING Participates in Steel Summit 2024",
   excerpt: "Our company was honored to participate in the 1st International Steel Industry & Global Market Summit organized by SteelRadar, celebrating 50 years of industry excellence.",
   category: "Events",
   author: "Rajesh Kumar",
   date: "2024-01-20",
   readTime: "4 min read",
-  image: "/src/News1.jpg",
+  image: "/lovable-uploads/steel-summit-award.jpg",
   content: "The Steel Summit 2024 brought together industry leaders from across the globe to discuss the future of steel trading, sustainability initiatives, and market trends. AAASHA TRADING was proud to be recognized among the leading companies contributing to the steel industry's growth."
 };
 
@@ -108,7 +108,7 @@ export default function News() {
                 <div className="relative h-[400px] lg:h-auto">
                   <img
                     src={featuredArticle.image}
-                    alt="Educating school kids about recycling"
+                    alt="Steel Summit Award Ceremony"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-black/20" />
@@ -149,7 +149,7 @@ export default function News() {
               className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
-                src="/src/News1.jpg"
+                src="/lovable-uploads/steel-summit-award.jpg"
                 alt="Award Ceremony at Steel Summit"
                 className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -173,7 +173,7 @@ export default function News() {
               className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
             >
               <img
-                src="/src/News2.jpg"
+                src="/lovable-uploads/steel-summit-delegates.jpg"
                 alt="International Delegates at Steel Summit"
                 className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -185,6 +185,79 @@ export default function News() {
                 </div>
                 <h3 className="text-xl font-bold mb-2">International Collaboration</h3>
                 <p className="text-gray-200 text-sm">Building bridges across continents with industry leaders from around the world</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* New Section - Educating School Kids */}
+      <section className="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4">
+              Educating school kids about{" "}
+              <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                recycling
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Recycling in School Initiative taken by our CEO
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* News Photo 1 */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                src="/lovable-uploads/News1.jpg"
+                alt="CEO educating school children about recycling"
+                className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <div className="flex items-center mb-2">
+                  <Users className="w-5 h-5 text-green-400 mr-2" />
+                  <Badge className="bg-green-500 text-white">Education Initiative</Badge>
+                </div>
+                <h3 className="text-xl font-bold mb-2">School Visit Program</h3>
+                <p className="text-gray-200 text-sm">Our CEO engaging with young minds about the importance of recycling and environmental responsibility</p>
+              </div>
+            </motion.div>
+
+            {/* News Photo 2 */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
+            >
+              <img
+                src="/lovable-uploads/News2.jpg"
+                alt="Students learning about steel recycling process"
+                className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <div className="flex items-center mb-2">
+                  <Award className="w-5 h-5 text-blue-400 mr-2" />
+                  <Badge className="bg-blue-500 text-white">Hands-on Learning</Badge>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Interactive Workshop</h3>
+                <p className="text-gray-200 text-sm">Students participating in interactive sessions about steel recycling and sustainable practices</p>
               </div>
             </motion.div>
           </div>

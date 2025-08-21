@@ -43,14 +43,18 @@ export default function Footer() {
             >
               {/* Logo */}
               <Link to="/" className="flex items-center space-x-3 mb-4">
-                <div className="w-28 h-28 flex items-center justify-center rounded-2xl overflow-hidden">
+                <div className="w-20 h-16 flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border border-green-200/30 dark:border-green-700/30 shadow-sm overflow-hidden" 
+                     style={{
+                       borderRadius: '12px'
+                     }}>
                   <img
                     src="/src/logo.gif"
                     alt="AAASHA TRADING LTD Logo"
-                    className="w-28 h-28 object-contain"
+                    className="w-16 h-12 object-cover"
                     style={{
                       imageRendering: 'crisp-edges',
-                      filter: 'contrast(1.2) brightness(1.1) saturate(1.1)'
+                      filter: 'contrast(1.2) brightness(1.1) saturate(1.1)',
+                      borderRadius: '12px'
                     }}
                   />
                 </div>
