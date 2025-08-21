@@ -171,7 +171,7 @@ export default function About() {
       {/* Our Story */}
       <section className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -189,14 +189,33 @@ export default function About() {
                 </span>
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                At AAASHA's we specialize in buying and selling recyclable materials, including metal scrap, plastic scrap, and used tyre scrap. Our goal is to strengthen the circular economy ecosystem in a just and equitable manner with focus on social upliftment, efficient logistics, provision for working capital, education, end-to-end traceability and on-ground action.
+                At AAASHA's, we have over two decades of expertise in the metal recycling and trading industry.
               </p>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                Aaasha sources its recyclable raw materials from the Middle East, Europe, North America and South America. It sells to the Indian subcontinent (consisting of India, Pakistan, Sri Lanka and Bangladesh), and the ASEAN countries (comprising of Vietnam, Indonesia, Thailand, Philippines, Taiwan, Singapore, Malaysia and China).
-              </p>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                Our main strength comes from being the supplier of a customer while also being the customer of the customer. For example, we supply stainless steel scrap to major mills in India and we buy back the finished product to redistribute it efficiently & with full traceability to close the loop whilst growing our business portfolio & giving back a considerable share of it's profit back to the society.
-              </p>
+              
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 mb-6 border-l-4 border-green-500">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Aaasha sources its recyclable raw materials from the Middle East, Europe, North America and South America. It sells to the Indian subcontinent (consisting of India, Pakistan, Sri Lanka and Bangladesh), and the ASEAN countries (comprising of Vietnam, Indonesia, Thailand, Philippines, Taiwan, Singapore, Malaysia and China).
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 mb-6 border-l-4 border-blue-500">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Our journey is rooted in a deep commitment to the circular economy, transforming waste into valuable resources and contributing to a more sustainable future. Backed by an experienced and dedicated team in Finance, Documentation, and Logistics, we ensure seamless operations across borders.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 mb-6 border-l-4 border-purple-500">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  With extensive knowledge of the metal, tyre and plastic industry, we manage the entire process — from scrap collection to finished products — ensuring quality, reliability, and environmental responsibility at every stage. Our strong industry network, market insight, and unwavering dedication to excellence have made us a trusted partner for clients across the globe.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 mb-8 border-l-4 border-orange-500">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  Our main strength comes from being the supplier of a customer while also being the customer of the customer. For example, we supply stainless steel scrap to major mills in India and we buy back the finished product to redistribute it efficiently & with full traceability to close the loop whilst growing our business portfolio & giving back a considerable share of it's profit back to the society.
+                </p>
+              </div>
+              
               <div className="space-y-4">
                 {[
                   "ISO 9001:2015 Quality Management Certified",
@@ -218,14 +237,43 @@ export default function About() {
                 ))}
               </div>
             </motion.div>
+            
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative"
+              className="relative space-y-8"
             >
-              {/* Video card replaces the static gradient card */}
+              {/* Why Choose Us Section */}
+              <div className="mb-8 mt-16">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Why Choose Us</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-4 lg:p-6 shadow-md border border-green-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+                    <div className="text-center">
+                      <span className="text-green-600 dark:text-green-400 font-bold text-3xl block mb-3">💰</span>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Competitive Prices</h4>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">We offer fair market prices for recyclable materials</p>
+                    </div>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-4 lg:p-6 shadow-md border border-green-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+                    <div className="text-center">
+                      <span className="text-green-600 dark:text-green-400 font-bold text-3xl block mb-3">🛡️</span>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Reliable Service</h4>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">Our team is dedicated to providing efficient and hassle-free transactions</p>
+                    </div>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-4 lg:p-6 shadow-md border border-green-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+                    <div className="text-center">
+                      <span className="text-green-600 dark:text-green-400 font-bold text-3xl block mb-3">🌱</span>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Sustainable Practices</h4>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">We prioritize environmentally responsible practices in all our operations</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Video Section */}
               <div className="w-full aspect-video rounded-3xl overflow-hidden shadow-2xl relative bg-gray-900">
                 <video
                   className="absolute inset-0 w-full h-full object-contain"
@@ -242,17 +290,29 @@ export default function About() {
                   Steel Recycling Facility
                 </div>
               </div>
-              {/* CO₂ badge (unchanged) */}
-              <div className="absolute -bottom-6 -left-6 bg-green-600 text-white p-6 rounded-2xl shadow-xl">
-                <div className="text-3xl font-black mb-2">890K+</div>
-                <div className="text-green-200">Tons CO₂ Saved</div>
+              
+              {/* Moved Cards Section */}
+              <div className="space-y-6">
+                <div className="bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900 dark:to-emerald-900 rounded-2xl p-6">
+                  <p className="text-lg text-gray-800 dark:text-gray-200 leading-relaxed font-medium">
+                    Guided by innovation and sustainability, we strive to bridge the gap between metal recycling and global trade, delivering value for our partners while safeguarding the planet.
+                  </p>
+                </div>
+                
+                <div className="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-6 border-l-4 border-teal-500">
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    If you're interested in buying or selling your recyclable materials, contact us today to learn more about our services and competitive prices.
+                  </p>
+                </div>
               </div>
+              
+              
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Our Values */}
+      {/* Business Process Section */}
       <section className="py-20 bg-gradient-to-br from-green-50 to-white dark:from-gray-800 dark:to-gray-700 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <motion.div
@@ -263,7 +323,7 @@ export default function About() {
             className="text-center mb-16"
           >
             <div className="inline-flex items-center px-6 py-3 bg-green-100 dark:bg-green-800 rounded-full mb-6">
-              <Heart className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+              <Globe className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
               <span className="text-green-800 dark:text-green-300 font-semibold">Our Values</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">

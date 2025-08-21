@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useSpring, animated, config } from '@react-spring/web';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Factory, TrendingUp, Leaf } from "lucide-react";
+import { Heart, Recycle, Factory } from "lucide-react";
 import { useResponsive } from "@/hooks/useResponsive";
 
 // Register GSAP plugins
@@ -12,7 +12,6 @@ gsap.registerPlugin(ScrollTrigger);
 export default function HeroSimple() {
   const containerRef = useRef(null);
   const heroContentRef = useRef(null);
-  const countersRef = useRef(null);
   const { isMobile, isTablet } = useResponsive();
 
   // React Spring animations - adjusted for mobile
@@ -78,32 +77,6 @@ export default function HeroSimple() {
         });
       }
     }
-
-    // Counter animation with GSAP - adjusted timing for mobile
-    if (countersRef.current) {
-      const counterElements = countersRef.current.querySelectorAll('.counter-number');
-      const targets = [50000, 25000, 500];
-      const duration = isMobile ? 2 : 3;
-      const baseDelay = isMobile ? 1.5 : 2;
-
-      counterElements.forEach((element: HTMLElement, index: number) => {
-        const obj = { value: 0 };
-        gsap.to(obj, {
-          value: targets[index],
-          duration: duration,
-          delay: baseDelay + (index * 0.2),
-          ease: "power2.out",
-          onUpdate: function () {
-            element.textContent = Math.floor(obj.value).toLocaleString();
-          }
-        });
-      });
-    }
-
-    // Cleanup function
-    return () => {
-      gsap.killTweensOf("*");
-    };
   }, [isMobile]);
 
   return (
@@ -197,8 +170,8 @@ export default function HeroSimple() {
                   </h1>
                 </div>
 
-                {/* Environmental Impact Stats Card - More compact */}
-                <div ref={countersRef} className="mt-2 sm:mt-3">
+                {/* Environmental Section Card */}
+                <div className="mt-2 sm:mt-3">
                   <div className="w-full max-w-xs sm:max-w-sm md:max-w-md bg-black/30 backdrop-blur-md border border-white/15 rounded-lg p-2 sm:p-3 md:p-4 shadow-lg">
                     {/* Header */}
                     <div className="flex items-center gap-2 mb-3 sm:mb-4">
@@ -215,35 +188,44 @@ export default function HeroSimple() {
 
                     <div className="h-px w-full bg-white/15 mb-3 sm:mb-4" />
 
-                    <div className="space-y-2 sm:space-y-3">
-                      {/* KPI: Tons Recycled */}
-                      <div className="flex items-center gap-1.5 sm:gap-2 w-full">
-                        <Factory className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-green-300 shrink-0" />
-                        <span className="counter-number text-base sm:text-lg md:text-xl lg:text-2xl font-black text-white">0</span>
-                        <span className="text-green-300 font-bold text-xs sm:text-sm md:text-base">+</span>
-                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-0.5 sm:ml-1">
-                          Tons Recycled
-                        </span>
+                    <div className="space-y-3 sm:space-y-4">
+                      {/* Our Values Section */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-green-300 shrink-0" />
+                          <span className="text-green-300 font-bold text-xs sm:text-sm">
+                            Our Values: SHARING IS CARING
+                          </span>
+                        </div>
+                        <div className="ml-5 sm:ml-6 space-y-1">
+                          <div className="text-green-100 text-xs font-medium">
+                            1. Knowledge, Economic & Resource Sharing
+                          </div>
+                          <div className="text-green-100 text-xs font-medium">
+                            2. Community Engagement by promoting sustainability, education and training
+                          </div>
+                        </div>
                       </div>
 
-                      {/* KPI: Tons CO₂ Saved */}
-                      <div className="flex items-center gap-1.5 sm:gap-2 w-full">
-                        <Leaf className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-emerald-300 shrink-0" />
-                        <span className="counter-number text-base sm:text-lg md:text-xl lg:text-2xl font-black text-white">0</span>
-                        <span className="text-green-300 font-bold text-xs sm:text-sm md:text-base">+</span>
-                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-0.5 sm:ml-1">
-                          Tons CO₂ Saved
-                        </span>
-                      </div>
-
-                      {/* KPI: Happy Clients */}
-                      <div className="flex items-center gap-1.5 sm:gap-2 w-full">
-                        <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 text-teal-300 shrink-0" />
-                        <span className="counter-number text-base sm:text-lg md:text-xl lg:text-2xl font-black text-white">0</span>
-                        <span className="text-green-300 font-bold text-xs sm:text-sm md:text-base">+</span>
-                        <span className="text-green-100 text-xs sm:text-sm font-medium ml-0.5 sm:ml-1">
-                          Happy Clients
-                        </span>
+                      {/* Materials We Trade Section */}
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Recycle className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-300 shrink-0" />
+                          <span className="text-emerald-300 font-bold text-xs sm:text-sm">
+                            Materials We Trade
+                          </span>
+                        </div>
+                        <div className="ml-5 sm:ml-6 space-y-1">
+                          <div className="text-green-100 text-xs font-medium">
+                            • Metal Scrap: Ferrous and non-ferrous metals, including steel, aluminum, copper, brass, and more
+                          </div>
+                          <div className="text-green-100 text-xs font-medium">
+                            • Plastic Scrap: Various types of plastic waste, including HDPE, LDPE, PET, and PVC
+                          </div>
+                          <div className="text-green-100 text-xs font-medium">
+                            • Used Tyre Scrap: Whole tyres, shredded tyres, and tyre crumbs
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
