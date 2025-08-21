@@ -71,7 +71,7 @@ export default function SiteHeader() {
                      borderRadius: '12px'
                    }}>
                 <img
-                  src="/src/logo.gif"
+                  src="/logo.gif"
                   alt="AAASHA TRADING LTD Logo"
                   className="w-16 h-12 object-cover"
                   style={{
