@@ -1,117 +1,76 @@
 import { motion } from "framer-motion";
 
 export default function OurPartners() {
-  // Partner logos data with authentic company-specific designs
   const partners = [
     {
-      name: "Standard Chartered",
-      alt: "Standard Chartered Logo",
+      name: "Lloyds Bank",
+      alt: "Lloyds Bank Logo",
       type: "banking",
-      brandColors: ["#0f4c81", "#00a651"],
+      brandColors: ["#006a4d", "#ffffff"],
       content: (
         <div className="flex flex-col items-center gap-2">
           <div className="relative">
-            <div className="w-16 h-12 bg-gradient-to-r from-blue-700 to-green-600 rounded-lg flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-green-500/20"></div>
-              <div className="text-white font-bold text-lg tracking-wider">SC</div>
-              <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
-            </div>
-            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-blue-600 to-green-500 rounded-full"></div>
-          </div>
-          <div className="text-center w-full px-3">
-            <div className="text-sm font-bold text-blue-700 leading-tight break-words overflow-hidden">Standard Chartered</div>
-            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">International Banking</div>
-          </div>
-        </div>
-      )
-    },
-    {
-      name: "NBF",
-      alt: "NBF Logo",
-      type: "banking",
-      brandColors: ["#1e40af", "#0ea5e9"],
-      content: (
-        <div className="flex flex-col items-center gap-2">
-          <div className="relative">
-            <div className="w-14 h-10 bg-gradient-to-br from-blue-600 to-sky-500 rounded-xl flex items-center justify-center relative shadow-lg">
-              <div className="text-white font-black text-xl tracking-wide">NBF</div>
-              <div className="absolute top-0 right-0 w-3 h-3 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full transform translate-x-1 -translate-y-1"></div>
-              <div className="absolute bottom-1 left-1 w-1 h-1 bg-white/60 rounded-full"></div>
-            </div>
-            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex gap-1">
-              <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
-              <div className="w-1 h-1 bg-sky-400 rounded-full"></div>
-              <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
+            <div className="w-16 h-12 bg-gradient-to-br from-green-700 to-green-800 rounded-xl flex items-center justify-center relative overflow-hidden shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-600/30 to-transparent"></div>
+              <div className="text-white text-lg font-black tracking-wider">LLOYDS</div>
+              <div className="absolute top-1 right-1 w-3 h-3 bg-white/20 rounded-full flex items-center justify-center">
+                <div className="text-green-300 text-xs">🏛️</div>
+              </div>
+              <div className="absolute bottom-1 left-1 right-1 h-0.5 bg-gradient-to-r from-green-400 via-white to-green-400 rounded-full"></div>
             </div>
           </div>
           <div className="text-center w-full px-3">
-            <div className="text-xs font-semibold text-blue-600 leading-tight break-words overflow-hidden">National Bank of Fujairah</div>
-            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">UAE Banking</div>
+            <div className="text-xs font-semibold text-green-700 leading-tight break-words overflow-hidden">Lloyds Banking Group</div>
+            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">UK • International Banking</div>
           </div>
-        </div>
-      )
-    },
-    {
-      name: "ADCB",
-      alt: "ADCB Logo",
-      type: "banking",
-      content: (
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-red-700 rounded-lg flex items-center justify-center">
-              <div className="w-4 h-4 bg-white rounded-full"></div>
-            </div>
-            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-bounce"></div>
-          </div>
-          <div className="flex flex-col text-center">
-            <div className="text-xl font-bold text-gray-700 leading-tight">ADCB</div>
-            <div className="text-xs text-gray-500 mt-1 leading-tight break-words">Abu Dhabi Commercial</div>
-          </div>
-        </div>
-      )
-    },
-    {
-      name: "FAB",
-      alt: "FAB Logo",
-      content: (
-        <div className="flex flex-col items-center text-center w-full px-2">
-          <div className="text-2xl font-bold text-blue-600 leading-tight">FAB</div>
-          <div className="text-xs text-gray-500 mt-1 leading-tight break-words">First Abu Dhabi Bank</div>
         </div>
       )
     },
     {
       name: "Emirates NBD",
       alt: "Emirates NBD Logo",
+      type: "banking",
+      brandColors: ["#1e40af", "#ffffff"],
       content: (
-        <div className="flex flex-col items-center gap-2 text-center w-full px-2">
-          <div className="w-8 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
-            <div className="text-white text-xs font-bold">E</div>
+        <div className="flex flex-col items-center gap-2">
+          <div className="relative">
+            <div className="w-16 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center relative overflow-hidden shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-transparent"></div>
+              <div className="text-white text-sm font-black tracking-wide">Emirates</div>
+              <div className="text-white text-xs font-bold mt-0.5">NBD</div>
+              <div className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
+                <div className="text-white text-xs">🏦</div>
+              </div>
+              <div className="absolute bottom-1 left-1 right-1 h-0.5 bg-gradient-to-r from-red-500 via-white to-red-500 rounded-full"></div>
+            </div>
           </div>
-          <div className="text-sm font-bold text-blue-600 leading-tight break-words">Emirates NBD</div>
+          <div className="text-center w-full px-3">
+            <div className="text-xs font-semibold text-blue-700 leading-tight break-words overflow-hidden">Emirates NBD Bank</div>
+            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">UAE • Regional Banking</div>
+          </div>
         </div>
       )
     },
     {
-      name: "MSC",
-      alt: "MSC Logo",
-      type: "shipping",
-      brandColors: ["#003366", "#0066cc"],
+      name: "HDFC",
+      alt: "HDFC Bank Logo",
+      type: "banking",
+      brandColors: ["#dc2626", "#ffffff"],
       content: (
         <div className="flex flex-col items-center gap-2">
           <div className="relative">
-            <div className="w-16 h-12 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl flex items-center justify-center relative overflow-hidden shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent"></div>
-              <div className="text-white text-2xl font-black tracking-wider">MSC</div>
-              <div className="absolute top-1 right-1 w-4 h-3 bg-blue-500 rounded-sm flex items-center justify-center">
-                <div className="text-white text-xs">⚓</div>
+            <div className="w-16 h-12 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center relative overflow-hidden shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500/30 to-transparent"></div>
+              <div className="text-white text-lg font-black tracking-wider">HDFC</div>
+              <div className="absolute top-1 right-1 w-3 h-3 bg-white/20 rounded-full flex items-center justify-center">
+                <div className="text-red-300 text-xs">🏛️</div>
               </div>
-              <div className="absolute bottom-1 left-1 right-1 h-0.5 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 rounded-full"></div>
+              <div className="absolute bottom-1 left-1 right-1 h-0.5 bg-gradient-to-r from-white via-red-300 to-white rounded-full"></div>
             </div>
           </div>
           <div className="text-center w-full px-3">
-            <div className="text-xs font-semibold text-slate-700 leading-tight break-words overflow-hidden">Mediterranean Shipping Co.</div>
-            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">World's Largest Container Fleet</div>
+            <div className="text-xs font-semibold text-red-700 leading-tight break-words overflow-hidden">HDFC Bank Limited</div>
+            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">India • Private Banking</div>
           </div>
         </div>
       )
@@ -146,67 +105,25 @@ export default function OurPartners() {
       )
     },
     {
-      name: "Safmarine",
-      alt: "Safmarine Logo",
-      content: (
-        <div className="flex flex-col items-center text-center w-full px-2">
-          <div className="text-lg font-bold text-orange-600 leading-tight break-words">Safmarine</div>
-          <div className="w-12 h-1 bg-orange-400 rounded-full mt-2"></div>
-        </div>
-      )
-    },
-    {
-      name: "COSCO Shipping",
-      alt: "COSCO Shipping Logo",
+      name: "MSC",
+      alt: "MSC Logo",
       type: "shipping",
-      brandColors: ["#dc2626", "#2563eb"],
+      brandColors: ["#1e40af", "#ffffff"],
       content: (
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-2">
           <div className="relative">
-            <div className="w-16 h-12 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex flex-col items-center justify-center relative overflow-hidden shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-t from-red-800/20 to-transparent"></div>
-              <div className="text-white text-lg font-black tracking-wide">COSCO</div>
-              <div className="w-12 h-0.5 bg-blue-400 rounded-full mt-1"></div>
-              <div className="text-blue-200 text-xs font-semibold tracking-widest">SHIPPING</div>
-              <div className="absolute top-1 left-1 w-2 h-2 bg-yellow-400 rounded-full"></div>
-            </div>
-            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex gap-1">
-              <div className="w-1 h-1 bg-red-400 rounded-full"></div>
-              <div className="w-3 h-1 bg-blue-400 rounded-full"></div>
-              <div className="w-1 h-1 bg-red-400 rounded-full"></div>
-            </div>
-          </div>
-          <div className="text-center w-full px-3 mt-2">
-            <div className="text-xs font-semibold text-red-600 leading-tight break-words overflow-hidden">China Ocean Shipping</div>
-            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">Global Logistics Leader</div>
-          </div>
-        </div>
-      )
-    },
-    {
-      name: "Evergreen",
-      alt: "Evergreen Logo",
-      type: "shipping",
-      brandColors: ["#16a34a", "#15803d"],
-      content: (
-        <div className="flex flex-col items-center gap-3">
-          <div className="relative">
-            <div className="w-16 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center relative overflow-hidden shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-t from-green-700/20 to-transparent"></div>
-              <div className="text-white text-sm font-black tracking-wider">EVERGREEN</div>
-              <div className="absolute top-1 right-1 w-3 h-3 bg-white/20 rounded-full flex items-center justify-center">
-                <div className="w-2 h-2 bg-green-300 rounded-full"></div>
+            <div className="w-16 h-12 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl flex items-center justify-center relative overflow-hidden shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent"></div>
+              <div className="text-white text-2xl font-black tracking-wider">MSC</div>
+              <div className="absolute top-1 right-1 w-4 h-3 bg-blue-500 rounded-sm flex items-center justify-center">
+                <div className="text-white text-xs">⚓</div>
               </div>
-              <div className="absolute bottom-1 left-1 right-1 flex justify-center gap-1">
-                <div className="w-1 h-1 bg-green-300 rounded-full"></div>
-                <div className="w-1 h-1 bg-green-200 rounded-full"></div>
-                <div className="w-1 h-1 bg-green-300 rounded-full"></div>
-              </div>
+              <div className="absolute bottom-1 left-1 right-1 h-0.5 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 rounded-full"></div>
             </div>
           </div>
-          <div className="text-center w-full px-3 mt-2">
-            <div className="text-xs font-semibold text-green-600 leading-tight break-words overflow-hidden">Evergreen Marine Corp.</div>
-            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">Taiwan • Container Shipping</div>
+          <div className="text-center w-full px-3">
+            <div className="text-xs font-semibold text-slate-700 leading-tight break-words overflow-hidden">Mediterranean Shipping Co.</div>
+            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">World's Largest Container Fleet</div>
           </div>
         </div>
       )
@@ -214,23 +131,23 @@ export default function OurPartners() {
     {
       name: "CMA CGM",
       alt: "CMA CGM Logo",
+      type: "shipping",
+      brandColors: ["#1e40af", "#dc2626"],
       content: (
-        <div className="flex flex-col items-center text-center w-full px-2">
-          <div className="text-lg font-bold text-blue-700 leading-tight break-words">CMA CGM</div>
-          <div className="flex gap-1 mt-2">
-            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+        <div className="flex flex-col items-center gap-3">
+          <div className="relative">
+            <div className="w-16 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex flex-col items-center justify-center relative overflow-hidden shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-800/20 to-transparent"></div>
+              <div className="text-white text-sm font-black tracking-wide">CMA</div>
+              <div className="text-white text-sm font-black tracking-wide">CGM</div>
+              <div className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="absolute bottom-1 left-1 right-1 h-0.5 bg-gradient-to-r from-red-400 via-white to-red-400 rounded-full"></div>
+            </div>
           </div>
-        </div>
-      )
-    },
-    {
-      name: "Avana Logistics",
-      alt: "Avana Logo",
-      content: (
-        <div className="flex flex-col items-center text-center w-full px-2">
-          <div className="text-lg font-bold text-purple-600 leading-tight break-words">avana</div>
-          <div className="text-xs text-gray-500 mt-1 leading-tight">LOGISTICS</div>
+          <div className="text-center w-full px-3 mt-2">
+            <div className="text-xs font-semibold text-blue-700 leading-tight break-words overflow-hidden">CMA CGM Group</div>
+            <div className="text-xs text-gray-500 mt-1 leading-tight overflow-hidden">France • Container Shipping</div>
+          </div>
         </div>
       )
     }
