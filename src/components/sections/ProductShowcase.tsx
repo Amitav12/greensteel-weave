@@ -107,7 +107,7 @@ export default function ProductShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-3xl md:text-4xl font-black text-gray-900 mb-4"
+            className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4"
           >
             <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
               Recycled Materials

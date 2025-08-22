@@ -200,9 +200,8 @@ export default function Index() {
             delay: 0.4
           }}>
               <Link to="/products">
-                <Button variant="glass" size="lg" className="text-lg px-8 py-4 font-bold" greenTint="light">
-                  <ArrowRight className="w-5 h-5 mr-2" />
-                  View Products
+                <Button size="lg" className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                  View Commodities
                 </Button>
               </Link>
             </motion.div>
@@ -242,6 +241,6 @@ export default function Index() {
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
 
       {/* WhatsApp Floating Button */}
-      <WhatsAppFloat phoneNumber="919876543210" defaultMessage="Hello AAASHA TRADING! I'm interested in your steel trading and recycling services. Could you please provide more information about your products and pricing?" />
+      <WhatsAppFloat phoneNumber="919876543210" defaultMessage="Hello AAASHA TRADING! I'm interested in your steel trading and recycling services. Could you please provide more information about your commodities and pricing?" />
     </div>;
 }
