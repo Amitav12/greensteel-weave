@@ -6,22 +6,18 @@ export default function Products() {
   return (
     <>
       <Helmet>
-        <title>Products - AAASHA TRADING LTD | Premium Steel & Recycled Materials</title>
-        <meta
-          name="description"
-          content="Explore our comprehensive range of high-quality steel products and recycled materials. Premium steel coils, sheets, structural steel, and sustainable recycling solutions."
+        <title>Commodities - AAASHA TRADING LTD | Premium Steel & Recycled Materials</title>
+        <meta 
+          name="description" 
+          content="Explore our comprehensive range of high-quality steel commodities and recycled materials. Premium steel coils, sheets, structural steel, and sustainable recycling solutions."
         />
-        <meta name="keywords" content="steel products, steel coils, steel sheets, structural steel, recycled materials, sustainable steel" />
+        <meta name="keywords" content="steel commodities, steel coils, steel sheets, structural steel, recycled materials, sustainable steel" />
       </Helmet>
-
-
-
-      {/* Products Content Section - Below the video */}
-      <section className="py-12 sm:py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
-        <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
-          <ProductShowcase />
-        </div>
-      </section>
+      
+      <div className="min-h-screen bg-white dark:bg-gray-900">
+        {/* Commodities Content Section - Below the video */}
+        <ProductShowcase />
+      </div>
     </>
   );
 }

@@ -456,7 +456,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Benefits of Recycling */}
+      {/* Environmental Impact & Benefits Section */}
       <section className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <motion.div
@@ -503,33 +503,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-br from-green-600 to-emerald-600 text-white">
-        <div className="container mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-black mb-6">
-              Ready to Partner with Us?
-            </h2>
-            <p className="text-xl text-green-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-              If you're interested in buying or selling recyclable materials, contact us today to learn more about our services and competitive prices.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-3 bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-green-50 transition-colors duration-300 group"
-            >
-              Contact Us Today
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Team Section */}
+      {/* Our Team Section */}
       <section className="py-20 bg-gradient-to-br from-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
         <div className="container mx-auto px-6">
           <motion.div

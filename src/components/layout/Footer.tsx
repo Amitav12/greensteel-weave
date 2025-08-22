@@ -15,7 +15,7 @@ import {
 
 const quickLinks = [
   { name: "About Us", href: "/about" },
-  { name: "Products", href: "/products" },
+  { name: "Commodities", href: "/products" },
   { name: "Contact", href: "/contact" },
   { name: "Admin", href: "/admin/login" }
 ];
@@ -76,16 +76,26 @@ export default function Footer() {
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
                   <Phone className="w-4 h-4 text-green-400" />
-                  <span className="text-gray-300 text-sm">+91 98765 43210</span>
+                  <span className="text-gray-300 text-sm">+447446643043</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Phone className="w-4 h-4 text-green-400" />
+                  <span className="text-gray-300 text-sm">+447308409476</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="w-4 h-4 text-green-400" />
-                  <span className="text-gray-300 text-sm">info@aaashatrading.com</span>
+                  <span className="text-gray-300 text-sm">info@aaasha.co.uk</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Linkedin className="w-4 h-4 text-green-400" />
+                  <a href="https://www.linkedin.com/in/arihant-singhi-4428947/" target="_blank" rel="noopener noreferrer" className="text-gray-300 text-sm hover:text-green-400 transition-colors duration-300">
+                    Arihant Singhi
+                  </a>
                 </div>
                 <div className="flex items-start space-x-2">
                   <MapPin className="w-4 h-4 text-green-400 mt-0.5" />
                   <span className="text-gray-300 text-sm">
-                    Mumbai, Maharashtra, India
+                    21 High View Cl<br />Leicester LE4 9LJ, UK
                   </span>
                 </div>
               </div>

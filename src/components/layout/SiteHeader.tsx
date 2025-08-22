@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 const nav = [
   { to: "/", label: "Home", icon: Recycle },
   { to: "/about", label: "About", icon: Users },
-  { to: "/products", label: "Products", icon: Factory },
+  { to: "/products", label: "Commodities", icon: Factory },
   { to: "/partners", label: "Partners", icon: Award },
   { to: "/news", label: "News", icon: Newspaper },
 ];
