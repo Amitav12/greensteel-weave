@@ -73,7 +73,7 @@ export default function SiteHeader() {
                 <img
                   src="/logo.gif"
                   alt="AAASHA TRADING LTD Logo"
-                  className="w-16 h-12 object-cover"
+                  className="w-18 h-14 object-cover"
                   style={{
                     imageRendering: 'crisp-edges',
                     filter: 'contrast(1.2) brightness(1.1) saturate(1.1)',

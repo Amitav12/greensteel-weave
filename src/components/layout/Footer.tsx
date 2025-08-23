@@ -50,7 +50,7 @@ export default function Footer() {
                   <img
                     src="/logo.gif"
                     alt="AAASHA TRADING LTD Logo"
-                    className="w-12 h-10 sm:w-16 sm:h-12 object-cover transition-all duration-300 group-hover:brightness-110"
+                    className="w-14 h-12 sm:w-18 sm:h-14 object-cover transition-all duration-300 group-hover:brightness-110"
                     style={{
                       imageRendering: 'crisp-edges',
                       filter: 'contrast(1.2) brightness(1.1) saturate(1.2)',
