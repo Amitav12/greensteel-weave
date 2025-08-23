@@ -38,7 +38,7 @@ export default function Footer() {
               {/* Logo Section */}
               <Link to="/" className="inline-flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 group">
                 <motion.div 
-                  className="relative w-16 h-14 sm:w-20 sm:h-16 flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/30 dark:to-emerald-800/30 border border-green-200/40 dark:border-green-700/40 shadow-lg overflow-hidden transition-all duration-300 group-hover:scale-105" 
+                  className="relative w-20 h-18 sm:w-24 sm:h-20 flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/30 dark:to-emerald-800/30 border border-green-200/40 dark:border-green-700/40 shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-green-500/20"
                   style={{
                     borderRadius: '12px'
                   }}
@@ -49,8 +49,8 @@ export default function Footer() {
                 >
                   <img
                     src="/logo.gif"
-                    alt="AAASHA TRADING LTD Logo"
-                    className="w-14 h-12 sm:w-18 sm:h-14 object-cover transition-all duration-300 group-hover:brightness-110"
+                    alt="ATL - The Commodity Experts Logo"
+                    className="w-18 h-16 sm:w-22 sm:h-18 object-contain transition-all duration-300 group-hover:brightness-110"
                     style={{
                       imageRendering: 'crisp-edges',
                       filter: 'contrast(1.2) brightness(1.1) saturate(1.2)',
