@@ -21,6 +21,10 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import { StrictMode } from "react";
+import FerrousScrap from "@/pages/FerrousScrap";
+import NonFerrousScrap from "@/pages/NonFerrousScrap";
+import NonPrimeProducts from "@/pages/NonPrimeProducts";
+import RubberScrap from "@/pages/RubberScrap";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,6 +60,10 @@ const App = () => (
                             <Route path="/" element={<Index />} />
                             <Route path="/about" element={<About />} />
                             <Route path="/products" element={<Products />} />
+                            <Route path="/commodities/ferrous-scrap" element={<FerrousScrap />} />
+                            <Route path="/commodities/non-ferrous-scrap" element={<NonFerrousScrap />} />
+                            <Route path="/commodities/non-prime-products" element={<NonPrimeProducts />} />
+                            <Route path="/commodities/rubber-scrap" element={<RubberScrap />} />
                             <Route path="/partners" element={<Partners />} />
                             <Route path="/certifications" element={<Certifications />} />
                             <Route path="/news" element={<News />} />

@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import ContactModal from "@/components/ui/ContactModal";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Recycle, Menu, X, Factory, Award, Users, Newspaper } from "lucide-react";
+import { Phone, Recycle, Menu, X, Factory, Award, Users, Newspaper, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Switch } from "@/components/ui/switch";
@@ -11,7 +11,17 @@ import { Switch } from "@/components/ui/switch";
 const nav = [
   { to: "/", label: "Home", icon: Recycle },
   { to: "/about", label: "About", icon: Users },
-  { to: "/products", label: "Commodities", icon: Factory },
+  { 
+    to: "/products", 
+    label: "Commodities", 
+    icon: Factory,
+    dropdown: [
+      { to: "/commodities/ferrous-scrap", label: "Ferrous Scrap" },
+      { to: "/commodities/non-ferrous-scrap", label: "Non-Ferrous Scrap" },
+      { to: "/commodities/non-prime-products", label: "Non-Prime Flat & Long Products" },
+      { to: "/commodities/rubber-scrap", label: "Rubber Scrap" }
+    ]
+  },
   { to: "/partners", label: "Partners", icon: Award },
   { to: "/news", label: "News", icon: Newspaper },
 ];
@@ -20,6 +30,7 @@ export default function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -38,10 +49,10 @@ export default function SiteHeader() {
   }, []);
 
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
-    `relative px-5 py-3 rounded-xl text-sm font-bold tracking-wide transition-all duration-500 group ${
+    `relative px-3 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-500 group ${
       isActive 
-        ? "text-white bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 shadow-lg shadow-green-500/25 dark:shadow-green-400/20" 
-        : "text-slate-700 dark:text-slate-200 hover:text-white hover:bg-gradient-to-r hover:from-emerald-500 hover:via-green-500 hover:to-teal-500 hover:shadow-lg hover:shadow-green-500/20 hover:scale-105"
+        ? "text-white bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 shadow-md shadow-green-500/25 dark:shadow-green-400/20" 
+        : "text-slate-700 dark:text-slate-200 hover:text-white hover:bg-gradient-to-r hover:from-emerald-500 hover:via-green-500 hover:to-teal-500 hover:shadow-md hover:shadow-green-500/20 hover:scale-105"
     }`;
 
   // Don't render until mounted to avoid hydration mismatch
@@ -59,38 +70,107 @@ export default function SiteHeader() {
           : "bg-white/20 dark:bg-gray-900/20 border-b border-[#81C784]/10 dark:border-[#4CAF50]/10 shadow-sm"
       }`}>
         <div className="container flex h-20 items-center justify-between px-6">
-          {/* Logo */}
-          <Link to="/" className="group">
+          {/* Logo - Moved to far left with enhanced styling */}
+          <Link to="/" className="group flex-shrink-0">
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="font-black tracking-tight text-xl text-[#2E7D32] dark:text-[#4CAF50] drop-shadow-sm group-hover:text-[#4CAF50] dark:group-hover:text-[#66BB6A] transition-colors duration-300 flex items-center gap-3"
+              whileHover={{ scale: 1.08 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="flex items-center gap-4"
             >
-              <div className="w-20 h-16 flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border border-green-200/30 dark:border-green-700/30 shadow-sm overflow-hidden" 
+              <div className="w-24 h-20 flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border border-green-200/30 dark:border-green-700/30 shadow-lg overflow-hidden group-hover:shadow-xl group-hover:shadow-green-500/20 transition-all duration-300"
                    style={{
                      borderRadius: '12px'
                    }}>
-                <img
+                <motion.img
                   src="/logo.gif"
-                  alt="AAASHA TRADING LTD Logo"
-                  className="w-16 h-12 object-cover"
+                  alt="ATL - The Commodity Experts Logo"
+                  className="w-22 h-18 object-contain"
                   style={{
                     imageRendering: 'crisp-edges',
                     filter: 'contrast(1.2) brightness(1.1) saturate(1.1)',
                     borderRadius: '12px'
                   }}
+                  whileHover={{ 
+                    filter: 'contrast(1.3) brightness(1.2) saturate(1.2)',
+                    scale: 1.05
+                  }}
+                  transition={{ duration: 0.3 }}
                 />
               </div>
-              AAASHA TRADING LTD
+              
+              {/* Enhanced Company Name with bigger text and effects */}
+              <motion.div
+                className="font-extrabold tracking-wide text-3xl lg:text-4xl text-[#2E7D32] dark:text-[#4CAF50] drop-shadow-lg transition-all duration-500"
+                whileHover={{ 
+                  scale: 1.02,
+                  textShadow: "0 0 20px rgba(76, 175, 80, 0.5)"
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #2E7D32, #4CAF50, #66BB6A)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 2px 4px rgba(46, 125, 50, 0.3))',
+                  fontFamily: 'Georgia, serif'
+                }}
+              >
+                <motion.span
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  AAASHA TRADING LTD
+                </motion.span>
+              </motion.div>
             </motion.div>
           </Link>
           
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-2">
+          {/* Desktop Navigation - Moved more to the right with smaller buttons */}
+          <nav className="hidden md:flex items-center gap-1 ml-auto mr-4">
             {nav.map((n) => (
-              <NavLink key={n.to} to={n.to} className={getNavCls} end>
-                {n.label}
-              </NavLink>
+              <div key={n.to} className="relative">
+                {n.dropdown ? (
+                  <div
+                    className="relative"
+                    onMouseEnter={() => setActiveDropdown(n.to)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
+                    <button
+                      className={`${getNavCls({ isActive: false })} flex items-center gap-1`}
+                    >
+                      {n.label}
+                      <ChevronDown className="w-3 h-3" />
+                    </button>
+                    
+                    <AnimatePresence>
+                      {activeDropdown === n.to && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50"
+                        >
+                          {n.dropdown.map((item) => (
+                            <Link
+                              key={item.to}
+                              to={item.to}
+                              className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
+                              onClick={() => setActiveDropdown(null)}
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <NavLink to={n.to} className={getNavCls} end>
+                    {n.label}
+                  </NavLink>
+                )}
+              </div>
             ))}
           </nav>
           
@@ -193,17 +273,38 @@ export default function SiteHeader() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1, duration: 0.3 }}
                     >
-                      <NavLink 
-                        to={n.to} 
-                        className="block w-full px-6 py-4 rounded-lg text-lg font-semibold text-[#2E7D32] dark:text-[#4CAF50] hover:text-white hover:bg-[#4CAF50] transition-all duration-300"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        end
-                      >
-                        <div className="flex items-center gap-3">
-                          <IconComponent className="w-5 h-5" />
-                          {n.label}
+                      {n.dropdown ? (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-3 px-6 py-4 text-lg font-semibold text-[#2E7D32] dark:text-[#4CAF50]">
+                            <IconComponent className="w-5 h-5" />
+                            {n.label}
+                          </div>
+                          <div className="ml-6 space-y-1">
+                            {n.dropdown.map((item) => (
+                              <Link
+                                key={item.to}
+                                to={item.to}
+                                className="block px-6 py-3 text-md text-gray-600 dark:text-gray-300 hover:text-[#4CAF50] hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-all duration-300"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </div>
                         </div>
-                      </NavLink>
+                      ) : (
+                        <NavLink 
+                          to={n.to} 
+                          className="block w-full px-6 py-4 rounded-lg text-lg font-semibold text-[#2E7D32] dark:text-[#4CAF50] hover:text-white hover:bg-[#4CAF50] transition-all duration-300"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          end
+                        >
+                          <div className="flex items-center gap-3">
+                            <IconComponent className="w-5 h-5" />
+                            {n.label}
+                          </div>
+                        </NavLink>
+                      )}
                     </motion.div>
                   );
                 })}
