@@ -188,7 +188,7 @@ export default function Index() {
               Join hundreds of satisfied clients who trust AAASHA TRADING for sustainable steel solutions.
             </motion.p>
 
-            <motion.div className="flex justify-center items-center mb-12" initial={{
+            <motion.div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12" initial={{
             opacity: 0,
             y: 20
           }} whileInView={{
@@ -204,6 +204,13 @@ export default function Index() {
                   View Commodities
                 </Button>
               </Link>
+              <Button 
+                size="lg" 
+                onClick={() => setIsContactModalOpen(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Contact Us
+              </Button>
             </motion.div>
           </div>
         </div>
