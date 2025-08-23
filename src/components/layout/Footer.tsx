@@ -156,12 +156,23 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
             {/* Copyright */}
             <motion.div 
-              className="text-gray-400 text-xs sm:text-sm font-medium"
+              className="text-gray-400 text-xs sm:text-sm font-medium text-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              © 2024 AAASHA TRADING LTD. All rights reserved.
+              <div>© 2024 AAASHA TRADING LTD. All rights reserved.</div>
+              <div className="mt-1">
+                IT Solutions developed by{' '}
+                <a 
+                  href="https://DarkElephants.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-green-400 hover:text-green-300 transition-colors duration-300 underline decoration-dotted underline-offset-2"
+                >
+                  DarkElephants.com
+                </a>
+              </div>
             </motion.div>
             
             {/* Back to Top Button */}
