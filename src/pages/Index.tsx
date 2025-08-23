@@ -205,34 +205,6 @@ export default function Index() {
                 </Button>
               </Link>
             </motion.div>
-
-            {/* Quick Contact Info - Centered */}
-            <motion.div className="flex justify-center items-center gap-8" initial={{
-            opacity: 0,
-            y: 20
-          }} whileInView={{
-            opacity: 1,
-            y: 0
-          }} viewport={{
-            once: true
-          }} transition={{
-            delay: 0.6
-          }}>
-              <div className="bg-white/5 backdrop-blur-xl rounded-xl p-6 border border-white/10 flex items-center gap-4">
-                <Mail className="w-6 h-6 text-green-400" />
-                <div className="text-left">
-                  <h3 className="text-white font-bold mb-1">Email Us</h3>
-                  <p className="text-green-300 text-sm">info@aaashatrading.com</p>
-                </div>
-              </div>
-              <div className="bg-white/5 backdrop-blur-xl rounded-xl p-6 border border-white/10 flex items-center gap-4">
-                <MapPin className="w-6 h-6 text-green-400" />
-                <div className="text-left">
-                  <h3 className="text-white font-bold mb-1">Visit Us</h3>
-                  <p className="text-green-300 text-sm">Mumbai, India</p>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </motion.section>
@@ -241,6 +213,12 @@ export default function Index() {
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
 
       {/* WhatsApp Floating Button */}
-      <WhatsAppFloat phoneNumber="919876543210" defaultMessage="Hello AAASHA TRADING! I'm interested in your steel trading and recycling services. Could you please provide more information about your commodities and pricing?" />
+      <WhatsAppFloat 
+        phoneNumbers={[
+          { number: "447446643043", label: "Primary Contact" },
+          { number: "447308409476", label: "Secondary Contact" }
+        ]} 
+        defaultMessage="Hello AAASHA TRADING! I'm interested in your steel trading and recycling services. Could you please provide more information about your commodities and pricing?" 
+      />
     </div>;
 }
