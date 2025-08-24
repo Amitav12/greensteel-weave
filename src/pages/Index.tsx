@@ -194,19 +194,26 @@ export default function Index() {
                 </Button>
               </Link>
               <Button 
-                size="lg" 
                 onClick={(e) => {
-                  const btn = e.currentTarget as HTMLElement;
-                  // Smoothly bring the button into view first
-                  btn.scrollIntoView({ block: "center", behavior: "smooth" });
-                  setAnchorSide("above");
-                  // After smooth scroll settles, measure and open anchored above
-                  setTimeout(() => {
+                  const btn = e.currentTarget as HTMLButtonElement;
+                  const isMobile = window.innerWidth <= 768;
+
+                  if (!isMobile) {
+                    // Desktop: keep nice scroll + anchor above the button
+                    btn.scrollIntoView({ block: "center", behavior: "smooth" });
+                    setAnchorSide("above");
+                    setTimeout(() => {
+                      const rect = btn.getBoundingClientRect();
+                      setContactAnchor({ x: rect.left + rect.width / 2, y: rect.top });
+                      requestAnimationFrame(() => setIsContactModalOpen(true));
+                    }, 350);
+                  } else {
+                    // Mobile: no scrolling; open at top of the screen (modal ignores anchor on mobile)
+                    setAnchorSide("above");
                     const rect = btn.getBoundingClientRect();
-                    // Use the top edge as the anchor for "above" placement
                     setContactAnchor({ x: rect.left + rect.width / 2, y: rect.top });
                     requestAnimationFrame(() => setIsContactModalOpen(true));
-                  }, 350);
+                  }
                 }}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
