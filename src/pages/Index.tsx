@@ -197,7 +197,7 @@ export default function Index() {
                 onClick={(e) => {
                   const btn = e.currentTarget as HTMLButtonElement;
                   const isMobile = window.innerWidth <= 768;
-
+  
                   if (!isMobile) {
                     // Desktop: keep nice scroll + anchor above the button
                     btn.scrollIntoView({ block: "center", behavior: "smooth" });
@@ -208,11 +208,13 @@ export default function Index() {
                       requestAnimationFrame(() => setIsContactModalOpen(true));
                     }, 350);
                   } else {
-                    // Mobile: no scrolling; open at top of the screen (modal ignores anchor on mobile)
+                    // Mobile: scroll to top and open modal there (no manual scrolling needed)
                     setAnchorSide("above");
-                    const rect = btn.getBoundingClientRect();
-                    setContactAnchor({ x: rect.left + rect.width / 2, y: rect.top });
-                    requestAnimationFrame(() => setIsContactModalOpen(true));
+                    setContactAnchor(null);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                    setTimeout(() => {
+                      requestAnimationFrame(() => setIsContactModalOpen(true));
+                    }, 400);
                   }
                 }}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
