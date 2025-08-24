@@ -1,16 +1,20 @@
-import { useState } from "react";
+// Replace imports and extend props; add positioning logic
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, User, Mail, Phone, MessageSquare, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import type { ChangeEvent, FormEvent } from "react";
 
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
+  anchorPosition?: { x: number; y: number } | null;
+  anchorSide?: "above" | "below"; // new: prefer placing above or below the anchor
 }
 
-export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
+export default function ContactModal({ isOpen, onClose, anchorPosition, anchorSide = "below" }: ContactModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,14 +25,26 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [computedPos, setComputedPos] = useState<{ top: number; left: number } | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // NEW: handlers defined before usage
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCancel = () => {
+    setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+    onClose();
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
     try {
       const { error } = await supabase
-        .from('inquiries')
+        .from("inquiries")
         .insert([
           {
             name: formData.name,
@@ -36,7 +52,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             phone: formData.phone || null,
             company: formData.company || null,
             message: formData.message,
-          }
+          },
         ]);
 
       if (error) {
@@ -48,16 +64,14 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
         return;
       }
 
-      // Reset form and close modal
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });
       onClose();
-      
       toast({
         title: "Success",
         description: "Thank you for your message! We'll get back to you soon.",
       });
-    } catch (error) {
-      console.error('Error submitting inquiry:', error);
+    } catch (err) {
+      console.error("Error submitting inquiry:", err);
       toast({
         title: "Error",
         description: "An unexpected error occurred. Please try again.",
@@ -68,17 +82,53 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  useEffect(() => {
+    if (!isOpen) return;
+    if (!anchorPosition) {
+      setComputedPos(null);
+      return;
+    }
+    const rAF = requestAnimationFrame(() => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const padding = 12;
+      const offsetY = 8;
+      const el = modalRef.current;
+      if (!el) return;
 
-  const handleCancel = () => {
-    setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-    onClose();
-  };
+      const rect = el.getBoundingClientRect();
+      const w = rect.width || 360; // fallback width
+      const h = rect.height || 480; // fallback height
+
+      const headerEl = document.querySelector("header");
+      const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 0;
+
+      let left = anchorPosition.x;
+      let top = anchorSide === "above" ? anchorPosition.y - offsetY - h : anchorPosition.y + offsetY;
+
+      const minLeft = padding + w / 2;
+      const maxLeft = vw - padding - w / 2;
+      left = Math.max(minLeft, Math.min(left, maxLeft));
+
+      const minTop = padding + headerHeight + 4;
+      const maxTop = vh - padding - h;
+
+      if (anchorSide === "above" && top < minTop) {
+        top = Math.min(anchorPosition.y + offsetY, maxTop);
+      } else {
+        top = Math.max(minTop, Math.min(top, maxTop));
+      }
+
+      setComputedPos({ top, left });
+    });
+    return () => cancelAnimationFrame(rAF);
+  }, [isOpen, anchorPosition, anchorSide]);
+
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -87,15 +137,27 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 ${anchorPosition ? "p-4" : "flex items-center justify-center p-4"}`}
           onClick={onClose}
         >
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
             className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-auto relative"
+            style={
+              anchorPosition
+                ? computedPos
+                  ? { position: "fixed", top: computedPos.top, left: computedPos.left, transform: "translate(-50%, 0)" }
+                  : { position: "fixed", top: -9999, left: -9999, visibility: "hidden" }
+                : undefined
+            }
+            role="dialog"
+            aria-modal="true"
+            aria-label="Contact form"
+            tabIndex={-1}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}

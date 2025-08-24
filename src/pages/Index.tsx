@@ -12,6 +12,8 @@ import { useState } from "react";
 
 export default function Index() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [contactAnchor, setContactAnchor] = useState<{ x: number; y: number } | null>(null);
+  const [anchorSide, setAnchorSide] = useState<"above" | "below">("below");
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
@@ -193,7 +195,19 @@ export default function Index() {
               </Link>
               <Button 
                 size="lg" 
-                onClick={() => setIsContactModalOpen(true)}
+                onClick={(e) => {
+                  const btn = e.currentTarget as HTMLElement;
+                  // Smoothly bring the button into view first
+                  btn.scrollIntoView({ block: "center", behavior: "smooth" });
+                  setAnchorSide("above");
+                  // After smooth scroll settles, measure and open anchored above
+                  setTimeout(() => {
+                    const rect = btn.getBoundingClientRect();
+                    // Use the top edge as the anchor for "above" placement
+                    setContactAnchor({ x: rect.left + rect.width / 2, y: rect.top });
+                    requestAnimationFrame(() => setIsContactModalOpen(true));
+                  }, 350);
+                }}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Contact Us
@@ -207,6 +221,8 @@ export default function Index() {
       <ContactModal 
         isOpen={isContactModalOpen} 
         onClose={() => setIsContactModalOpen(false)} 
+        anchorPosition={contactAnchor}
+        anchorSide={anchorSide}
       />
 
       {/* WhatsApp Floating Button */}

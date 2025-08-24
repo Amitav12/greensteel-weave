@@ -30,6 +30,7 @@ export default function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [contactAnchor, setContactAnchor] = useState<{ x: number; y: number } | null>(null);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -69,18 +70,18 @@ export default function SiteHeader() {
           ? "bg-white/20 dark:bg-gray-900/20 backdrop-blur-lg border-b border-[#81C784]/20 dark:border-[#4CAF50]/20 shadow-lg" 
           : "bg-white/20 dark:bg-gray-900/20 border-b border-[#81C784]/10 dark:border-[#4CAF50]/10 shadow-sm"
       }`}>
-        <div className="container flex h-20 items-center justify-between px-6">
+        <div className="container flex h-20 items-center justify-between px-6 overflow-x-hidden">
           {/* Logo - Moved to far left with enhanced styling */}
-          <Link to="/" className="group flex-shrink-0">
+          <Link to="/" className="group shrink min-w-0">
             <motion.div
               whileHover={{ scale: 1.08 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex items-center gap-4"
+              className="flex items-center gap-2 sm:gap-4"
             >
-              <div className="w-24 h-20 flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border border-green-200/30 dark:border-green-700/30 shadow-lg overflow-hidden group-hover:shadow-xl group-hover:shadow-green-500/20 transition-all duration-300"
-                   style={{
-                     borderRadius: '12px'
-                   }}>
+              <div
+                className="w-16 h-14 sm:w-20 sm:h-16 md:w-24 md:h-20 flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border border-green-200/30 dark:border-green-700/30 shadow-lg overflow-hidden group-hover:shadow-xl group-hover:shadow-green-500/20 transition-all duration-300"
+                style={{ borderRadius: '12px' }}
+              >
                 <motion.img
                   src="/logo.gif"
                   alt="ATL - The Commodity Experts Logo"
@@ -98,9 +99,9 @@ export default function SiteHeader() {
                 />
               </div>
               
-              {/* Enhanced Company Name with bigger text and effects */}
+              {/* Enhanced Company Name with responsive sizing and width constraint */}
               <motion.div
-                className="font-extrabold tracking-wide text-3xl lg:text-4xl text-[#2E7D32] dark:text-[#4CAF50] drop-shadow-lg transition-all duration-500"
+                className="font-extrabold tracking-wide text-[clamp(1rem,5vw,1.4rem)] sm:text-2xl md:text-3xl lg:text-4xl text-[#2E7D32] dark:text-[#4CAF50] drop-shadow-lg transition-all duration-500 max-w-[55vw] sm:max-w-none truncate"
                 whileHover={{ 
                   scale: 1.02,
                   textShadow: "0 0 20px rgba(76, 175, 80, 0.5)"
@@ -124,7 +125,6 @@ export default function SiteHeader() {
               </motion.div>
             </motion.div>
           </Link>
-          
           {/* Desktop Navigation - Moved more to the right with smaller buttons */}
           <nav className="hidden md:flex items-center gap-1 ml-auto mr-4">
             {nav.map((n) => (
@@ -191,7 +191,11 @@ export default function SiteHeader() {
             </div>
             
             <Button 
-              onClick={() => setIsContactModalOpen(true)}
+              onClick={(e) => {
+                const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                setContactAnchor({ x: rect.left + rect.width / 2, y: rect.bottom });
+                requestAnimationFrame(() => setIsContactModalOpen(true));
+              }}
               className="bg-[#4CAF50] hover:bg-[#2E7D32] dark:bg-[#66BB6A] dark:hover:bg-[#4CAF50] text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               size="sm"
             >
@@ -317,8 +321,10 @@ export default function SiteHeader() {
                   className="pt-4"
                 >
                   <Button 
-                    onClick={() => {
-                      setIsContactModalOpen(true);
+                    onClick={(e) => {
+                      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                      setContactAnchor({ x: rect.left + rect.width / 2, y: rect.bottom });
+                      requestAnimationFrame(() => setIsContactModalOpen(true));
                       setIsMobileMenuOpen(false);
                     }}
                     className="w-full bg-[#4CAF50] hover:bg-[#2E7D32] dark:bg-[#66BB6A] dark:hover:bg-[#4CAF50] text-white font-bold text-lg py-4 shadow-lg"
@@ -337,6 +343,7 @@ export default function SiteHeader() {
       <ContactModal 
         isOpen={isContactModalOpen} 
         onClose={() => setIsContactModalOpen(false)} 
+        anchorPosition={contactAnchor}
       />
     </>
   );
