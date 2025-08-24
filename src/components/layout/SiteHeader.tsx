@@ -35,6 +35,43 @@ export default function SiteHeader() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // NEW: Track dropdown trigger and fixed position
+  const [dropdownPos, setDropdownPos] = useState<{ left: number; top: number } | null>(null);
+  const [triggerEl, setTriggerEl] = useState<HTMLButtonElement | null>(null);
+  
+  const positionFromRect = (rect: DOMRect) => {
+    const DROPDOWN_WIDTH = 256; // w-64
+    const PADDING = 12;
+    const left = Math.min(
+      Math.max(rect.left, PADDING),
+      window.innerWidth - DROPDOWN_WIDTH - PADDING
+    );
+    const top = rect.bottom + 8; // small gap below trigger
+    setDropdownPos({ left, top });
+  };
+  
+  useEffect(() => {
+    if (!activeDropdown || !triggerEl) return;
+  
+    const recompute = () => {
+      const rect = triggerEl.getBoundingClientRect();
+      positionFromRect(rect);
+    };
+  
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveDropdown(null);
+    };
+  
+    recompute();
+    window.addEventListener("scroll", recompute, true);
+    window.addEventListener("resize", recompute);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("scroll", recompute, true);
+      window.removeEventListener("resize", recompute);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [activeDropdown, triggerEl]);
   // Handle hydration
   useEffect(() => {
     setMounted(true);
@@ -104,7 +141,7 @@ export default function SiteHeader() {
                 className="font-extrabold tracking-wide text-[clamp(1rem,5vw,1.4rem)] sm:text-2xl md:text-3xl lg:text-4xl text-[#2E7D32] dark:text-[#4CAF50] drop-shadow-lg transition-all duration-500 max-w-[55vw] sm:max-w-none truncate"
                 whileHover={{ 
                   scale: 1.02,
-                  textShadow: "0 0 20px rgba(76, 175, 80, 0.5)"
+                  textShadow: '0 0 20px rgba(76, 175, 80, 0.5)'
                 }}
                 style={{
                   background: 'linear-gradient(135deg, #2E7D32, #4CAF50, #66BB6A)',
@@ -112,7 +149,7 @@ export default function SiteHeader() {
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
                   filter: 'drop-shadow(0 2px 4px rgba(46, 125, 50, 0.3))',
-                  fontFamily: 'Georgia, serif'
+                  fontFamily: '"Inter Tight", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif'
                 }}
               >
                 <motion.span
@@ -132,24 +169,48 @@ export default function SiteHeader() {
                 {n.dropdown ? (
                   <div
                     className="relative"
-                    onMouseEnter={() => setActiveDropdown(n.to)}
                     onMouseLeave={() => setActiveDropdown(null)}
                   >
                     <button
+                      ref={(el) => {
+                        if (el && activeDropdown === n.to) setTriggerEl(el);
+                      }}
                       className={`${getNavCls({ isActive: false })} flex items-center gap-1`}
+                      onMouseEnter={(e) => {
+                        const rect = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
+                        setActiveDropdown(n.to);
+                        setTriggerEl(e.currentTarget as HTMLButtonElement);
+                        positionFromRect(rect);
+                      }}
+                      onClick={(e) => {
+                        const btn = e.currentTarget as HTMLButtonElement;
+                        const rect = btn.getBoundingClientRect();
+                        if (activeDropdown === n.to) {
+                          setActiveDropdown(null);
+                          return;
+                        }
+                        setActiveDropdown(n.to);
+                        setTriggerEl(btn);
+                        positionFromRect(rect);
+                      }}
+                      aria-haspopup="menu"
+                      aria-expanded={activeDropdown === n.to}
                     >
                       {n.label}
                       <ChevronDown className="w-3 h-3" />
                     </button>
-                    
+
                     <AnimatePresence>
-                      {activeDropdown === n.to && (
+                      {activeDropdown === n.to && dropdownPos && (
                         <motion.div
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50"
+                          transition={{ duration: 0.18 }}
+                          // CHANGED: fixed, high z, no scrollbar, placed by JS
+                          className="fixed z-[100] w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2"
+                          style={{ top: dropdownPos.top, left: dropdownPos.left }}
+                          role="menu"
                         >
                           {n.dropdown.map((item) => (
                             <Link
@@ -157,6 +218,7 @@ export default function SiteHeader() {
                               to={item.to}
                               className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-green-900/20 hover:text-green-600 dark:hover:text-green-400 transition-colors duration-200"
                               onClick={() => setActiveDropdown(null)}
+                              role="menuitem"
                             >
                               {item.label}
                             </Link>
