@@ -25,8 +25,8 @@ const values = [
   {
     icon: BookOpen,
     title: "Knowledge Sharing",
-    description: "Sharing knowledge, economic opportunities, and resources to strengthen the circular economy ecosystem."
-  },
+    description: "Sharing knowledges, economic opportunities, and resources to strengthen the circular economy ecosystem."
+  },//all good
   {
     icon: Heart,
     title: "Community Engagement",
