@@ -7,62 +7,62 @@ export default function FerrousScrap() {
     {
       title: "Shredded Steel Scrap – ISRI 211 Grade",
       description: "High-quality shredded steel scrap meeting ISRI 211 specifications for optimal recycling efficiency.",
-      image: "/lovable-uploads/steel-worker-industrial.jpg"
+      image: "/Shredded Steel Scrap (1).png"
     },
     {
       title: "HMS 1 & HMS 2 (Heavy Melting Scrap)",
       description: "Premium heavy melting scrap grades 1 and 2, ideal for steel production and manufacturing.",
-      image: "/lovable-uploads/product-steel-coils.jpg"
+      image: "/HMS 1-2  (1).JPG"
     },
     {
       title: "Steel Turning Scrap",
       description: "Clean steel turning scrap from machining operations, perfect for remelting processes.",
-      image: "/lovable-uploads/product-steel-pipes.jpg"
+      image: "/Steel Turning Scrap (1).JPG"
     },
     {
       title: "Blue Steel Scrap",
       description: "High-grade blue steel scrap with excellent purity levels for quality steel production.",
-      image: "/lovable-uploads/product-structural-steel.jpg"
+      image: "/Blue Steel (1).JPG"
     },
     {
       title: "Rebar Bundles",
       description: "Bundled reinforcement bar scrap from construction projects, ready for recycling.",
-      image: "/lovable-uploads/cargo-ship-containers.jpg"
+      image: "/Rebar Bundles.jpg"
     },
     {
       title: "Cast Iron Break Disc",
       description: "Cast iron brake disc scrap from automotive industry, high iron content material.",
-      image: "/lovable-uploads/shipping-containers-port.jpg"
+      image: "/Cast Iron Break Disc.jpeg"
     },
     {
       title: "Used Rail Scrap (R50 / R65)",
       description: "Railway track scrap in R50 and R65 specifications, premium quality steel material.",
-      image: "/lovable-uploads/hero-recycling-steel.jpg"
+      image: "/Used Rail Scrap (1).JPG"
     },
     {
       title: "Moon Cut Plates",
       description: "Precision cut steel plates in moon shape configuration for specialized applications.",
-      image: "/lovable-uploads/steel-worker-industrial.jpg"
+      image: "/Moon cut.jpg"
     },
     {
       title: "LMS Bundles (Light Melting Scrap)",
       description: "Light melting scrap bundles, processed and sorted for efficient steel production.",
-      image: "/lovable-uploads/product-steel-coils.jpg"
+      image: "/Fabrication Grade (1).JPG"
     },
     {
       title: "HMS Bundles",
       description: "Heavy melting scrap in convenient bundle format for easy handling and processing.",
-      image: "/lovable-uploads/product-steel-pipes.jpg"
+      image: "/HMS Bundles .jpg"
     },
     {
       title: "HMS Rebar Bundles",
       description: "Combined heavy melting scrap and rebar bundles for comprehensive steel recycling.",
-      image: "/lovable-uploads/product-structural-steel.jpg"
+      image: "/HMS Bundles 1.jpg"
     },
     {
       title: "PNS (Plate & Structural Scrap)",
       description: "Plate and structural steel scrap from construction and industrial demolition projects.",
-      image: "/lovable-uploads/cargo-ship-containers.jpg"
+      image: "/PNS .jpg"
     }
   ];
 

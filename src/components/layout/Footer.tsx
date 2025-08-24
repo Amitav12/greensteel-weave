@@ -74,7 +74,7 @@ export default function Footer() {
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    Steel Trading & Recycling
+                    The Commodity Experts
                   </motion.p>
                 </div>
               </Link>
