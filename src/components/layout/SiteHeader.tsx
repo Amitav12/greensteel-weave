@@ -102,6 +102,7 @@ export default function SiteHeader() {
 
   return (
     <>
+      {/* header remains z-50 */}
       <header className={`sticky top-0 z-50 transition-all duration-300 ${
         isScrolled 
           ? "bg-white/20 dark:bg-gray-900/20 backdrop-blur-lg border-b border-[#81C784]/20 dark:border-[#4CAF50]/20 shadow-lg" 
@@ -325,7 +326,7 @@ export default function SiteHeader() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed top-20 left-0 right-0 z-40 md:hidden"
+            className="fixed top-20 left-0 right-0 z-[49] md:hidden"
           >
             <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg border-b border-[#81C784]/20 dark:border-[#4CAF50]/20 shadow-xl">
               <div className="container px-6 py-8 space-y-4">

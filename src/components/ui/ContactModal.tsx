@@ -26,7 +26,7 @@ export default function ContactModal({ isOpen, onClose, anchorPosition, anchorSi
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const modalRef = useRef<HTMLDivElement>(null);
-  const [computedPos, setComputedPos] = useState<{ top: number; left: number } | null>(null);
+  const [computedPos, setComputedPos] = useState<{ top: number; left?: number; isMobile: boolean } | null>(null);
 
   // NEW: handlers defined before usage
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -84,31 +84,38 @@ export default function ContactModal({ isOpen, onClose, anchorPosition, anchorSi
 
   useEffect(() => {
     if (!isOpen) return;
-    if (!anchorPosition) {
-      setComputedPos(null);
-      return;
-    }
-    const rAF = requestAnimationFrame(() => {
+
+    const computePosition = () => {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
+      const isMobile = vw <= 768; // md breakpoint
       const padding = 12;
       const offsetY = 8;
+
       const el = modalRef.current;
       if (!el) return;
-
-      const rect = el.getBoundingClientRect();
-      const w = rect.width || 360; // fallback width
-      const h = rect.height || 480; // fallback height
 
       const headerEl = document.querySelector("header");
       const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 0;
 
-      let left = anchorPosition.x;
-      let top = anchorSide === "above" ? anchorPosition.y - offsetY - h : anchorPosition.y + offsetY;
+      const MAX_W = Math.min(448, vw - 24); // cap at 28rem, keep 12px gutters
 
-      const minLeft = padding + w / 2;
-      const maxLeft = vw - padding - w / 2;
-      left = Math.max(minLeft, Math.min(left, maxLeft));
+      if (isMobile) {
+        const top = padding + headerHeight + 4;
+        setComputedPos({ top, isMobile: true });
+        return;
+      }
+
+      if (!anchorPosition) {
+        setComputedPos(null);
+        return;
+      }
+
+      const h = el.offsetHeight || 480;
+
+      let top = anchorSide === "above"
+        ? anchorPosition.y - offsetY - h
+        : anchorPosition.y + offsetY;
 
       const minTop = padding + headerHeight + 4;
       const maxTop = vh - padding - h;
@@ -119,16 +126,21 @@ export default function ContactModal({ isOpen, onClose, anchorPosition, anchorSi
         top = Math.max(minTop, Math.min(top, maxTop));
       }
 
-      setComputedPos({ top, left });
-    });
-    return () => cancelAnimationFrame(rAF);
-  }, [isOpen, anchorPosition, anchorSide]);
+      const leftEdge = Math.round((vw - MAX_W) / 2);
+      setComputedPos({ top, left: leftEdge, isMobile: false });
+    };
 
-  useEffect(() => {
-    if (isOpen && modalRef.current) {
-      modalRef.current.focus();
-    }
-  }, [isOpen]);
+    const raf = requestAnimationFrame(computePosition);
+    const onResize = () => computePosition();
+    const onScroll = () => computePosition();
+    window.addEventListener("resize", onResize);
+    window.addEventListener("scroll", onScroll, true);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", onScroll, true);
+    };
+  }, [isOpen, anchorPosition, anchorSide]);
 
   return (
     <AnimatePresence>
@@ -142,17 +154,18 @@ export default function ContactModal({ isOpen, onClose, anchorPosition, anchorSi
         >
           <motion.div
             ref={modalRef}
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            // When anchored (desktop near click) or on mobile (forced top), do not scale during animation
+            initial={anchorPosition ? { opacity: 0, y: 10 } : { opacity: 0, scale: 0.9, y: 20 }}
+            animate={anchorPosition ? { opacity: 1, y: 0 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={anchorPosition ? { opacity: 0, y: 10 } : { opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
             className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-auto relative"
             style={
-              anchorPosition
-                ? computedPos
-                  ? { position: "fixed", top: computedPos.top, left: computedPos.left, transform: "translate(-50%, 0)" }
-                  : { position: "fixed", top: -9999, left: -9999, visibility: "hidden" }
-                : undefined
+              computedPos
+                ? computedPos.isMobile
+                  ? { position: "fixed", top: computedPos.top, left: 12, right: 12, margin: "0 auto", maxWidth: "28rem" }
+                  : { position: "fixed", top: computedPos.top, left: computedPos.left!, maxWidth: "min(100vw - 24px, 28rem)" }
+                : { maxWidth: "min(100vw - 24px, 28rem)" }
             }
             role="dialog"
             aria-modal="true"
