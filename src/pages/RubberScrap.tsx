@@ -7,17 +7,17 @@ export default function RubberScrap() {
     {
       title: "Bailed Car Tyres",
       description: "Compressed and bailed car tyres ready for recycling and processing into various rubber products and materials.",
-      image: "/lovable-uploads/cargo-ship-containers.jpg"
+      image: "/baled tyre.jpg"
     },
     {
       title: "Shredded Car Tyres",
       description: "Pre-processed shredded car tyre rubber chips suitable for manufacturing rubber mats, playground surfaces, and other applications.",
-      image: "/lovable-uploads/shipping-containers-port.jpg"
+      image: "/shredded tyre 1.jpg"
     },
     {
       title: "3-Cut Truck Tyres",
       description: "Heavy-duty truck tyres cut into three sections for efficient processing and recycling into industrial rubber products.",
-      image: "/lovable-uploads/hero-recycling-steel.jpg"
+      image: "/Cut Typre  (1).jpeg"
     }
   ];
 
@@ -32,23 +32,23 @@ export default function RubberScrap() {
         <meta name="keywords" content="rubber scrap, tire recycling, rubber recycling, industrial rubber, rubber waste" />
       </Helmet>
       
-      <div className="min-h-screen bg-white dark:bg-gray-900">
+      <div className="min-h-screen bg-white dark:bg-gray-900 w-full overflow-x-hidden">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800">
-          <div className="container mx-auto px-4">
+        <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 w-full">
+          <div className="w-full px-4 sm:px-6 lg:px-8 max-w-none sm:max-w-7xl sm:mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-center max-w-4xl mx-auto"
+              className="text-center w-full"
             >
-              <div className="flex justify-center mb-6">
-                <Truck className="w-16 h-16 text-purple-600" />
+              <div className="flex justify-center mb-4 sm:mb-6">
+                <Truck className="w-12 h-12 sm:w-16 sm:h-16 text-purple-600" />
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 px-2">
                 Rubber <span className="text-purple-600">Scrap</span>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+              <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 px-4 max-w-4xl mx-auto">
                 Sustainable rubber recycling solutions for tire and industrial rubber waste materials.
               </p>
             </motion.div>
@@ -56,9 +56,9 @@ export default function RubberScrap() {
         </section>
 
         {/* Products Section */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section className="py-12 sm:py-16 w-full">
+          <div className="w-full px-4 sm:px-6 lg:px-8 max-w-none sm:max-w-7xl sm:mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
               {rubberScrapProducts.map((product, index) => (
                 <motion.div
                   key={index}
@@ -66,9 +66,9 @@ export default function RubberScrap() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300"
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300 w-full"
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden w-full">
                     <img
                       src={product.image}
                       alt={product.title}
@@ -76,7 +76,7 @@ export default function RubberScrap() {
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-4 sm:p-6 w-full">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
                       {product.title}
                     </h3>

@@ -492,7 +492,7 @@ export default function About() {
             >
               <div className="relative h-full">
                 <img 
-                  src="/CEO.jpg" 
+                  src="/CEO.png" 
                   alt={team[0].name}
                   className="w-full h-full object-cover"
                 />
@@ -500,13 +500,7 @@ export default function About() {
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                   <h3 className="text-lg lg:text-xl font-bold mb-1">
                     {team[0].name}
-                  </h3>
-                  <p className="text-green-300 font-semibold text-sm mb-1">
-                    {team[0].position}
-                  </p>
-                  <div className="text-xs text-gray-300 font-medium">
-                    Gemini Corporation
-                  </div>
+                  </h3>                 
                 </div>
               </div>
             </motion.div>

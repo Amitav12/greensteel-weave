@@ -12,66 +12,66 @@ export default function NonFerrousScrap() {
       {
         title: "UBC (Used Beverage Cans)",
         description: "High-quality used aluminum beverage cans, perfect for recycling into new aluminum products.",
-        image: "/lovable-uploads/product-steel-coils.jpg"
+        image: "/UBC1.jpg"
       },
       {
         title: "Tense (Mixed Cast Aluminium)",
         description: "Mixed cast aluminum scrap from various industrial and automotive applications.",
-        image: "/lovable-uploads/product-steel-pipes.jpg"
+        image: "/Tense 1.jpg"
       },
       {
         title: "Taint/Tabor (Mixed Sheet Aluminium)",
         description: "Mixed sheet aluminum scrap from construction and manufacturing industries.",
-        image: "/lovable-uploads/product-structural-steel.jpg"
+        image: "/Tesnse tebor 1.jpg"
       },
       {
         title: "Troma (Aluminium Wheels)",
         description: "Aluminum wheel scrap from automotive industry, high-grade aluminum alloy material.",
-        image: "/lovable-uploads/cargo-ship-containers.jpg"
+        image: "/wheels 1.jpg"
       },
       {
         title: "Zorba (Shredded Mixed Non-Ferrous)",
         description: "Shredded mixed non-ferrous metals separated from automotive shredder residue.",
-        image: "/lovable-uploads/shipping-containers-port.jpg"
+        image: "/zorba 1.jpg"
       }
     ],
     "Stainless Steel Scrap": [
       {
         title: "200 Series (e.g., 201 series)",
         description: "200 series stainless steel scrap with manganese and nitrogen content for cost-effective applications.",
-        image: "/lovable-uploads/hero-recycling-steel.jpg"
+        image: "/Steel Turning Scrap (2).JPG"
       },
       {
         title: "300 Series (e.g., 304, 316 series)",
         description: "Premium 300 series stainless steel scrap, highly corrosion-resistant austenitic steel.",
-        image: "/lovable-uploads/steel-worker-industrial.jpg"
+        image: "/Steel Turning Scrap (3).JPG"
       },
       {
         title: "400 Series (e.g., 410, 420, 430 series)",
         description: "400 series stainless steel scrap, ferritic and martensitic grades for various applications.",
-        image: "/lovable-uploads/product-steel-coils.jpg"
+        image: "/Steel Turning Scrap (4).JPG"
       }
     ],
     "Machinery & Electrical Scrap": [
       {
         title: "Compressor Scrap (Sealed Unit)",
         description: "Sealed compressor units from refrigeration and air conditioning systems.",
-        image: "/lovable-uploads/product-steel-pipes.jpg"
+        image: "/compressor 1.jpg"
       },
       {
         title: "Mixed Electric Motor Scrap",
         description: "Electric motor scrap from various industrial and household appliances.",
-        image: "/lovable-uploads/product-structural-steel.jpg"
+        image: "/Mixed Electric Motors (1).JPG"
       },
       {
         title: "Starter & Alternator Scrap",
         description: "Automotive starter and alternator scrap containing valuable copper and steel components.",
-        image: "/lovable-uploads/cargo-ship-containers.jpg"
+        image: "/starter1.jpg"
       },
       {
         title: "Silicon Steel Scrap (Electrical Steel / Transformer Scrap)",
         description: "High-grade silicon steel scrap from transformers and electrical equipment.",
-        image: "/lovable-uploads/shipping-containers-port.jpg"
+        image: "/Mixed Electric Motors (2).JPG"
       }
     ]
   };

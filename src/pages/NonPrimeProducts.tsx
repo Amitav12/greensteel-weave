@@ -7,27 +7,27 @@ export default function NonPrimeProducts() {
     {
       title: "Coated Steel Coils & Plates",
       description: "High-quality coated steel coils and plates with protective coating for enhanced durability and corrosion resistance.",
-      image: "/lovable-uploads/product-steel-coils.jpg"
+      image: "/Blue Steel (2).JPG"
     },
     {
       title: "Uncoated Steel Coils & Plates",
       description: "Premium uncoated steel coils and plates suitable for various industrial applications and manufacturing processes.",
-      image: "/lovable-uploads/product-steel-pipes.jpg"
+      image: "/Blue Steel (3).JPG"
     },
     {
       title: "Round Bars",
       description: "Precision round steel bars in various diameters, ideal for machining, construction, and manufacturing applications.",
-      image: "/lovable-uploads/product-structural-steel.jpg"
+      image: "/Fabrication Grade (2).JPG"
     },
     {
       title: "Bright Bars",
       description: "High-quality bright steel bars with smooth finish and precise dimensions for precision engineering applications.",
-      image: "/lovable-uploads/cargo-ship-containers.jpg"
+      image: "/Fabrication Grade (3).JPG"
     },
     {
       title: "Wire Rods",
       description: "Steel wire rods in various grades and specifications for wire drawing, fastener manufacturing, and industrial applications.",
-      image: "/lovable-uploads/shipping-containers-port.jpg"
+      image: "/wire rods 1.jpg"
     }
   ];
 
