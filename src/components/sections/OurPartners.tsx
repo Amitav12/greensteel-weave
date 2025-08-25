@@ -30,13 +30,13 @@ export default function OurPartners() {
       location: "India • Private Banking"
     },
     {
-      name: "Global Container Shipping",
-      alt: "Global Container Shipping Logo",
+      name: "Maersk",
+      alt: "Maersk Logo",
       type: "shipping",
       brandColors: ["#00adef", "#ffffff"],
-      image: "/global.jpg",
-      description: "Global Container Shipping",
-      location: "Denmark • Worldwide"
+      image: "/Maersk.png",
+      description: "A.P. Moller - Maersk",
+      location: "Denmark • Global Container Shipping"
     },
     {
       name: "Mediterranean Shipping Co",
