@@ -219,9 +219,7 @@ export default function HeroSimple() {
                           <div className="text-green-100 text-xs font-medium">
                             • Metal Scrap: Ferrous and non-ferrous metals, including steel, aluminum, copper, brass, and more
                           </div>
-                          <div className="text-green-100 text-xs font-medium">
-                            • Plastic Scrap: Various types of plastic waste, including HDPE, LDPE, PET, and PVC
-                          </div>
+                          
                           <div className="text-green-100 text-xs font-medium">
                             • Used Tyre Scrap: Whole tyres, shredded tyres, and tyre crumbs
                           </div>

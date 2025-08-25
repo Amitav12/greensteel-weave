@@ -74,7 +74,7 @@ export default function Footer() {
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    The Commodity Experts
+                    THE COMMODITY EXPERTS
                   </motion.p>
                 </div>
               </Link>
@@ -141,7 +141,7 @@ export default function Footer() {
                 >
                   <MapPin className="w-4 h-4 text-green-400 group-hover:text-green-300 transition-colors mt-0.5" />
                   <span className="text-gray-300 text-xs sm:text-sm font-medium text-center sm:text-left">
-                    21 High View Cl<br />Leicester LE4 9LJ, UK
+                    21 High View Close<br />Leicester LE4 9LJ, UK
                   </span>
                 </motion.div>
               </motion.div>
