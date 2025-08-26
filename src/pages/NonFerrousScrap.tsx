@@ -1,12 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { Zap, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { Zap } from "lucide-react";
 
 export default function NonFerrousScrap() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const categories = {
     "Aluminium Scrap": [
       {
@@ -76,11 +72,6 @@ export default function NonFerrousScrap() {
     ]
   };
 
-  const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
-    setIsDropdownOpen(false);
-  };
-
   return (
     <>
       <Helmet>
@@ -115,92 +106,58 @@ export default function NonFerrousScrap() {
           </div>
         </section>
 
-        {/* Category Selection Section */}
+        {/* All Categories Section */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-                Select Product Category
-              </h2>
-              
-              {/* Dropdown Button */}
-              <div className="relative inline-block">
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-semibold flex items-center gap-2 transition-colors duration-300 shadow-lg"
-                >
-                  {selectedCategory || "Choose Category"}
-                  <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-                
-                {/* Dropdown Menu */}
-                {isDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-10"
-                  >
-                    {Object.keys(categories).map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => handleCategorySelect(category)}
-                        className="w-full px-6 py-4 text-left hover:bg-orange-50 dark:hover:bg-gray-700 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg border-b border-gray-100 dark:border-gray-600 last:border-b-0"
-                      >
-                        <span className="text-gray-900 dark:text-white font-medium">{category}</span>
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </div>
-            </div>
-
-            {/* Products Grid */}
-            {selectedCategory && (
+            {Object.entries(categories).map(([categoryName, products], categoryIndex) => (
               <motion.div
+                key={categoryName}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
+                className={`${categoryIndex > 0 ? 'mt-20' : ''}`}
               >
-                {categories[selectedCategory as keyof typeof categories].map((product, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300"
-                  >
-                    <div className="relative h-48 overflow-hidden">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
-                        {product.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-3">
-                        {product.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
+                {/* Category Header */}
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    {categoryName}
+                  </h2>
+                  <div className="w-24 h-1 bg-orange-600 mx-auto rounded-full"></div>
+                </div>
 
-            {/* Default Message */}
-            {!selectedCategory && (
-              <div className="text-center py-16">
-                <p className="text-xl text-gray-600 dark:text-gray-300">
-                  Please select a category above to view our non-ferrous scrap products.
-                </p>
-              </div>
-            )}
+                {/* Products Grid */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                  {products.map((product, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                    >
+                      <div className="relative h-48 sm:h-56 overflow-hidden">
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
+                          {product.title}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-3">
+                          {product.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </section>
       </div>
