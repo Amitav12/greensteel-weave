@@ -237,8 +237,7 @@ export default function Index() {
       {/* WhatsApp Floating Button */}
       <WhatsAppFloat 
         phoneNumbers={[
-          { number: "447446643043", label: "Primary Contact" },
-          { number: "447308409476", label: "Secondary Contact" }
+          { number: "447446643043", label: "Primary Contact" }
         ]} 
         defaultMessage="Hello AAASHA TRADING! I'm interested in your steel trading and recycling services. Could you please provide more information about your commodities and pricing?" 
       />
