@@ -12,7 +12,7 @@ export default function NonPrimeProducts() {
     {
       title: "Uncoated Steel Coils & Plates",
       description: "Premium uncoated steel coils and plates suitable for various industrial applications and manufacturing processes.",
-      image: "/Blue Steel (3).JPG"
+      image: "/UncoatedSteelcoils.jpg"
     },
     {
       title: "Round Bars",
