@@ -52,7 +52,7 @@ export default function OurPartners() {
       alt: "CMA CGM Logo",
       type: "shipping",
       brandColors: ["#1e40af", "#dc2626"],
-      image: "/CMA.jpg",
+      image: "/CMA.png",
       description: "CMA CGM Group",
       location: "France • Container Shipping"
     }
