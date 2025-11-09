@@ -111,7 +111,7 @@ export default function Footer() {
                   whileHover={{ scale: 1.02, y: -1 }}
                 >
                   <Mail className="w-4 h-4 text-green-400 group-hover:text-green-300 transition-colors" />
-                  <span className="text-gray-300 text-xs sm:text-sm font-medium">aaashatradinguk@gmail.com</span>
+                  <span className="text-gray-300 text-xs sm:text-sm font-medium">office@aaasha.co.uk</span>
                 </motion.div>
                 
                 {/* LinkedIn */}
